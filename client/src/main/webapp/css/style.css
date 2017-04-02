@@ -1,0 +1,54 @@
+body {
+	background-image: url(image/fon.jpg);
+}
+
+.funClass {
+	display : none;
+}
+
+.divClass {
+	display : inline;
+	padding : 10px;
+	margin : 5px;
+	
+	border : 3px solid #0C5E0C;
+	border-radius:20px;
+	font-size:20px;
+	
+}
+
+#footer {
+	margin-left : 5%;
+	margin-right : 5%;
+	margin-top : 15px;
+	width : 90%;
+	height : 100px;
+
+}
+
+#siteName {
+	font-size:50px;
+}
+
+#buttons, #language  {
+	float : right;
+}
+
+#currency {
+	float : left;
+}
+
+#searchDiv {
+	float : right;
+}
+
+#searchInput {
+	width : 800px;
+}
+
+#menuDiv {
+	height : 450px;
+	width : 150px;
+	float : left;
+	font-size : 30px;
+}
