@@ -6,6 +6,10 @@ body {
 	display : none;
 }
 
+.border {
+	border: 1px solid black;
+}
+
 .divClass {
 	display : inline;
 	padding : 10px;

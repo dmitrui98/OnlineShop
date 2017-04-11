@@ -19,7 +19,7 @@ public class MyController {
     //@Autowired
     //private UserRepository userRepository;
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/getData", method = RequestMethod.GET)
     //@ResponseBody
     public User getUser() {
 
@@ -29,6 +29,8 @@ public class MyController {
 
         return createUser();
     }
+
+
 
     private User createUser() {
         User user = new User();

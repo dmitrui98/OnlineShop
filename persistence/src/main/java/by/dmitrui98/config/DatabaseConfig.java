@@ -7,9 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.jpa.util.BeanDefinitionUtils;
-import org.springframework.http.StreamingHttpOutputMessage;
-import org.springframework.orm.jpa.AbstractEntityManagerFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -76,10 +73,11 @@ public class DatabaseConfig {
     }
 
     private Properties getHibernateProporties() {
-        Properties properties = new Properties();
-        InputStream is = getClass().getClassLoader().getResourceAsStream("hibernate.properties");
 
         try {
+
+            Properties properties = new Properties();
+            InputStream is = getClass().getClassLoader().getResourceAsStream("hibernate.properties");
             properties.load(is);
             return properties;
 

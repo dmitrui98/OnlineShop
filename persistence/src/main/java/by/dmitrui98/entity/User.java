@@ -10,13 +10,14 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "user1")
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private long user_id;
+    @Column(name = "user_id")
+    private long userId;
 
     @Column(name = "login", nullable = false, length = 100)
     private String login;
@@ -42,13 +43,13 @@ public class User {
     @Column(name = "discont")
     private double discont;
 
-    @Column(name = "create_at")
+    @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+    private Date createdAt;
 
-    @Column(name = "update_at")
+    @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateAt;
+    private Date updatedAt;
 
 
     public User() {
@@ -64,12 +65,12 @@ public class User {
         this.phone = phone;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getLogin() {
@@ -137,18 +138,18 @@ public class User {
     }
 
     public Date getCreate_at() {
-        return createAt;
+        return createdAt;
     }
 
     public void setCreate_at(Date createAt) {
-        this.createAt = createAt;
+        this.createdAt = createAt;
     }
 
     public Date getUpdate_at() {
-        return updateAt;
+        return updatedAt;
     }
 
     public void setUpdate_at(Date updateAt) {
-        this.updateAt = updateAt;
+        this.updatedAt = updateAt;
     }
 }
