@@ -34,7 +34,7 @@ public class DatabaseConfig {
     private Environment env;
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 
         em.setDataSource(dataSource());
@@ -42,6 +42,8 @@ public class DatabaseConfig {
 
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(getHibernateProporties());
+
+        System.out.println("configured EntityManagerFactory");
 
         return em;
     }
@@ -62,31 +64,34 @@ public class DatabaseConfig {
         ds.setTestOnBorrow(Boolean.valueOf(env.getRequiredProperty("db.testOnBorrow")));
         ds.setValidationQuery(env.getRequiredProperty("db.validationQuery"));
 
+        System.out.println("configured DataSource");
+
         return ds;
     }
 
     @Bean
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager manager = new JpaTransactionManager();
-        manager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+        manager.setEntityManagerFactory(entityManagerFactory().getObject());
+
+        System.out.println("configured PlatformTransactionManager");
+
         return manager;
     }
 
     private Properties getHibernateProporties() {
 
         try {
-
             Properties properties = new Properties();
             InputStream is = getClass().getClassLoader().getResourceAsStream("hibernate.properties");
             properties.load(is);
+
+            System.out.println("getting Hibernate properties");
+
             return properties;
 
         } catch (IOException e) {
             throw new IllegalArgumentException("Can't find 'hibernate.properties' in classpath!", e);
         }
-
-
     }
-
-
 }

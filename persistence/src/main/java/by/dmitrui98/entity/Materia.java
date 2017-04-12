@@ -1,5 +1,7 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,7 +14,7 @@ public class Materia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "guest_id")
+    @Column(name = "materia_id")
     private int materiaId;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

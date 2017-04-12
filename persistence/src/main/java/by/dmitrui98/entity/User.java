@@ -1,5 +1,6 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.GeneratorType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,8 +15,7 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private long userId;
 
@@ -44,11 +44,9 @@ public class User {
     private double discont;
 
     @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
 

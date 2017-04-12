@@ -1,5 +1,7 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -52,11 +54,9 @@ public class Product {
     private String description;
 
     @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
     public Product() {

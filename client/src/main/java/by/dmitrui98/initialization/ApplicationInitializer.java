@@ -1,5 +1,7 @@
 package by.dmitrui98.initialization;
 
+
+import by.dmitrui98.config.DatabaseConfig;
 import by.dmitrui98.config.WebConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -20,7 +22,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+
         ctx.register((WebConfig.class));
+        ctx.register(DatabaseConfig.class);
+
         servletContext.addListener(new ContextLoaderListener(ctx));
 
         ServletRegistration.Dynamic servlet = servletContext.addServlet(DISPATCHER, new DispatcherServlet(ctx));

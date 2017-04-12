@@ -24,9 +24,6 @@ public class Address {
     @JoinColumn(name = "user_id")
     private User user;
 
-
-
-
     @Column(name = "country")
     private String country;
     @Column(name = "city")
@@ -35,11 +32,9 @@ public class Address {
     private String address;
 
     @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
     public Address() {

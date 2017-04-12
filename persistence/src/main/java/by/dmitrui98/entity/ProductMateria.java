@@ -1,5 +1,7 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 /**
