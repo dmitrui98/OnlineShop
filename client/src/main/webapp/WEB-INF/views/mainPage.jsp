@@ -1,3 +1,7 @@
+<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>--%>
+<?xml version="1.0" encoding="UTF-8" ?>
+<%@ page contentType="text/html;charset=utf-8" %>
+<%--<fmt:requestEncoding value="UTF-8" />--%>
 <html>
 	<head>
 		<meta charset="UTF-8"/>

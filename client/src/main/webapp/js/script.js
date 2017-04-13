@@ -1,6 +1,6 @@
 jQuery('document').ready(function() {
 	jQuery("#comeIn").on("click", function() {
-		location.href = '../comeIn.jsp';
+		location.href = '../WEB-INF/views/comeIn.jsp';
 	});
 	
 	jQuery("#registration").on("click", function() {

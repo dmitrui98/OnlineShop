@@ -25,6 +25,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
         ctx.register(WebConfig.class);
         ctx.register(DatabaseConfig.class);
+        ctx.setServletContext(servletContext);
 
         servletContext.addListener(new ContextLoaderListener(ctx));
 

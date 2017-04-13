@@ -9,12 +9,15 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * Created by Администратор on 08.04.2017.
  */
-//@Controller
+@Controller
+@RequestMapping(value = "/")
 public class ViewController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
     public ModelAndView showMainPage() {
-        return new ModelAndView("mainPage");
+        ModelAndView modelAndView = new ModelAndView("mainPage");
+        return modelAndView;
     }
 
 

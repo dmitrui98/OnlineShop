@@ -41,9 +41,9 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>${jta.version}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
         </dependency>
 
         <dependency>
@@ -55,6 +55,7 @@
 
     <properties>
         <mysql-connector-java.version>6.0.6</mysql-connector-java.version>
+        <jstl.version>1.2</jstl.version>
     </properties>
 
 
