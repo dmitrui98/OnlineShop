@@ -1,12 +1,20 @@
 package by.dmitrui98.config;
 
+import by.dmitrui98.dao.UserDao;
+import by.dmitrui98.dao.implementation.UserDaoImpl;
+import by.dmitrui98.util.SessionUtil;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -24,7 +32,7 @@ import java.util.Properties;
  */
 
 @Configuration
-@EnableJpaRepositories("by.dmitrui98.repository")
+//@EnableJpaRepositories("by.dmitrui98.repository")
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
 @ComponentScan("by.dmitrui98")
@@ -33,20 +41,50 @@ public class DatabaseConfig {
     @Resource
     private Environment env;
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+//
+//        em.setDataSource(dataSource());
+//        em.setPackagesToScan(env.getRequiredProperty("db.entity.package"));
+//
+//        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+//        em.setJpaProperties(getHibernateProperties());
+//
+//        System.out.println("configured EntityManagerFactory");
+//
+//        return em;
+//    }
 
-        em.setDataSource(dataSource());
-        em.setPackagesToScan(env.getRequiredProperty("db.entity.package"));
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactory() {
+//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+//        sessionFactory.setDataSource(dataSource());
+//        sessionFactory.setPackagesToScan(
+//                new String[] { "by.dmitrui98.dao", "by.dmitrui98.service" });
+//        sessionFactory.setHibernateProperties(getHibernateProperties());
+//
+//        System.out.println("registration LocalSessionFactoryBean*********");
+//
+//        return sessionFactory;
+//    }
 
-        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        em.setJpaProperties(getHibernateProporties());
-
-        System.out.println("configured EntityManagerFactory");
-
-        return em;
+    //@Autowired
+	@Bean
+	public SessionFactory sessionFactory() {
+        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource());
+        sessionBuilder.scanPackages(env.getRequiredProperty("db.entity.package"));
+        sessionBuilder.addProperties(getHibernateProperties());
+        System.out.println("creating sessionFactory*********");
+        return sessionBuilder.buildSessionFactory();
     }
+
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation()
+    {
+        return new PersistenceExceptionTranslationPostProcessor();
+    }
+
 
     @Bean
     public DataSource dataSource() {
@@ -69,17 +107,39 @@ public class DatabaseConfig {
         return ds;
     }
 
+//    @Bean
+//    public PlatformTransactionManager platformTransactionManager() {
+//        JpaTransactionManager manager = new JpaTransactionManager();
+//        manager.setEntityManagerFactory(entityManagerFactory().getObject());
+//
+//        System.out.println("configured PlatformTransactionManager");
+//
+//        return manager;
+//    }
+
     @Bean
-    public PlatformTransactionManager transactionManager() {
-        JpaTransactionManager manager = new JpaTransactionManager();
-        manager.setEntityManagerFactory(entityManagerFactory().getObject());
-
-        System.out.println("configured PlatformTransactionManager");
-
-        return manager;
+	public HibernateTransactionManager transactionManager() {
+        HibernateTransactionManager txManager = new HibernateTransactionManager();
+        txManager.setSessionFactory(sessionFactory());
+        return txManager;
     }
 
-    private Properties getHibernateProporties() {
+
+    @Bean
+    public UserDao userDao() {
+        System.out.println("registration UserDaoImpl********");
+        return new UserDaoImpl();
+    }
+
+    @Bean
+    public SessionUtil sessionUtil() {
+        System.out.println("registration sessionUtil********");
+        return new SessionUtil();
+    }
+
+
+
+    private Properties getHibernateProperties() {
 
         try {
             Properties properties = new Properties();
@@ -91,7 +151,7 @@ public class DatabaseConfig {
             return properties;
 
         } catch (IOException e) {
-            throw new IllegalArgumentException("Can't find 'hibernate.properties' in classpath!", e);
+            throw new IllegalArgumentException("Can't findAll 'hibernate.properties' in classpath!", e);
         }
     }
 }

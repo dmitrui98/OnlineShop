@@ -19,7 +19,7 @@ public class Order {
     @Column(name = "order_id")
     private long orderId;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address addressId;
 

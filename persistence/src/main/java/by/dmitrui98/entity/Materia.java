@@ -17,10 +17,7 @@ public class Materia {
     @Column(name = "materia_id")
     private int materiaId;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "product_materia",
-        joinColumns = @JoinColumn(name = "materia_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @ManyToMany(mappedBy = "materiaSet")
     private Set<Product> productSet;
 
     @Column(name = "name")

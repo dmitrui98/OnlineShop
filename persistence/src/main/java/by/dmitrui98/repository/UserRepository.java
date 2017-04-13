@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by Администратор on 04.04.2017.
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository {//extends JpaRepository<User, Long> {
 }

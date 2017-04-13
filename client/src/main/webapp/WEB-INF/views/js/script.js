@@ -1,14 +1,14 @@
 jQuery('document').ready(function() {
 	jQuery("#comeIn").on("click", function() {
-		location.href = 'comeIn.html';
+		location.href = '../comeIn.jsp';
 	});
 	
 	jQuery("#registration").on("click", function() {
-		location.href = 'registration.html';
+		location.href = '../registration.jsp';
 	});
 	
 	jQuery("#pottle").on("click", function() {
-		location.href = 'pottle.html';
+		location.href = '../pottle.jsp';
 	});
 	
 	jQuery("#searchAll").on("click", function() {
@@ -16,6 +16,6 @@ jQuery('document').ready(function() {
 	});
 	
 	jQuery("#extendedSearch").on("click", function() {
-		location.href = 'extendedSearch.html';
+		location.href = '../extendedSearch.jsp';
 	});
 });
