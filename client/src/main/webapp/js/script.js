@@ -1,21 +1,32 @@
 jQuery('document').ready(function() {
 	jQuery("#comeIn").on("click", function() {
-		location.href = '../WEB-INF/views/comeIn.jsp';
+		location.href = "/comeIn";
 	});
-	
+
 	jQuery("#registration").on("click", function() {
-		location.href = '../registration.jsp';
+		location.href = "/registration";
 	});
-	
+
 	jQuery("#pottle").on("click", function() {
-		location.href = '../pottle.jsp';
+		location.href = "/pottle";
 	});
-	
-	jQuery("#searchAll").on("click", function() {
-		alert("поиск по всем каталогам");
-	});
-	
-	jQuery("#extendedSearch").on("click", function() {
-		location.href = '../extendedSearch.jsp';
-	});
+
+    //jQuery('#content').html('');
+    jQuery.ajax({
+        url: '/products',
+        type: 'GET',
+        success: function (data) {
+            data.forEach(function(element) {
+                var p = $('<p></p>').text('Продукт: ' + element.name + ' ' +
+                    ' цена: ' + element.price + ' ' +
+                    ' description: ' + element.description);
+
+                $("#content").append(p);
+
+//                    var img = $('<img>').attr('src', element.image);
+//                    p.append(img);
+                console.log(element);
+            });
+        }
+    });
 });

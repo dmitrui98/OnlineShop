@@ -8,8 +8,8 @@ import javax.persistence.*;
  * Created by Администратор on 11.04.2017.
  */
 
-@Entity
-@Table(name = "product_materia")
+//@Entity
+//@Table(name = "product_materia")
 public class ProductMateria {
 
     @Id

@@ -1,4 +1,4 @@
-package by.dmitrui98.controller;
+package by.dmitrui98.controller.json;
 
 
 import by.dmitrui98.entity.User;
@@ -14,7 +14,6 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    //@Qualifier("by.dmitrui98.service.implementation.UserServiceImpl")
     private BaseService<User, Long> userService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)

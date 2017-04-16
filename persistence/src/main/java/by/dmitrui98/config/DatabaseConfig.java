@@ -124,13 +124,6 @@ public class DatabaseConfig {
         return txManager;
     }
 
-
-    @Bean
-    public UserDao userDao() {
-        System.out.println("registration UserDaoImpl********");
-        return new UserDaoImpl();
-    }
-
     @Bean
     public SessionUtil sessionUtil() {
         System.out.println("registration sessionUtil********");

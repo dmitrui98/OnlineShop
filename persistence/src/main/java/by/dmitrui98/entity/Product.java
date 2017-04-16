@@ -31,19 +31,19 @@ public class Product {
     @JoinColumn(name = "created_by")
     private Admin admin;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "product_materia",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "materia_id"))
-    private Set<Materia> materiaSet = new HashSet<>();
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinTable(name = "product_materia",
+//        joinColumns = @JoinColumn(name = "product_id"),
+//        inverseJoinColumns = @JoinColumn(name = "materia_id"))
+    //private Set<Materia> materiaSet = new HashSet<>();
 
 
 //    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinTable(name = "order_product",
 //            joinColumns = @JoinColumn(name = "product_id"),
 //            inverseJoinColumns = @JoinColumn(name = "order_id"))
-    @ManyToMany(mappedBy = "productSet")
-    private Set<Order> orderSet;
+//    @ManyToMany(mappedBy = "productSet")
+//    private Set<Order> orderSet;
 
 
 
@@ -63,41 +63,45 @@ public class Product {
     public Product() {
     }
 
-    public Product(Image image, Category category, Admin admin, String name, double price, String description) {
+    public Product(Image image, Category category, Admin admin, String name, double price, String description, Date createdAt, Date updatedAt) {
         this.image = image;
         this.category = category;
         this.admin = admin;
         this.name = name;
         this.price = price;
         this.description = description;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
-    public Product(Image image, Category category, Admin admin, Set<Materia> materiaSet, Set<Order> orderSet, String name, double price, String description) {
-        this.image = image;
-        this.category = category;
-        this.admin = admin;
-        this.materiaSet = materiaSet;
-        this.orderSet = orderSet;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-    }
+    //    public Product(Image image, Category category, Admin admin, Set<Materia> materiaSet, Set<Order> orderSet, String name, double price, String description) {
+//        this.image = image;
+//        this.category = category;
+//        this.admin = admin;
+//        this.materiaSet = materiaSet;
+//        this.orderSet = orderSet;
+//        this.name = name;
+//        this.price = price;
+//        this.description = description;
+//    }
 
-    public Set<Materia> getMateriaSet() {
-        return materiaSet;
-    }
 
-    public void setMateriaSet(Set<Materia> materiaSet) {
-        this.materiaSet = materiaSet;
-    }
 
-    public Set<Order> getOrderSet() {
-        return orderSet;
-    }
+//    public Set<Materia> getMateriaSet() {
+//        return materiaSet;
+//    }
+//
+//    public void setMateriaSet(Set<Materia> materiaSet) {
+//        this.materiaSet = materiaSet;
+//    }
 
-    public void setOrderSet(Set<Order> orderSet) {
-        this.orderSet = orderSet;
-    }
+//    public Set<Order> getOrderSet() {
+//        return orderSet;
+//    }
+//
+//    public void setOrderSet(Set<Order> orderSet) {
+//        this.orderSet = orderSet;
+//    }
 
     public long getProductId() {
         return productId;

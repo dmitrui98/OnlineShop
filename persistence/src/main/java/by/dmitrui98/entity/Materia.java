@@ -8,8 +8,8 @@ import java.util.Set;
 /**
  * Created by Администратор on 09.04.2017.
  */
-@Entity
-@Table(name = "materia")
+//@Entity
+//@Table(name = "materia")
 public class Materia {
 
     @Id
