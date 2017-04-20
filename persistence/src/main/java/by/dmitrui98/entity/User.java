@@ -19,7 +19,12 @@ public class User {
     @Column(name = "user_id")
     private long userId;
 
-    @Column(name = "login", nullable = false, length = 100)
+    @Transient
+    private String confirmPassword;
+
+
+
+    @Column(name = "login", nullable = false, length = 100, unique = true)
     private String login;
 
     @Column(name = "email", nullable = false, length = 100)
@@ -149,5 +154,30 @@ public class User {
 
     public void setUpdate_at(Date updateAt) {
         this.updatedAt = updateAt;
+    }
+
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

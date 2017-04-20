@@ -6,7 +6,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title> Интернет-магазин одежды </title>
-        <%--<link href = "css/bootstrap.css" rel="stylesheet" type ="text/css" />--%>
+        <link href = "css/bootstrap.css" rel="stylesheet" type ="text/css" />
         <link href = "css/style.css" rel="stylesheet" type ="text/css" />
 
 		<script type = "text/javascript" src = "js/jquery-3.2.0.min.js"> </script>
@@ -14,7 +14,7 @@
 	<head>
 	
 	<body>
-        <div id = "header" style="height: 60px;" >
+        <div id = "header" style="height: 80px;" >
 			<div id = "currency">
 				currency
 			</div>
@@ -35,7 +35,7 @@
 		</div>
 
         <div id = "content">
-            Список продуктов:<br/>
+            Список товаров:<br/>
         </div>
 
 	<body>

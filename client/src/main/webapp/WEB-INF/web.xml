@@ -1,59 +1,90 @@
-<!--<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">-->
-
-<!--</web-app>-->
-
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="
-             http://java.sun.com/xml/ns/javaee
-             http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>secured</web-resource-name>
-            <url-pattern>/security/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>ADMIN</role-name>
-        </auth-constraint>
-    </security-constraint>
+    <!--<filter>-->
+        <!--<filter-name>springSecurityFilterChain</filter-name>-->
+        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+    <!--</filter>-->
 
-    <security-role>
-        <role-name>ADMIN</role-name>
-    </security-role>
-
-    <login-config>
-        <auth-method>BASIC</auth-method>
-    </login-config>
-
-    <!--<login-config>-->
-        <!--<auth-method>FORM</auth-method>-->
-        <!--<form-login-config>-->
-            <!--<form-login-page>/login.html</form-login-page>-->
-            <!--<form-error-page>/error.html</form-error-page>-->
-        <!--</form-login-config>-->
-    <!--</login-config>-->
-
-    <!--Позволяет работать с русскими символами-->
-    <filter>
-        <filter-name>encodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-        <init-param>
-            <param-name>forceEncoding</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>encodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
+    <!--<filter-mapping>-->
+        <!--<filter-name>springSecurityFilterChain</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
 </web-app>
+
+
+
+
+<!--&lt;!&ndash;<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">&ndash;&gt;-->
+
+<!--&lt;!&ndash;</web-app>&ndash;&gt;-->
+
+<!--<web-app xmlns="http://java.sun.com/xml/ns/javaee"-->
+         <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+         <!--xsi:schemaLocation="-->
+             <!--http://java.sun.com/xml/ns/javaee-->
+             <!--http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"-->
+         <!--version="3.0">-->
+
+    <!--&lt;!&ndash;<security-constraint>&ndash;&gt;-->
+        <!--&lt;!&ndash;<web-resource-collection>&ndash;&gt;-->
+            <!--&lt;!&ndash;<web-resource-name>secured</web-resource-name>&ndash;&gt;-->
+            <!--&lt;!&ndash;<url-pattern>/security/*</url-pattern>&ndash;&gt;-->
+            <!--&lt;!&ndash;<http-method>GET</http-method>&ndash;&gt;-->
+            <!--&lt;!&ndash;<http-method>POST</http-method>&ndash;&gt;-->
+        <!--&lt;!&ndash;</web-resource-collection>&ndash;&gt;-->
+        <!--&lt;!&ndash;<auth-constraint>&ndash;&gt;-->
+            <!--&lt;!&ndash;<role-name>ADMIN</role-name>&ndash;&gt;-->
+        <!--&lt;!&ndash;</auth-constraint>&ndash;&gt;-->
+    <!--&lt;!&ndash;</security-constraint>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<security-role>&ndash;&gt;-->
+        <!--&lt;!&ndash;<role-name>ADMIN</role-name>&ndash;&gt;-->
+    <!--&lt;!&ndash;</security-role>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<login-config>&ndash;&gt;-->
+        <!--&lt;!&ndash;<auth-method>BASIC</auth-method>&ndash;&gt;-->
+    <!--&lt;!&ndash;</login-config>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<login-config>&ndash;&gt;-->
+        <!--&lt;!&ndash;<auth-method>FORM</auth-method>&ndash;&gt;-->
+        <!--&lt;!&ndash;<form-login-config>&ndash;&gt;-->
+            <!--&lt;!&ndash;<form-login-page>/login.html</form-login-page>&ndash;&gt;-->
+            <!--&lt;!&ndash;<form-error-page>/error.html</form-error-page>&ndash;&gt;-->
+        <!--&lt;!&ndash;</form-login-config>&ndash;&gt;-->
+    <!--&lt;!&ndash;</login-config>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;Позволяет работать с русскими символами&ndash;&gt;-->
+    <!--&lt;!&ndash;<filter>&ndash;&gt;-->
+        <!--&lt;!&ndash;<filter-name>encodingFilter</filter-name>&ndash;&gt;-->
+        <!--&lt;!&ndash;<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>&ndash;&gt;-->
+        <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
+            <!--&lt;!&ndash;<param-name>encoding</param-name>&ndash;&gt;-->
+            <!--&lt;!&ndash;<param-value>UTF-8</param-value>&ndash;&gt;-->
+        <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
+        <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
+            <!--&lt;!&ndash;<param-name>forceEncoding</param-name>&ndash;&gt;-->
+            <!--&lt;!&ndash;<param-value>true</param-value>&ndash;&gt;-->
+        <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
+    <!--&lt;!&ndash;</filter>&ndash;&gt;-->
+    <!--&lt;!&ndash;<filter-mapping>&ndash;&gt;-->
+        <!--&lt;!&ndash;<filter-name>encodingFilter</filter-name>&ndash;&gt;-->
+        <!--&lt;!&ndash;<url-pattern>/*</url-pattern>&ndash;&gt;-->
+    <!--&lt;!&ndash;</filter-mapping>&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;<filter>&ndash;&gt;-->
+        <!--&lt;!&ndash;<filter-name>springSecurityFilterChain</filter-name>&ndash;&gt;-->
+        <!--&lt;!&ndash;<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>&ndash;&gt;-->
+    <!--&lt;!&ndash;</filter>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<filter-mapping>&ndash;&gt;-->
+        <!--&lt;!&ndash;<filter-name>springSecurityFilterChain</filter-name>&ndash;&gt;-->
+        <!--&lt;!&ndash;<url-pattern>/*</url-pattern>&ndash;&gt;-->
+    <!--&lt;!&ndash;</filter-mapping>&ndash;&gt;-->
+
+<!--</web-app>-->

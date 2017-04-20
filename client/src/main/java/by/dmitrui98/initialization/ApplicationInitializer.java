@@ -2,6 +2,7 @@ package by.dmitrui98.initialization;
 
 
 import by.dmitrui98.config.DatabaseConfig;
+import by.dmitrui98.config.SecurityConfig;
 import by.dmitrui98.config.WebConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -24,7 +25,9 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 
         ctx.register(WebConfig.class);
-        ctx.register(DatabaseConfig.class);
+        //ctx.register(DatabaseConfig.class);
+        //ctx.register(SecurityConfig.class);
+
         ctx.setServletContext(servletContext);
 
         servletContext.addListener(new ContextLoaderListener(ctx));

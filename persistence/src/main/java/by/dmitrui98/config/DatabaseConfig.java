@@ -56,26 +56,22 @@ public class DatabaseConfig {
 //        return em;
 //    }
 
-//    @Bean
-//    public LocalSessionFactoryBean sessionFactory() {
-//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource());
-//        sessionFactory.setPackagesToScan(
-//                new String[] { "by.dmitrui98.dao", "by.dmitrui98.service" });
-//        sessionFactory.setHibernateProperties(getHibernateProperties());
+    //    @Bean
+//    public PlatformTransactionManager platformTransactionManager() {
+//        JpaTransactionManager manager = new JpaTransactionManager();
+//        manager.setEntityManagerFactory(entityManagerFactory().getObject());
 //
-//        System.out.println("registration LocalSessionFactoryBean*********");
+//        System.out.println("configured PlatformTransactionManager");
 //
-//        return sessionFactory;
+//        return manager;
 //    }
 
-    //@Autowired
 	@Bean
 	public SessionFactory sessionFactory() {
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource());
         sessionBuilder.scanPackages(env.getRequiredProperty("db.entity.package"));
         sessionBuilder.addProperties(getHibernateProperties());
-        System.out.println("creating sessionFactory*********");
+        System.out.println("created sessionFactory");
         return sessionBuilder.buildSessionFactory();
     }
 
@@ -107,15 +103,7 @@ public class DatabaseConfig {
         return ds;
     }
 
-//    @Bean
-//    public PlatformTransactionManager platformTransactionManager() {
-//        JpaTransactionManager manager = new JpaTransactionManager();
-//        manager.setEntityManagerFactory(entityManagerFactory().getObject());
-//
-//        System.out.println("configured PlatformTransactionManager");
-//
-//        return manager;
-//    }
+
 
     @Bean
 	public HibernateTransactionManager transactionManager() {
@@ -126,7 +114,7 @@ public class DatabaseConfig {
 
     @Bean
     public SessionUtil sessionUtil() {
-        System.out.println("registration sessionUtil********");
+        System.out.println("registered sessionUtil");
         return new SessionUtil();
     }
 

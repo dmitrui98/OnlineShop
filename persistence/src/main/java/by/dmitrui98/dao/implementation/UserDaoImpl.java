@@ -4,6 +4,7 @@ import by.dmitrui98.dao.UserDao;
 import by.dmitrui98.entity.User;
 import by.dmitrui98.util.SessionUtil;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -56,5 +57,22 @@ public class UserDaoImpl implements UserDao {
         User result = (User) session.get(User.class, id);
         sessionUtil.closeTransactionSession();
         return result;
+    }
+
+    @Override
+    public User getByName(String username) {
+        sessionUtil.openTransactionSession();
+        Session session = sessionUtil.getSession();
+        Query query = session.createQuery("FROM User u where u.login=:name", User.class);
+        query.setParameter("name", username);
+        List<User> users = ((List<User>) query.getResultList());
+        sessionUtil.closeTransactionSession();
+
+        User user = null;
+        if (users.size() > 0) {
+            user = users.get(0);
+        }
+
+        return user;
     }
 }

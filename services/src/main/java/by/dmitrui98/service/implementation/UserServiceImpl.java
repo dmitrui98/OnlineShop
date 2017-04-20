@@ -5,6 +5,7 @@ import by.dmitrui98.dao.BaseDao;
 import by.dmitrui98.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +16,16 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    //@Qualifier("by.dmitrui98.dao.implementation.UserDaoImpl")
     BaseDao<User, Long> userDao;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void save(User user) {
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
         userDao.addOrUpdate(user);
     }
 
@@ -36,5 +42,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(Long aLong) {
         return userDao.getById(aLong);
+    }
+
+    @Override
+    public User getByName(String username) {
+        return userDao.getByName(username);
     }
 }

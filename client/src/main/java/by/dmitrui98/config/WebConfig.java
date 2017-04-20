@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -22,7 +23,9 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("by.dmitrui98.controller")
+@ComponentScan({"by.dmitrui98.config.", "by.dmitrui98.controller."})
+//@ComponentScan("by.dmitrui98")
+@Import({SecurityConfig.class, DatabaseConfig.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean

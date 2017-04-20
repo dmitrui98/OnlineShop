@@ -12,4 +12,5 @@ public interface BaseDao<T, T_ID> {
     public  void delete(T_ID id);
     public List<T> findAll();
     public T getById(T_ID id);
+    public T getByName(String name);
 }

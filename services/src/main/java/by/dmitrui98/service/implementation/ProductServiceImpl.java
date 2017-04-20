@@ -27,6 +27,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getByName(String name) {
+        return productDao.getByName(name);
+    }
+
+    @Override
     public void save(Product entity) {
         productDao.addOrUpdate(entity);
     }

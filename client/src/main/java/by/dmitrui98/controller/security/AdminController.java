@@ -10,11 +10,31 @@ import org.springframework.web.servlet.ModelAndView;
  */
 
 @Controller
-@RequestMapping(value = "/security")
 public class AdminController {
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @RequestMapping(value = "/security", method = RequestMethod.GET)
     public ModelAndView test() {
         return new ModelAndView("security/index.jsp");
     }
+
+//    @RequestMapping(value = "/protected**", method = RequestMethod.GET)
+//    public ModelAndView protectedPage() {
+//
+//        ModelAndView model = new ModelAndView();
+//        model.addObject("title", "Spring Security 3.2.4 Hello World Tutorial");
+//        model.addObject("message", "This is protected page - Only for Admin Users!");
+//        model.setViewName("protected");
+//        return model;
+//
+//    }
+//
+//    @RequestMapping(value = {"/", "/helloworld**"}, method = {RequestMethod.GET})
+//    public ModelAndView welcomePage() {
+//        ModelAndView model = new ModelAndView();
+//        model.addObject("title", "Spring Security Tutorial");
+//        model.addObject("message", "Welcome Page !");
+//        model.setViewName("helloworld");
+//        return model;
+//    }
+
 }

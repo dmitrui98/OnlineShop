@@ -17,9 +17,9 @@ jQuery('document').ready(function() {
         type: 'GET',
         success: function (data) {
             data.forEach(function(element) {
-                var p = $('<p></p>').text('Продукт: ' + element.name + ' ' +
+                var p = $('<p></p>').text('Товар: ' + element.name + ' ' +
                     ' цена: ' + element.price + ' ' +
-                    ' description: ' + element.description);
+                    ' описание: ' + element.description);
 
                 $("#content").append(p);
 
