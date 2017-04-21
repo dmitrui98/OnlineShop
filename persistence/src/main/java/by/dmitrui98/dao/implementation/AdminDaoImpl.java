@@ -62,7 +62,7 @@ public class AdminDaoImpl implements AdminDao {
     public Admin getByName(String adminName) {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        Query query = session.createQuery("FROM User u where u.login=:name", Admin.class);
+        Query query = session.createQuery("FROM Admin a where a.login=:name", Admin.class);
         query.setParameter("name", adminName);
         List<Admin> admins = ((List<Admin>) query.getResultList());
         sessionUtil.closeTransactionSession();

@@ -1,4 +1,4 @@
-package by.dmitrui98.service.implementation;
+package by.dmitrui98.service.implementation.security;
 
 import by.dmitrui98.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;

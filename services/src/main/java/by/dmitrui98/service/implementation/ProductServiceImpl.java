@@ -1,6 +1,7 @@
 package by.dmitrui98.service.implementation;
 
 import by.dmitrui98.dao.BaseDao;
+import by.dmitrui98.dao.ProductDao;
 import by.dmitrui98.entity.Product;
 import by.dmitrui98.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    BaseDao<Product, Long> productDao;
+    ProductDao productDao;
     @Override
     public List<Product> getAll() {
         return productDao.findAll();
@@ -26,10 +27,6 @@ public class ProductServiceImpl implements ProductService {
         return productDao.getById(id);
     }
 
-    @Override
-    public Product getByName(String name) {
-        return productDao.getByName(name);
-    }
 
     @Override
     public void save(Product entity) {

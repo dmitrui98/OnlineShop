@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan({"by.dmitrui98.config.", "by.dmitrui98.controller."})
+@ComponentScan({"by.dmitrui98.config.", "by.dmitrui98.controller/**"})
 //@ComponentScan("by.dmitrui98")
 @Import({SecurityConfig.class, DatabaseConfig.class})
 public class WebConfig extends WebMvcConfigurerAdapter {

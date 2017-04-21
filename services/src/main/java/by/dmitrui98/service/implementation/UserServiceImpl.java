@@ -1,5 +1,6 @@
 package by.dmitrui98.service.implementation;
 
+import by.dmitrui98.dao.UserDao;
 import by.dmitrui98.service.UserService;
 import by.dmitrui98.dao.BaseDao;
 import by.dmitrui98.entity.User;
@@ -16,7 +17,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    BaseDao<User, Long> userDao;
+    UserDao userDao;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;

@@ -38,5 +38,7 @@
             Список товаров:<br/>
         </div>
 
+		<a href = "/logout">Logout</a>
+
 	<body>
 <html>

@@ -1,6 +1,6 @@
 package by.dmitrui98.service.implementation;
 
-import by.dmitrui98.dao.BaseDao;
+import by.dmitrui98.dao.AdminDao;
 import by.dmitrui98.entity.Admin;
 import by.dmitrui98.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    BaseDao<Admin, Long> adminDao;
+    AdminDao adminDao;
 
     @Override
     public List<Admin> getAll() {

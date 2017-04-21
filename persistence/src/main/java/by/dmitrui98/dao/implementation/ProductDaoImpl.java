@@ -57,13 +57,4 @@ public class ProductDaoImpl implements ProductDao {
         sessionUtil.closeTransactionSession();
         return result;
     }
-
-    @Override
-    public Product getByName(String name) {
-        sessionUtil.openTransactionSession();
-        Session session = sessionUtil.getSession();
-        Product product = (Product) session.get(Product.class, name);
-        sessionUtil.closeTransactionSession();
-        return product;
-    }
 }

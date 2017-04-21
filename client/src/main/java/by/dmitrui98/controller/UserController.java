@@ -5,6 +5,9 @@ import by.dmitrui98.service.SecurityService;
 import by.dmitrui98.service.UserService;
 import by.dmitrui98.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,11 +45,6 @@ public class UserController {
         return "registration";
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(Model model) {
-
-        return "logout";
-    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
@@ -107,17 +105,13 @@ public class UserController {
         //response.getWriter().println("<html><body><p>" + login + "</p></body></html>");
     }
 
-    @RequestMapping(value = "/comeInAdmin", method = RequestMethod.GET)
-    public String comeInAdmin(Model model, String error, String logout) {
-
-        if (error != null) {
-            model.addAttribute("error", "Admin login or password is incorrect.");
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-
-        if (logout != null) {
-            model.addAttribute("message", "Logged out successfully.");
-        }
-
-        return "comeInAdmin";
+        return "redirect:/comeIn?logout";
     }
+
 }

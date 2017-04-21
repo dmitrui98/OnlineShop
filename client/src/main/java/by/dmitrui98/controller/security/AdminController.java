@@ -14,7 +14,7 @@ public class AdminController {
 
     @RequestMapping(value = "/security", method = RequestMethod.GET)
     public ModelAndView test() {
-        return new ModelAndView("security/index.jsp");
+        return new ModelAndView("security/index");
     }
 
 //    @RequestMapping(value = "/protected**", method = RequestMethod.GET)
