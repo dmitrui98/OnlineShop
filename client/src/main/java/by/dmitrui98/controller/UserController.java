@@ -48,6 +48,10 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+
+//        response.setContentType ("text/html; charset=UTF-8");
+//        request.setCharacterEncoding("UTF-8");
+
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -59,6 +63,12 @@ public class UserController {
         securityService.autoLogin(userForm.getLogin(), userForm.getConfirmPassword());
 
         return "redirect:/welcome";
+    }
+
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
+    public String welcome(Model model) {
+        System.out.println("welcome");
+        return "welcome";
     }
 
     @RequestMapping(value = "/comeIn", method = RequestMethod.GET)

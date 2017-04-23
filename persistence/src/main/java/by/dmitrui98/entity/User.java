@@ -22,8 +22,6 @@ public class User {
     @Transient
     private String confirmPassword;
 
-
-
     @Column(name = "login", nullable = false, length = 100, unique = true)
     private String login;
 

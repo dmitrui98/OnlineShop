@@ -27,6 +27,8 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
+       // user.setConfirmPassword(null);
+
         userDao.addOrUpdate(user);
     }
 
