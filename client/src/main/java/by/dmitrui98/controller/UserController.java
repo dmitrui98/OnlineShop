@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -51,6 +52,13 @@ public class UserController {
 
 //        response.setContentType ("text/html; charset=UTF-8");
 //        request.setCharacterEncoding("UTF-8");
+        try {
+            userForm.setFname(new String (userForm.getFname().getBytes("ISO-8859-1"), "UTF-8"));
+            userForm.setSurname(new String (userForm.getSurname().getBytes("ISO-8859-1"), "UTF-8"));
+            userForm.setLname(new String (userForm.getLname().getBytes("ISO-8859-1"), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         userValidator.validate(userForm, bindingResult);
 
@@ -73,7 +81,6 @@ public class UserController {
 
     @RequestMapping(value = "/comeIn", method = RequestMethod.GET)
     public String comeIn(Model model, String error, String logout) {
-
         if (error != null) {
             model.addAttribute("error", "Username or password is incorrect.");
         }

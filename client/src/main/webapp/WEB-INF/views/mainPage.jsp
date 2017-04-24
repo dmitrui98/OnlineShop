@@ -1,6 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>--%>
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@ page contentType="text/html;charset=utf-8" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%--<fmt:requestEncoding value="UTF-8" />--%>
 <html>
 	<head>
@@ -33,6 +34,12 @@
                 language
             </div>
 		</div>
+
+
+
+		<c:if test="${not empty pageContext.request.userPrincipal.name}">
+			<h1>Привет, ${pageContext.request.userPrincipal.name} </h1>
+		</c:if>
 
         <div id = "content">
             Список товаров:<br/>
