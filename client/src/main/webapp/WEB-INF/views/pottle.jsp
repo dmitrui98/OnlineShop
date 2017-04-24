@@ -7,7 +7,10 @@
 	<head>
 	
 	<body>
-		Корзина
+
+	<jsp:include page="pottleProducts.jsp" flush="true" />
+
+
 	</body>
 	
 	

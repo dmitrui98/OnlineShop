@@ -1,29 +1,34 @@
 package by.dmitrui98.controller;
 
+import by.dmitrui98.entity.Product;
+import by.dmitrui98.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
  * Created by Администратор on 08.04.2017.
  */
 @Controller
-public class MainFormController {
+public class MainController {
+
+    @Autowired
+    private ProductService productService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView showMainPage() {
-        ModelAndView modelAndView = new ModelAndView("mainPage");
-        return modelAndView;
-    }
+    public String showMainPage(Model model) {
 
-//    @RequestMapping(value = "/comeIn", method = RequestMethod.GET)
-//    //@ResponseBody
-//    public ModelAndView showComeInForm() {
-//        ModelAndView modelAndView = new ModelAndView("comeIn");
-//        return modelAndView;
-//    }
+        List<Product> products = productService.getAll();
+        model.addAttribute("products", products);
+
+        return "mainPage";
+    }
 
     @RequestMapping(value = "/pottle", method = RequestMethod.GET)
     //@ResponseBody
@@ -31,15 +36,5 @@ public class MainFormController {
         ModelAndView modelAndView = new ModelAndView("pottle");
         return modelAndView;
     }
-
-//    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-//    //@ResponseBody
-//    public ModelAndView showRegistrationForm() {
-//        ModelAndView modelAndView = new ModelAndView("registration");
-//        return modelAndView;
-//    }
-
-
-
 
 }

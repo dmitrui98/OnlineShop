@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Администратор
@@ -9,6 +10,8 @@
 <html>
 <head>
     <title>Test</title>
+    <script type = "text/javascript" src = "js/jquery-3.2.0.min.js"> </script>
+    <script type = "text/javascript" src="js/script.js"> </script>
 </head>
 <body>
     HELLO WORLD!<br/>
@@ -24,8 +27,17 @@
     %>
     myCookie: <%= cookieResult.getValue() %>
     <br/>
+
+    <c:if test="${not empty pageContext.request.userPrincipal.name}">
+    <h1>Привет, ${pageContext.request.userPrincipal.name} </h1>
+    </c:if>
+
     <h4>Users:</h4>
     ${users}
+
+    <div id = "content">
+        Список товаров AJAX:<br/>
+    </div>
 
 </body>
 </html>

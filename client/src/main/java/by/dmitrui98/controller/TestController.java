@@ -29,7 +29,6 @@ public class TestController {
 
         HttpSession session = request.getSession();
         session.setAttribute("users", userService.getAll());
-
         return "test";
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Администратор on 16.04.2017.
  */
 @RestController
-public class ProductController {
+public class ProductRestController {
     @Autowired
     private BaseService<Product, Long> productService;
 

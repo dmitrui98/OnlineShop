@@ -1,6 +1,8 @@
 package by.dmitrui98.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -59,6 +61,11 @@ public class Product {
 
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @Transient
+    private int countPottleProducts;
+
+
 
     public Product() {
     }
@@ -173,5 +180,20 @@ public class Product {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public int getCountPottleProducts() {
+        return countPottleProducts;
+    }
+
+    public void setCountPottleProducts(int countPottleProducts) {
+        this.countPottleProducts = countPottleProducts;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Product product = (Product) obj;
+
+        return product.getProductId() == productId;
     }
 }

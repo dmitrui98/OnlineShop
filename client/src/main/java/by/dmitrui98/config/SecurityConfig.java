@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/security").hasRole(UserRoleEnum.ADMIN.name())
                 .antMatchers("/pottle").hasAnyRole(UserRoleEnum.USER.name(), UserRoleEnum.ADMIN.name())
                 .antMatchers("/welcome").authenticated()
+                .antMatchers("/productController/put").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/comeIn")

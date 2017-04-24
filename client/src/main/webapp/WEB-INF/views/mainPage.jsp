@@ -25,9 +25,23 @@
 			</div>
 			
 			<div id = "buttons">
-				<button id = "comeIn"> войти </button> 
-				<button id = "registration"> регистрация </button>
+
+				<c:choose>
+					<c:when test="<%=request.getUserPrincipal() == null%>">
+						<button id = "comeIn"> войти </button>
+						<button id = "registration"> регистрация </button>
+					</c:when>
+					<c:otherwise>
+						<span style="font-size : 18px;">
+							<%= "Привет, " + request.getUserPrincipal().getName().toString()%> <br/>
+							<a href = "/logout">Logout</a>
+						</span>
+					</c:otherwise>
+				</c:choose>
+
 				<button id = "pottle"> корзина </button>
+
+
 			</div>
 
             <div id = "language">
@@ -35,17 +49,7 @@
             </div>
 		</div>
 
-
-
-		<c:if test="${not empty pageContext.request.userPrincipal.name}">
-			<h1>Привет, ${pageContext.request.userPrincipal.name} </h1>
-		</c:if>
-
-        <div id = "content">
-            Список товаров:<br/>
-        </div>
-
-		<a href = "/logout">Logout</a>
+		<jsp:include page="products.jsp" flush="true" />
 
 	<body>
 <html>
