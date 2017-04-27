@@ -7,5 +7,6 @@ import by.dmitrui98.entity.User;
  */
 public interface UserService extends BaseService<User, Long> {
     User getByName(String name);
+    User getByEmail(String name);
 
 }

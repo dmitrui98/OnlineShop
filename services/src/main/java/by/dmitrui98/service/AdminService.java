@@ -8,4 +8,6 @@ import by.dmitrui98.entity.Admin;
 public interface AdminService extends BaseService<Admin, Long> {
     Admin getByName(String name);
 
+    Admin getByEmail(String email);
+
 }

@@ -8,8 +8,8 @@ import java.util.Set;
 /**
  * Created by Администратор on 09.04.2017.
  */
-//@Entity
-//@Table(name = "materia")
+@Entity
+@Table(name = "materia")
 public class Materia {
 
     @Id
@@ -17,10 +17,7 @@ public class Materia {
     @Column(name = "materia_id")
     private int materiaId;
 
-    @ManyToMany(mappedBy = "materiaSet")
-    private Set<Product> productSet;
-
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     public Materia() {
@@ -28,19 +25,6 @@ public class Materia {
 
     public Materia(String name) {
         this.name = name;
-    }
-
-    public Materia(Set<Product> productSet, String name) {
-        this.productSet = productSet;
-        this.name = name;
-    }
-
-    public Set<Product> getProductSet() {
-        return productSet;
-    }
-
-    public void setProductSet(Set<Product> productSet) {
-        this.productSet = productSet;
     }
 
     public int getMateriaId() {

@@ -7,4 +7,5 @@ import by.dmitrui98.entity.Admin;
  */
 public interface AdminDao extends BaseDao<Admin, Long> {
     Admin getByName(String name);
+    Admin getByEmail(String email);
 }

@@ -33,6 +33,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Admin getByEmail(String email) {
+        return adminDao.getByEmail(email);
+    }
+
+    @Override
     public void save(Admin entity) {
         adminDao.addOrUpdate(entity);
     }

@@ -8,4 +8,5 @@ import by.dmitrui98.entity.User;
  */
 public interface UserDao extends BaseDao<User,Long> {
     User getByName(String name);
+    User getByEmail(String email);
 }

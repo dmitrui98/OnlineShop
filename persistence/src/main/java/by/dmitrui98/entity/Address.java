@@ -24,17 +24,19 @@ public class Address {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "country")
+    @Column(name = "country", nullable = false)
     private String country;
-    @Column(name = "city")
+
+    @Column(name = "city", nullable = false)
     private String city;
-    @Column(name = "address")
+
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
     public Address() {

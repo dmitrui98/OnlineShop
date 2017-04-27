@@ -10,8 +10,8 @@ import java.util.Set;
 /**
  * Created by Администратор on 09.04.2017.
  */
-//@Entity
-//@Table(name = "order")
+@Entity
+@Table(name = "order_")
 public class Order {
 
     @Id
@@ -29,23 +29,24 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> productSet = new HashSet<>();
 
-
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private double amount;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
     public Order() {
     }
 
-    public Order(Address addressId, Set<Product> productSet, double amount) {
+    public Order(Address addressId, Set<Product> productSet, double amount, Date createdAt, Date updatedAt) {
         this.addressId = addressId;
         this.productSet = productSet;
         this.amount = amount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public long getOrderId() {

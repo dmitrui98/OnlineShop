@@ -20,8 +20,10 @@ public class Admin {
 
     @Column(name = "login", unique = true)
     private String login;
-    @Column(name = "email")
+
+    @Column(name = "email", unique = true)
     private String email;
+
     @Column(name = "password")
     private String password;
 

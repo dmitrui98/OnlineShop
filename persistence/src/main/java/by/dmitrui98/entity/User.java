@@ -25,7 +25,7 @@ public class User {
     @Column(name = "login", nullable = false, length = 100, unique = true)
     private String login;
 
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false, length = 100)
@@ -46,17 +46,18 @@ public class User {
     @Column(name = "discont")
     private double discont;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
 
     public User() {
     }
 
-    public User(String login, String email, String password, String fname, String lname, String surname, String phone) {
+    public User(String confirmPassword, String login, String email, String password, String fname, String lname, String surname, String phone, double discont, Date createdAt, Date updatedAt) {
+        this.confirmPassword = confirmPassword;
         this.login = login;
         this.email = email;
         this.password = password;
@@ -64,6 +65,9 @@ public class User {
         this.lname = lname;
         this.surname = surname;
         this.phone = phone;
+        this.discont = discont;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public long getUserId() {
@@ -72,6 +76,14 @@ public class User {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getLogin() {
@@ -136,31 +148,6 @@ public class User {
 
     public void setDiscont(double discont) {
         this.discont = discont;
-    }
-
-    public Date getCreate_at() {
-        return createdAt;
-    }
-
-    public void setCreate_at(Date createAt) {
-        this.createdAt = createAt;
-    }
-
-    public Date getUpdate_at() {
-        return updatedAt;
-    }
-
-    public void setUpdate_at(Date updateAt) {
-        this.updatedAt = updateAt;
-    }
-
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public Date getCreatedAt() {

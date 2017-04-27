@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -65,6 +66,9 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
+
+        userForm.setCreatedAt(new Date());
+        userForm.setUpdatedAt(new Date());
 
         userService.save(userForm);
 

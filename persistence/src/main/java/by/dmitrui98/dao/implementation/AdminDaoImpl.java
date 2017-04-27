@@ -74,4 +74,21 @@ public class AdminDaoImpl implements AdminDao {
 
         return admin;
     }
+
+    @Override
+    public Admin getByEmail(String email) {
+        sessionUtil.openTransactionSession();
+        Session session = sessionUtil.getSession();
+        Query query = session.createQuery("FROM Admin a where a.email=:email", Admin.class);
+        query.setParameter("email", email);
+        List<Admin> admins = ((List<Admin>) query.getResultList());
+        sessionUtil.closeTransactionSession();
+
+        Admin admin = null;
+        if (admins.size() > 0) {
+            admin = admins.get(0);
+        }
+
+        return admin;
+    }
 }

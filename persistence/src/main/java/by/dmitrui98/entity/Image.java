@@ -16,7 +16,7 @@ public class Image {
     @Column(name = "image_id")
     private long imageId;
 
-    @Column(name = "image_directory")
+    @Column(name = "image_directory", nullable = false)
     private String imageDirectory;
 
     public Image() {

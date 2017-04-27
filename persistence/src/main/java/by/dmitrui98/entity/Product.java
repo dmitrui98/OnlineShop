@@ -1,12 +1,7 @@
 package by.dmitrui98.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,59 +16,56 @@ public class Product {
     @Column(name = "product_id")
     private long productId;
 
+    @Transient
+    private int countPottleProducts;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private Image image;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
+    @JoinColumn(name = "materia_id")
+    private Materia materia;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by", nullable = false)
     private Admin admin;
 
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinTable(name = "product_materia",
-//        joinColumns = @JoinColumn(name = "product_id"),
-//        inverseJoinColumns = @JoinColumn(name = "materia_id"))
-    //private Set<Materia> materiaSet = new HashSet<>();
 
-
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinTable(name = "order_product",
-//            joinColumns = @JoinColumn(name = "product_id"),
-//            inverseJoinColumns = @JoinColumn(name = "order_id"))
-//    @ManyToMany(mappedBy = "productSet")
-//    private Set<Order> orderSet;
+    @ManyToMany(mappedBy = "productSet")
+    private Set<Order> orderSet;
 
 
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
-    @Column(name = "price")
+
+    @Column(name = "price", nullable = false)
     private double price;
+
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
-
-    @Transient
-    private int countPottleProducts;
-
-
 
     public Product() {
     }
 
-    public Product(Image image, Category category, Admin admin, String name, double price, String description, Date createdAt, Date updatedAt) {
+    public Product(int countPottleProducts, Image image, Category category, Materia materia, Admin admin, Set<Order> orderSet, String name, double price, String description, Date createdAt, Date updatedAt) {
+        this.countPottleProducts = countPottleProducts;
         this.image = image;
         this.category = category;
+        this.materia = materia;
         this.admin = admin;
+        this.orderSet = orderSet;
         this.name = name;
         this.price = price;
         this.description = description;
@@ -81,34 +73,21 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    //    public Product(Image image, Category category, Admin admin, Set<Materia> materiaSet, Set<Order> orderSet, String name, double price, String description) {
-//        this.image = image;
-//        this.category = category;
-//        this.admin = admin;
-//        this.materiaSet = materiaSet;
-//        this.orderSet = orderSet;
-//        this.name = name;
-//        this.price = price;
-//        this.description = description;
-//    }
+    public Materia getMateria() {
+        return materia;
+    }
 
+    public void setMateria(Materia materia) {
+        this.materia = materia;
+    }
 
+    public Set<Order> getOrderSet() {
+        return orderSet;
+    }
 
-//    public Set<Materia> getMateriaSet() {
-//        return materiaSet;
-//    }
-//
-//    public void setMateriaSet(Set<Materia> materiaSet) {
-//        this.materiaSet = materiaSet;
-//    }
-
-//    public Set<Order> getOrderSet() {
-//        return orderSet;
-//    }
-//
-//    public void setOrderSet(Set<Order> orderSet) {
-//        this.orderSet = orderSet;
-//    }
+    public void setOrderSet(Set<Order> orderSet) {
+        this.orderSet = orderSet;
+    }
 
     public long getProductId() {
         return productId;
