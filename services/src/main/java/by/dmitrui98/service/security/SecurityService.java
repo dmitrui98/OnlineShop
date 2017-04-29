@@ -1,4 +1,4 @@
-package by.dmitrui98.service;
+package by.dmitrui98.service.security;
 
 /**
  * Created by Администратор on 18.04.2017.

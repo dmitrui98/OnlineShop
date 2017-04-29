@@ -1,10 +1,10 @@
-package by.dmitrui98.service.implementation.security;
+package by.dmitrui98.service.security;
 
 import by.dmitrui98.entity.Admin;
 import by.dmitrui98.entity.User;
 import by.dmitrui98.entity.enums.UserRoleEnum;
-import by.dmitrui98.service.AdminService;
-import by.dmitrui98.service.UserService;
+import by.dmitrui98.service.dao.AdminService;
+import by.dmitrui98.service.dao.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

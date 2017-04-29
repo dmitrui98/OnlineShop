@@ -13,8 +13,11 @@
         <td></td>
     </tr>
     <%
-        for (int index=0; index < products.size();index++) {
-            Product product = products.get(index);
+        Iterator<Product> iterator = products.iterator();
+        long index = -1;
+        while (iterator.hasNext()) {
+            Product product = iterator.next();
+            index++;
     %>
     <tr>
         <td><b><%= product.getName() %></b></td>

@@ -1,4 +1,4 @@
-package by.dmitrui98.service.implementation.security;
+package by.dmitrui98.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Администратор on 21.04.2017.
  */
-@Component
+//@Component
 public class AuthenticationProviderImpl implements AuthenticationProvider {
 
     @Autowired

@@ -1,9 +1,8 @@
-package by.dmitrui98.service.implementation;
+package by.dmitrui98.service.dao;
 
-import by.dmitrui98.dao.BaseDao;
 import by.dmitrui98.dao.ProductDao;
 import by.dmitrui98.entity.Product;
-import by.dmitrui98.service.ProductService;
+import by.dmitrui98.service.dao.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

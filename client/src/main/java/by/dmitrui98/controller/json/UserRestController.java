@@ -2,9 +2,8 @@ package by.dmitrui98.controller.json;
 
 
 import by.dmitrui98.entity.User;
-import by.dmitrui98.service.BaseService;
+import by.dmitrui98.service.dao.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,8 +1,8 @@
-package by.dmitrui98.service.implementation;
+package by.dmitrui98.service.dao;
 
 import by.dmitrui98.dao.AdminDao;
 import by.dmitrui98.entity.Admin;
-import by.dmitrui98.service.AdminService;
+import by.dmitrui98.service.dao.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

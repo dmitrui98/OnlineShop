@@ -1,6 +1,6 @@
-package by.dmitrui98.service.implementation.security;
+package by.dmitrui98.service.security;
 
-import by.dmitrui98.service.SecurityService;
+import by.dmitrui98.service.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

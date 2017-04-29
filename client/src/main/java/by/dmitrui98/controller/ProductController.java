@@ -1,15 +1,18 @@
 package by.dmitrui98.controller;
 
 import by.dmitrui98.entity.Product;
-import by.dmitrui98.service.ProductService;
+import by.dmitrui98.service.PottleService;
+import by.dmitrui98.service.dao.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -19,10 +22,11 @@ import java.util.List;
 @RequestMapping("/productController")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
 
-    @RequestMapping("/put")
+    @Autowired
+    private PottleService pottleService;
+
+    @RequestMapping(value = "/put", method = RequestMethod.POST)
     public String putInPottle(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
@@ -30,31 +34,25 @@ public class ProductController {
             session.setAttribute("pottleProducts", new ArrayList<Product>());
         }
 
-        long id = Long.parseLong(request.getParameter("index")) + 1;
-
-        Product product = (Product) productService.getById(id);
+        long productIndex = Long.parseLong(request.getParameter("index"));
         List<Product> pottleProducts = (List<Product>) session.getAttribute("pottleProducts");
 
-        if (pottleProducts.contains(product)) {
-            int i = pottleProducts.indexOf(product);
-            Product p = pottleProducts.get(i);
-            p.setCountPottleProducts(p.getCountPottleProducts() + 1);
-        } else {
-            pottleProducts.add(product);
-            product.setCountPottleProducts(product.getCountPottleProducts() + 1);
-        }
+        pottleService.putInPottle(pottleProducts, productIndex);
 
         return "redirect:/";
 
     }
 
+
+
     @RequestMapping("/delete")
     public String deleteFromPottle(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        List<Product> pottleProducts = (List<Product>) session.getAttribute("pottleProducts");
 
+        List<Product> pottleProducts = (List<Product>) session.getAttribute("pottleProducts");
         long index = Long.parseLong(request.getParameter("index"));
-        pottleProducts.remove((int) index);
+
+        pottleService.removeFromPottle(pottleProducts, index);
 
         return "redirect:/pottle";
     }

@@ -1,4 +1,4 @@
-package by.dmitrui98.service;
+package by.dmitrui98.service.dao;
 
 import java.util.List;
 

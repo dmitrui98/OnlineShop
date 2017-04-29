@@ -1,11 +1,9 @@
-package by.dmitrui98.service.implementation;
+package by.dmitrui98.service.dao;
 
 import by.dmitrui98.dao.UserDao;
-import by.dmitrui98.service.UserService;
-import by.dmitrui98.dao.BaseDao;
+import by.dmitrui98.service.dao.UserService;
 import by.dmitrui98.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
