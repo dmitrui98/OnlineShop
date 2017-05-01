@@ -17,9 +17,9 @@ public class PottleService {
     @Autowired
     private ProductService productService;
 
-    public void putInPottle(List<Product> pottleProducts, long productIndex) {
+    public void putInPottle(List<Product> pottleProducts, long productId) {
 
-        Product puttingProduct = getProduct(productService.getAll().iterator(), productIndex);
+        Product puttingProduct = productService.getById(productId);
 
         Product pottleProduct = getProduct(pottleProducts.iterator(), puttingProduct);
         if (pottleProduct != null)
@@ -30,29 +30,32 @@ public class PottleService {
         }
     }
 
-    public void removeFromPottle(List<Product> pottleProducts, long removedProductIndex) {
+    public void removeFromPottleAll(List<Product> pottleProducts, long removedProductId) {
         Iterator<Product> pottleProductsIterator = pottleProducts.iterator();
 
-        long i = -1;
         while (pottleProductsIterator.hasNext()) {
             Product product = pottleProductsIterator.next();
-            i++;
-            if (i == removedProductIndex) {
+            if (product.getProductId() == removedProductId) {
                 pottleProductsIterator.remove();
                 break;
             }
         }
     }
 
+    public void removeFromPottle(List<Product> pottleProducts, long removedProductId) {
+        Iterator<Product> pottleProductsIterator = pottleProducts.iterator();
 
-    private Product getProduct(Iterator<Product> iterator, long index) {
-        Product product = null;
-        long i = 0;
-        while (iterator.hasNext() && i <= index) {
-            product = iterator.next();
-            i++;
+        while (pottleProductsIterator.hasNext()) {
+            Product product = pottleProductsIterator.next();
+            if (product.getProductId() == removedProductId) {
+
+                product.setCountPottleProducts(product.getCountPottleProducts() - 1);
+                if (product.getCountPottleProducts() == 0)
+                    pottleProductsIterator.remove();
+
+                break;
+            }
         }
-        return product;
     }
 
     private Product getProduct(Iterator<Product> iterator, Product p) {

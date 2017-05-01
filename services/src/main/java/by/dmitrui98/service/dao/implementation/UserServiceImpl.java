@@ -1,4 +1,4 @@
-package by.dmitrui98.service.dao;
+package by.dmitrui98.service.dao.implementation;
 
 import by.dmitrui98.dao.UserDao;
 import by.dmitrui98.service.dao.UserService;

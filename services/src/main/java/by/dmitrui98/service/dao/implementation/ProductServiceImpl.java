@@ -1,4 +1,4 @@
-package by.dmitrui98.service.dao;
+package by.dmitrui98.service.dao.implementation;
 
 import by.dmitrui98.dao.ProductDao;
 import by.dmitrui98.entity.Product;
@@ -16,6 +16,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductDao productDao;
+
     @Override
     public List<Product> getAll() {
         return productDao.findAll();

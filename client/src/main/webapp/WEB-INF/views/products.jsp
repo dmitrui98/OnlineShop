@@ -9,6 +9,8 @@
         <td><b>Название</b></td>
         <td><b>Цена</b></td>
         <td><b>Описание</b></td>
+        <td><b>Категория</b></td>
+        <td><b>Материал</b></td>
         <td></td>
     </tr>
     <%
@@ -22,16 +24,52 @@
         <td><b><%= product.getName() %></b></td>
         <td><b><%= product.getPrice() %></b></td>
         <td><b><%= product.getDescription() %></b></td>
+        <td><b><%= product.getCategory() %></b></td>
+        <td><b><%= product.getMateria() %></b></td>
         <td>
-            <form name="addForm"
-                  action="/productController/put"
-                  method="POST">
-                <input type="submit" value="Добавить в корзину">
-                <input type="hidden" name= "index" value='<%= index %>'>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </form>
+            <%--<form name="addForm"--%>
+                  <%--action="/pottleController/put"--%>
+                  <%--method="POST">--%>
+                <%--<input type="submit" value="Добавить в корзину">--%>
+                <%--<input type="hidden" name= "index" value='<%= index %>'>--%>
+                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+            <%--</form>--%>
+
+            <button class="addInPottleButton"
+                    data-id="<%= product.getProductId() %>"
+                    data-csrf-name="${_csrf.parameterName}"
+                    data-csrf-value="${_csrf.token}">
+                Добавить в корзину
+            </button>
         </td>
     </tr>
     <% } %>
 </table>
 <% } %>
+
+<script>
+    jQuery(".addInPottleButton").on("click", function() {
+        var id = $(this).data("id");
+        var csrfValue = $(this).data("csrf-value");
+        var csrfName = $(this).data("csrf-name");
+
+        var data = {'id':id};
+        data[csrfName] = csrfValue;
+
+        jQuery.ajax({
+           url:"/pottleController/put",
+           headers:{'X-Csrf-Token':csrfValue},
+           data:data,
+           method:"post",
+           success:function (response, textStatus, xhr) {
+
+               if (response.length > 0)
+                   location.href = "/comeIn";
+
+           },
+           error:function (response) {
+               alert("что-то пошло не так");
+           }
+        });
+    });
+</script>

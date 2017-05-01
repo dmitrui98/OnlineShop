@@ -42,7 +42,7 @@ public class AdminDaoImpl implements AdminDao {
     public List<Admin> findAll() {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        List<Admin> result = session.createQuery("from User").list();
+        List<Admin> result = session.createQuery("from Admin").list();
 
         sessionUtil.closeTransactionSession();
 

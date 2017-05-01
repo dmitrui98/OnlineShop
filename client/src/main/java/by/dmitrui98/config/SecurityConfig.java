@@ -52,10 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 //.antMatchers("/test").access("hasRole('ADMIN')");
-                .antMatchers("/security").hasRole(UserRoleEnum.ADMIN.name())
+                .antMatchers("/security/**").hasRole(UserRoleEnum.ADMIN.name())
                 .antMatchers("/pottle").hasAnyRole(UserRoleEnum.USER.name(), UserRoleEnum.ADMIN.name())
                 .antMatchers("/welcome").authenticated()
-                .antMatchers("/productController/put").authenticated()
+                .antMatchers("/pottleController/**").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/comeIn")
@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logoutUrl("/logout")
 //                .logoutSuccessUrl("/comeIn?logout");
 
-       // http.csrf().disable();
+       //http.csrf().disable();
 
     }
 

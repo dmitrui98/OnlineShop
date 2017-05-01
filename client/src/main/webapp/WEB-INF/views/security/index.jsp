@@ -5,12 +5,14 @@
   Time: 10:24
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title> Защищенная страничка</title>
 </head>
 <body>
-    Hello World!
+    <a href = "<c:url value = "/security/category"/>">Редактировать категории товаров</a><br/>
+    <a href = "<c:url value = "/security/materia"/>">Редактировать материалы товаров</a><br/>
 </body>
 </html>

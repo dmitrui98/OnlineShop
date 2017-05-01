@@ -9,6 +9,6 @@ public interface BaseService<T, T_ID> {
     List<T> getAll();
     T getById(T_ID id);
     void save(T entity);
-    void remove(T_ID entity);
+    void remove(T_ID id);
 
 }
