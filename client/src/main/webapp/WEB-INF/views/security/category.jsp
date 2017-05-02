@@ -18,46 +18,54 @@
 </head>
 <body>
 
-<c:url var="url" value="/security/category"/>
-
-<p id = "myId">
-    text
-</p>
+<a href="<c:url value="/security/category/add" />"> Добавить категорию </a>
 
 <c:if test="${!empty categories}">
     <table class="tg">
         <tr>
             <th width="80">ID</th>
             <th width="120">Name</th>
+            <th width="120">Admin</th>
+            <th width="120">Created at</th>
+            <th width="120">Updated at</th>
             <th width="60">Edit</th>
             <th width="60">Delete</th>
+            <th width="120">Delete CASCADE</th>
         </tr>
         <c:forEach items="${categories}" var="category1">
             <tr>
                 <td>${category1.categoryId}</td>
                 <td>${category1.name}</td>
+                <td>${category1.admin.login}</td>
+                <td>${category1.createdAt}</td>
+                <td>${category1.updatedAt}</td>
 
                 <td>
-                    <form name="addForm"
-                          action="${url}/edit/${category1.categoryId}"
-                          method="GET">
-                        <input type="submit" value="Редактировать"/>
-                    </form>
+                    <button
+                            class="editButton"
+                            data-id="${category1.categoryId}">
+                        Редактировать
+                    </button>
                 </td>
 
                 <td>
-                    <%--<form id="deleteForm"--%>
-                          <%--action="${url}"--%>
-                          <%--method="DELETE">--%>
-                        <%--<input type="submit" value="Удалить">--%>
-                        <%--<input type="hidden" name= "id" value="${category1.categoryId}"/>--%>
-                    <%--</form>--%>
                     <button
                             class="deleteButton"
                             data-id="${category1.categoryId}"
                             data-csrf-name="${_csrf.parameterName}"
-                            data-csrf-value="${_csrf.token}"
-                    > Удалить </button>
+                            data-csrf-value="${_csrf.token}">
+                        Удалить
+                    </button>
+                </td>
+
+                <td>
+                    <button
+                            class="deleteCascadeButton"
+                            data-id="${category1.categoryId}"
+                            data-csrf-name="${_csrf.parameterName}"
+                            data-csrf-value="${_csrf.token}">
+                        Удалить каскадно
+                    </button>
                 </td>
             </tr>
         </c:forEach>
@@ -65,68 +73,43 @@
 </c:if>
 
 
-<h1>Добавить категорию</h1>
-
-<form:form action="${url}" modelAttribute="category" method="POST">
-    <table>
-        <c:if test="${!empty category.name}">
-            <tr>
-                <td>
-                    <form:label path="categoryId">
-                        <spring:message text="ID"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="categoryId" readonly="true" size="8" disabled="true"/>
-                    <form:hidden path="categoryId"/>
-                </td>
-            </tr>
-        </c:if>
-        <tr>
-            <td>
-                <form:label path="name">
-                    <spring:message text="Имя"/>
-                </form:label>
-            </td>
-            <td>
-                <form:input path="name"/>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <c:if test="${!empty category.name}">
-                    <input type="submit"
-                           value="<spring:message text="Редактировать"/>"/>
-                </c:if>
-                <c:if test="${empty category.name}">
-                    <input type="submit"
-                           value="<spring:message text="Добавить"/>"/>
-                </c:if>
-            </td>
-        </tr>
-    </table>
-</form:form>
 
 </body>
 </html>
 
 <script>
     jQuery(".deleteButton").on("click", function() {
-        var index = $(this).data("index");
+        var id = $(this).data("id");
         var csrfValue = $(this).data("csrf-value");
         var csrfName = $(this).data("csrf-name");
 
-        var data = {'index':index};
+        var data = {'id':id};
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-            url:"/security/category",
+            url:"/security/category/delete/"+id,
             headers:{'X-Csrf-Token':csrfValue},
             data:data,
             method:"delete",
             success:function (response, textStatus, xhr) {
+                $("body").html(response);
+            },
+            error:function (response) {
+                alert("что-то пошло не так");
+            }
+        });
+    });
 
-                alert($("#myId").html);
+    jQuery(".editButton").on("click", function() {
+        var id = $(this).data("id");
+        var data = {'id':id};
+
+        jQuery.ajax({
+            url:"/security/category/edit",
+            data:data,
+            method:"get",
+            success:function (response, textStatus, xhr) {
+                $('body').html(response);
             },
             error:function (response) {
                 alert("что-то пошло не так");

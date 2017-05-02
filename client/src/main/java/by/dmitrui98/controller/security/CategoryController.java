@@ -1,15 +1,21 @@
 package by.dmitrui98.controller.security;
 
+import by.dmitrui98.entity.Admin;
 import by.dmitrui98.entity.Category;
+import by.dmitrui98.service.dao.AdminService;
 import by.dmitrui98.service.dao.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Администратор on 29.04.2017.
@@ -21,43 +27,69 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String editCategoryPage(HttpServletRequest request, Model model) {
+    @Autowired
+    AdminService adminService;
 
-        model.addAttribute("category", new Category());
+    @RequestMapping(method = RequestMethod.GET)
+    public String editCategoryPage(Model model) {
+
         model.addAttribute("categories", categoryService.getAll());
 
         return "/security/category";
     }
 
-    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String editCategory(@PathVariable("id") int id, Model model) {
-        model.addAttribute("category", categoryService.getById(id));
-        model.addAttribute("categories", categoryService.getAll());
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String addCategory(HttpServletRequest request, HttpServletResponse response, Model model) {
+        model.addAttribute("category", new Category());
 
-        return "/security/category";
+        return "/security/categoryAdd";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String editCategory(HttpServletRequest request, HttpServletResponse response, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        model.addAttribute("category", categoryService.getById(id));
+
+        return "/security/categoryEdit";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addOrUpdate(@ModelAttribute("category") Category category, Model model) {
+    public String addOrUpdate(@ModelAttribute("category") Category category, Model model, HttpServletRequest request) {
+        String adminName = request.getUserPrincipal().getName();
+        Admin admin = adminService.getByName(adminName);
+
         try {
             category.setName(new String (category.getName().getBytes("ISO-8859-1"), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        System.out.println(category);
+
+        boolean isEdit = true;
+        if (category.getCategoryId() == 0)
+            isEdit = false;
+
+        category.setAdmin(admin);
         categoryService.save(category);
+
+        if (isEdit)
+            return "redirect:/security/category";
+        else
+            return "redirect:/security/category/add";
+    }
+
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    public String delete(@PathVariable("id") int id) {
+
+        categoryService.remove(id);
 
         return "redirect:/security/category";
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public String addOrUpdate(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-
-        categoryService.remove(id);
-
-        return "/security/category";
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        sdf.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
 

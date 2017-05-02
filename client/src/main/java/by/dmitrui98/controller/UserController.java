@@ -62,9 +62,6 @@ public class UserController {
             return "registration";
         }
 
-        userForm.setCreatedAt(new Date());
-        userForm.setUpdatedAt(new Date());
-
         userService.save(userForm);
 
         securityService.autoLogin(userForm.getLogin(), userForm.getConfirmPassword());

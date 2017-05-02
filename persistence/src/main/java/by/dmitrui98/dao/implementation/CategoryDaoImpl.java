@@ -32,7 +32,8 @@ public class CategoryDaoImpl implements CategoryDao {
     public void delete(Integer id) {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        session.delete(id);
+        Category myObject = (Category) session.get(Category.class,id);
+        session.delete(myObject);
         sessionUtil.closeTransactionSession();
     }
 

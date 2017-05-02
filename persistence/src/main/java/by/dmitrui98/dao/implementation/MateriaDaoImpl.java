@@ -32,7 +32,8 @@ public class MateriaDaoImpl implements MateriaDao {
     public void delete(Integer id) {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        session.delete(id);
+        Materia myObject = (Materia) session.load(Materia.class,id);
+        session.delete(myObject);
         sessionUtil.closeTransactionSession();
     }
 

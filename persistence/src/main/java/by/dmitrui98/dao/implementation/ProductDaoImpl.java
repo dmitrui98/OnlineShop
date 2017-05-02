@@ -34,7 +34,8 @@ public class ProductDaoImpl implements ProductDao {
     public void delete(Long id) {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        session.delete(id);
+        Product myObject = (Product) session.load(Product.class,id);
+        session.delete(myObject);
         sessionUtil.closeTransactionSession();
     }
 

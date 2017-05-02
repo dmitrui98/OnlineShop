@@ -35,7 +35,8 @@ public class UserDaoImpl implements UserDao {
     public void delete(Long id) {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        session.delete(id);
+        User myObject = (User) session.load(User.class,id);
+        session.delete(myObject);
         sessionUtil.closeTransactionSession();
     }
 

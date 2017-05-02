@@ -91,4 +91,5 @@ public class Admin {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
 }

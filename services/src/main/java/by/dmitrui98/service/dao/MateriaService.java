@@ -1,5 +1,6 @@
 package by.dmitrui98.service.dao;
 
+import by.dmitrui98.entity.Admin;
 import by.dmitrui98.entity.Materia;
 
 /**

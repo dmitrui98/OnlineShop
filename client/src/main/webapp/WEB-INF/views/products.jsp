@@ -24,8 +24,8 @@
         <td><b><%= product.getName() %></b></td>
         <td><b><%= product.getPrice() %></b></td>
         <td><b><%= product.getDescription() %></b></td>
-        <td><b><%= product.getCategory() %></b></td>
-        <td><b><%= product.getMateria() %></b></td>
+        <td><b><%= product.getCategory().getName() %></b></td>
+        <td><b><%= product.getMateria().getName() %></b></td>
         <td>
             <%--<form name="addForm"--%>
                   <%--action="/pottleController/put"--%>

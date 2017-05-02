@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,7 +26,8 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-       // user.setConfirmPassword(null);
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
 
         userDao.addOrUpdate(user);
     }
