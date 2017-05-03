@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pottle").hasAnyRole(UserRoleEnum.USER.name(), UserRoleEnum.ADMIN.name())
                 .antMatchers("/welcome").authenticated()
                 .antMatchers("/pottleController/**").authenticated()
+                .antMatchers("/comeIn").anonymous()
                 .and()
                 .formLogin()
                 .loginPage("/comeIn")

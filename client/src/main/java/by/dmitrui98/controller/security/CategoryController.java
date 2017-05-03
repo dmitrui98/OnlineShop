@@ -77,9 +77,9 @@ public class CategoryController {
             return "redirect:/security/category/add";
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable("id") int id) {
-
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String delete(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
         categoryService.remove(id);
 
         return "redirect:/security/category";

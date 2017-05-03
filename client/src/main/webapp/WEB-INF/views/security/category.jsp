@@ -87,15 +87,16 @@
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-            url:"/security/category/delete/"+id,
+            url:"/security/category/delete",
             headers:{'X-Csrf-Token':csrfValue},
             data:data,
-            method:"delete",
+            method:"post",
             success:function (response, textStatus, xhr) {
                 $("body").html(response);
             },
             error:function (response) {
                 alert("что-то пошло не так");
+                alert(response);
             }
         });
     });

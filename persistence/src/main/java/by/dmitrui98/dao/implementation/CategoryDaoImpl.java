@@ -1,6 +1,7 @@
 package by.dmitrui98.dao.implementation;
 
 import by.dmitrui98.dao.CategoryDao;
+import by.dmitrui98.entity.Admin;
 import by.dmitrui98.entity.Category;
 import by.dmitrui98.util.SessionUtil;
 import org.hibernate.Session;
