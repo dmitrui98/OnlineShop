@@ -17,6 +17,7 @@
     <script type = "text/javascript" src = "/js/jquery-3.2.0.min.js"> </script>
 </head>
 <body>
+<a href="<c:url value="/security" />">Назад</a> <br/>
 
 <a href="<c:url value="/security/category/add" />"> Добавить категорию </a>
 
