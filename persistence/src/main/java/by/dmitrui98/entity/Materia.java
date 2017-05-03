@@ -1,5 +1,6 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,21 +22,25 @@ public class Materia {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createdAt;
+
+    @Column(name = "updated_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date updatedAt;
+
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "created_by", nullable = false)
     private Admin admin;
 
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private Date updatedAt;
+    @ManyToMany(mappedBy = "materiaSet")
+    private Set<Product> productSet;
 
     public Materia() {
     }
 
-    public Materia(String name, Admin admin, Date createdAt, Date updatedAt) {
+    public Materia(String name, Set<Product> productSet, Admin admin, Date createdAt, Date updatedAt) {
         this.name = name;
+        this.productSet = productSet;
         this.admin = admin;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -55,6 +60,14 @@ public class Materia {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Product> getProductSet() {
+        return productSet;
+    }
+
+    public void setProductSet(Set<Product> productSet) {
+        this.productSet = productSet;
     }
 
     public Admin getAdmin() {
@@ -81,4 +94,8 @@ public class Materia {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

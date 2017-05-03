@@ -4,22 +4,25 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by Администратор on 26.04.2017.
+ * Created by Администратор on 03.05.2017.
  */
 @Embeddable
-public class OrderProductPK implements Serializable {
+public class ProductMateriaPK implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "materia_id")
+    private Materia materia;
 
-    public OrderProductPK(Product product, Order order) {
+    public ProductMateriaPK() {
+    }
+
+    public ProductMateriaPK(Product product, Materia materia) {
         this.product = product;
-        this.order = order;
+        this.materia = materia;
     }
 
     public Product getProduct() {
@@ -30,11 +33,11 @@ public class OrderProductPK implements Serializable {
         this.product = product;
     }
 
-    public Order getOrder() {
-        return order;
+    public Materia getMateria() {
+        return materia;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 }

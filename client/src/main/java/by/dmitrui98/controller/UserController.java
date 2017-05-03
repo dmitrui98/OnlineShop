@@ -52,6 +52,7 @@ public class UserController {
             userForm.setFname(new String (userForm.getFname().getBytes("ISO-8859-1"), "UTF-8"));
             userForm.setSurname(new String (userForm.getSurname().getBytes("ISO-8859-1"), "UTF-8"));
             userForm.setLname(new String (userForm.getLname().getBytes("ISO-8859-1"), "UTF-8"));
+            userForm.setPhone(new String (userForm.getPhone().getBytes("ISO-8859-1"), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

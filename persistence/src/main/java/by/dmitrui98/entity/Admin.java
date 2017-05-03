@@ -1,8 +1,6 @@
 package by.dmitrui98.entity;
 
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -18,21 +16,19 @@ public class Admin {
     @Column(name = "admin_id")
     private long admin_id;
 
-    @Column(name = "login", unique = true)
+    @Column(name = "login", unique = true, nullable = false)
     private String login;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdAt;
 
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date updatedAt;
 
     public Admin() {

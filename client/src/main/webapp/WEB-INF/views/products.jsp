@@ -18,14 +18,13 @@
         long index = -1;
         while (iterator.hasNext()){
             Product product = iterator.next();
-            index++;
     %>
     <tr>
         <td><b><%= product.getName() %></b></td>
         <td><b><%= product.getPrice() %></b></td>
         <td><b><%= product.getDescription() %></b></td>
         <td><b><%= product.getCategory().getName() %></b></td>
-        <td><b><%= product.getMateria().getName() %></b></td>
+        <td><b><%= product.getMateriaSet() %></b></td>
         <td>
             <%--<form name="addForm"--%>
                   <%--action="/pottleController/put"--%>

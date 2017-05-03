@@ -1,5 +1,6 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,7 +20,16 @@ public class Order {
     @Column(name = "order_id")
     private long orderId;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(name = "amount", nullable = false)
+    private double amount;
+
+    @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createdAt;
+
+    @Column(name = "updated_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date updatedAt;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address addressId;
 
@@ -28,15 +38,6 @@ public class Order {
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> productSet = new HashSet<>();
-
-    @Column(name = "amount", nullable = false)
-    private double amount;
-
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private Date updatedAt;
 
     public Order() {
     }

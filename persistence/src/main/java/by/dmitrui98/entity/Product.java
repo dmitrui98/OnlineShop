@@ -1,7 +1,10 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -19,28 +22,6 @@ public class Product {
     @Transient
     private int countPottleProducts;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "image_id")
-    private Image image;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "materia_id")
-    private Materia materia;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "created_by", nullable = false)
-    private Admin admin;
-
-
-    @ManyToMany(mappedBy = "productSet")
-    private Set<Order> orderSet;
-
-
-
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
@@ -50,20 +31,41 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date updatedAt;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "image_id")
+    private Image image;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "created_by", nullable = false)
+    private Admin admin;
+
+    @ManyToMany(mappedBy = "productSet")
+    private Set<Order> orderSet;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "product_materia",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "materia_id"))
+    private Set<Materia> materiaSet = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(int countPottleProducts, Image image, Category category, Materia materia, Admin admin, Set<Order> orderSet, String name, double price, String description, Date createdAt, Date updatedAt) {
+    public Product(int countPottleProducts, Image image, Category category, Set<Materia> materiaSet, Admin admin, Set<Order> orderSet, String name, double price, String description, Date createdAt, Date updatedAt) {
         this.countPottleProducts = countPottleProducts;
         this.image = image;
         this.category = category;
-        this.materia = materia;
+        this.materiaSet = materiaSet;
         this.admin = admin;
         this.orderSet = orderSet;
         this.name = name;
@@ -73,28 +75,20 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public Materia getMateria() {
-        return materia;
-    }
-
-    public void setMateria(Materia materia) {
-        this.materia = materia;
-    }
-
-    public Set<Order> getOrderSet() {
-        return orderSet;
-    }
-
-    public void setOrderSet(Set<Order> orderSet) {
-        this.orderSet = orderSet;
-    }
-
     public long getProductId() {
         return productId;
     }
 
     public void setProductId(long productId) {
         this.productId = productId;
+    }
+
+    public int getCountPottleProducts() {
+        return countPottleProducts;
+    }
+
+    public void setCountPottleProducts(int countPottleProducts) {
+        this.countPottleProducts = countPottleProducts;
     }
 
     public Image getImage() {
@@ -113,12 +107,28 @@ public class Product {
         this.category = category;
     }
 
+    public Set<Materia> getMateriaSet() {
+        return materiaSet;
+    }
+
+    public void setMateriaSet(Set<Materia> materiaSet) {
+        this.materiaSet = materiaSet;
+    }
+
     public Admin getAdmin() {
         return admin;
     }
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
+    }
+
+    public Set<Order> getOrderSet() {
+        return orderSet;
+    }
+
+    public void setOrderSet(Set<Order> orderSet) {
+        this.orderSet = orderSet;
     }
 
     public String getName() {
@@ -159,14 +169,6 @@ public class Product {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public int getCountPottleProducts() {
-        return countPottleProducts;
-    }
-
-    public void setCountPottleProducts(int countPottleProducts) {
-        this.countPottleProducts = countPottleProducts;
     }
 
     @Override

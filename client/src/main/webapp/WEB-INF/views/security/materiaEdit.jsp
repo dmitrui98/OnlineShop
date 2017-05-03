@@ -4,25 +4,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Редактировать категорию</title>
+    <title>Редактировать материал</title>
 </head>
 <body>
 
-<a href="<c:url value="/security/category" />">Назад</a>
+<a href="<c:url value="/security/materia" />">Назад</a>
 
-<h1>Редактировать категорию</h1>
+<h1>Редактировать материал</h1>
 
-<form:form action="/security/category" modelAttribute="category" method="POST">
+<form:form action="/security/materia" modelAttribute="materia" method="POST">
     <table>
         <tr>
             <td>
-                <form:label path="categoryId">
+                <form:label path="materiaId">
                     <spring:message text="ID"/>
                 </form:label>
             </td>
             <td>
-                <form:input path="categoryId" readonly="true" size="8" disabled="true"/>
-                <form:hidden path="categoryId"/>
+                <form:input path="materiaId" readonly="true" size="8" disabled="true"/>
+                <form:hidden path="materiaId"/>
             </td>
         </tr>
 
@@ -39,16 +39,16 @@
         </tr>
 
         <tr>
-        <td>
-            <form:label path="updatedAt">
-                <spring:message text="updatedAt"/>
-            </form:label>
-        </td>
-        <td>
-            <form:input path="updatedAt" readonly="true" size="16" disabled="true"/>
-            <form:hidden path="updatedAt"/>
-        </td>
-    </tr>
+            <td>
+                <form:label path="updatedAt">
+                    <spring:message text="updatedAt"/>
+                </form:label>
+            </td>
+            <td>
+                <form:input path="updatedAt" readonly="true" size="16" disabled="true"/>
+                <form:hidden path="updatedAt"/>
+            </td>
+        </tr>
 
         <tr>
             <td>
