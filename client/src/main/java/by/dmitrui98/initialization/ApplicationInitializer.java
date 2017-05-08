@@ -40,6 +40,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
         ctx.setServletContext(servletContext);
 
+
         servletContext.addListener(new ContextLoaderListener(ctx));
 
         ServletRegistration.Dynamic servlet = servletContext.addServlet(DISPATCHER, new DispatcherServlet(ctx));

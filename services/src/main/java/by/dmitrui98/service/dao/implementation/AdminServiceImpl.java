@@ -38,8 +38,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void save(Admin entity) {
-        adminDao.addOrUpdate(entity);
+    public void save(Admin admin) {
+        adminDao.addOrUpdate(admin);
     }
 
     @Override

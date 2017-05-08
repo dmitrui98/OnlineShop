@@ -24,16 +24,8 @@
         <td><b><%= product.getPrice() %></b></td>
         <td><b><%= product.getDescription() %></b></td>
         <td><b><%= product.getCategory().getName() %></b></td>
-        <td><b><%= product.getMateriaSet() %></b></td>
+        <td><b><%= product.getProductMaterias() %></b></td>
         <td>
-            <%--<form name="addForm"--%>
-                  <%--action="/pottleController/put"--%>
-                  <%--method="POST">--%>
-                <%--<input type="submit" value="Добавить в корзину">--%>
-                <%--<input type="hidden" name= "index" value='<%= index %>'>--%>
-                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-            <%--</form>--%>
-
             <button class="addInPottleButton"
                     data-id="<%= product.getProductId() %>"
                     data-csrf-name="${_csrf.parameterName}"

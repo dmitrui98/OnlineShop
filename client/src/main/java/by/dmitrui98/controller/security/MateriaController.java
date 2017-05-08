@@ -41,7 +41,7 @@ public class MateriaController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addCategory(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String addCategory(Model model) {
         model.addAttribute("materia", new Materia());
 
         return "/security/materiaAdd";

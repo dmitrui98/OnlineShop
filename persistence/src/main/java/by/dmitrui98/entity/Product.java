@@ -1,6 +1,8 @@
 package by.dmitrui98.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -49,30 +51,33 @@ public class Product {
     @JoinColumn(name = "created_by", nullable = false)
     private Admin admin;
 
-    @ManyToMany(mappedBy = "productSet")
-    private Set<Order> orderSet;
+    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
+    private Set<OrderProduct> orderProducts = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "product_materia",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "materia_id"))
-    private Set<Materia> materiaSet = new HashSet<>();
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "product_materia",
+//            joinColumns = @JoinColumn(name = "product_id"),
+//            inverseJoinColumns = @JoinColumn(name = "materia_id"))
+
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.product", cascade=CascadeType.ALL)
+    private Set<ProductMateria> productMaterias = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(int countPottleProducts, Image image, Category category, Set<Materia> materiaSet, Admin admin, Set<Order> orderSet, String name, double price, String description, Date createdAt, Date updatedAt) {
+    public Product(int countPottleProducts, String name, double price, String description, Date createdAt, Date updatedAt, Image image, Category category, Admin admin, Set<OrderProduct> orderProducts, Set<ProductMateria> productMaterias) {
         this.countPottleProducts = countPottleProducts;
-        this.image = image;
-        this.category = category;
-        this.materiaSet = materiaSet;
-        this.admin = admin;
-        this.orderSet = orderSet;
         this.name = name;
         this.price = price;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.image = image;
+        this.category = category;
+        this.admin = admin;
+        this.orderProducts = orderProducts;
+        this.productMaterias = productMaterias;
     }
 
     public long getProductId() {
@@ -89,46 +94,6 @@ public class Product {
 
     public void setCountPottleProducts(int countPottleProducts) {
         this.countPottleProducts = countPottleProducts;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Set<Materia> getMateriaSet() {
-        return materiaSet;
-    }
-
-    public void setMateriaSet(Set<Materia> materiaSet) {
-        this.materiaSet = materiaSet;
-    }
-
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-    }
-
-    public Set<Order> getOrderSet() {
-        return orderSet;
-    }
-
-    public void setOrderSet(Set<Order> orderSet) {
-        this.orderSet = orderSet;
     }
 
     public String getName() {
@@ -169,6 +134,46 @@ public class Product {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public Set<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(Set<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
+    }
+
+    public Set<ProductMateria> getProductMaterias() {
+        return productMaterias;
+    }
+
+    public void setProductMaterias(Set<ProductMateria> productMaterias) {
+        this.productMaterias = productMaterias;
     }
 
     @Override

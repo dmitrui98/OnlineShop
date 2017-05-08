@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -32,18 +33,21 @@ public class Materia {
     @JoinColumn(name = "created_by", nullable = false)
     private Admin admin;
 
-    @ManyToMany(mappedBy = "materiaSet")
-    private Set<Product> productSet;
+//    @ManyToMany(mappedBy = "materiaSet")
+//    private Set<Product> productSet;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.materia", cascade=CascadeType.ALL)
+    private Set<ProductMateria> productMaterias = new HashSet<>();
 
     public Materia() {
     }
 
-    public Materia(String name, Set<Product> productSet, Admin admin, Date createdAt, Date updatedAt) {
+    public Materia(String name, Date createdAt, Date updatedAt, Admin admin, Set<ProductMateria> productMaterias) {
         this.name = name;
-        this.productSet = productSet;
-        this.admin = admin;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.admin = admin;
+        this.productMaterias = productMaterias;
     }
 
     public int getMateriaId() {
@@ -62,22 +66,6 @@ public class Materia {
         this.name = name;
     }
 
-    public Set<Product> getProductSet() {
-        return productSet;
-    }
-
-    public void setProductSet(Set<Product> productSet) {
-        this.productSet = productSet;
-    }
-
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -94,8 +82,31 @@ public class Materia {
         this.updatedAt = updatedAt;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public Set<ProductMateria> getProductMaterias() {
+        return productMaterias;
+    }
+
+    public void setProductMaterias(Set<ProductMateria> productMaterias) {
+        this.productMaterias = productMaterias;
+    }
+
     @Override
     public String toString() {
         return getName();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Materia materia = (Materia) obj;
+
+        return materia.getMateriaId() == this.getMateriaId();
     }
 }

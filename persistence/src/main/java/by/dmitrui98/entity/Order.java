@@ -1,5 +1,6 @@
 package by.dmitrui98.entity;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -33,21 +34,22 @@ public class Order {
     @JoinColumn(name = "address_id")
     private Address addressId;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> productSet = new HashSet<>();
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "order_product",
+//            joinColumns = @JoinColumn(name = "order_id"),
+//            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.order", cascade = CascadeType.ALL)
+    private Set<OrderProduct> orderProducts = new HashSet<>();
 
     public Order() {
     }
 
-    public Order(Address addressId, Set<Product> productSet, double amount, Date createdAt, Date updatedAt) {
-        this.addressId = addressId;
-        this.productSet = productSet;
+    public Order(double amount, Date createdAt, Date updatedAt, Address addressId, Set<OrderProduct> orderProducts) {
         this.amount = amount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.addressId = addressId;
+        this.orderProducts = orderProducts;
     }
 
     public long getOrderId() {
@@ -56,22 +58,6 @@ public class Order {
 
     public void setOrderId(long orderId) {
         this.orderId = orderId;
-    }
-
-    public Address getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(Address addressId) {
-        this.addressId = addressId;
-    }
-
-    public Set<Product> getProductSet() {
-        return productSet;
-    }
-
-    public void setProductSet(Set<Product> productSet) {
-        this.productSet = productSet;
     }
 
     public double getAmount() {
@@ -96,5 +82,21 @@ public class Order {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Address getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Address addressId) {
+        this.addressId = addressId;
+    }
+
+    public Set<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(Set<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 }

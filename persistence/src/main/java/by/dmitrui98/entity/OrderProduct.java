@@ -1,5 +1,6 @@
 package by.dmitrui98.entity;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,6 +11,11 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "order_product")
+@AssociationOverrides({
+        @AssociationOverride(name = "id.order",
+                joinColumns = @JoinColumn(name = "order_id")),
+        @AssociationOverride(name = "id.product",
+                joinColumns = @JoinColumn(name = "product_id")) })
 public class OrderProduct {
 
     @EmbeddedId
@@ -52,5 +58,23 @@ public class OrderProduct {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Transient
+    public Order getOrder() {
+        return getId().getOrder();
+    }
+
+    @Transient
+    public Product getProduct() {
+        return getId().getProduct();
+    }
+
+    public void setOrder(Order order) {
+        getId().setOrder(order);
+    }
+
+    public void setProduct(Product product) {
+        getId().setProduct(product);
     }
 }

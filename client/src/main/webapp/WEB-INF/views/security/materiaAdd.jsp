@@ -23,7 +23,7 @@
                 </form:label>
             </td>
             <td>
-                <form:input path="name"/>
+                <form:input path="name" autofocus="true"/>
             </td>
         </tr>
         <tr>

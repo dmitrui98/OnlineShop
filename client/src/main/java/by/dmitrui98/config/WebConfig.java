@@ -1,6 +1,7 @@
 package by.dmitrui98.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +11,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import javax.servlet.MultipartConfigElement;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,7 +29,6 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan({"by.dmitrui98.config.", "by.dmitrui98.controller/**"})
-//@ComponentScan("by.dmitrui98")
 @Import({SecurityConfig.class, DatabaseConfig.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
@@ -60,6 +62,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         messageSource.setBasename("classpath:validation");
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
+    }
+
+//    @Bean
+//    MultipartConfigElement multipartConfigElement() {
+//        MultipartConfigFactory factory = new MultipartConfigFactory();
+//        factory.setMaxFileSize("128KB");
+//        factory.setMaxRequestSize("128KB");
+//        return factory.createMultipartConfig();
+//    }
+
+    @Bean
+    public MultipartResolver multipartResolver() {
+        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(1000000);
+        return multipartResolver;
     }
 
 //    @Bean

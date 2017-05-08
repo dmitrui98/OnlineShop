@@ -9,12 +9,10 @@ import java.io.Serializable;
 @Embeddable
 public class ProductMateriaPK implements Serializable {
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Product product;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "materia_id")
     private Materia materia;
 
     public ProductMateriaPK() {

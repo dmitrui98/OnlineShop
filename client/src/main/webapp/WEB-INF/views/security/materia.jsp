@@ -15,7 +15,7 @@
 <a href="<c:url value="/security/materia/add" />"> Добавить материал </a>
 
 <c:if test="${!empty materias}">
-    <table class="tg">
+    <table>
         <tr>
             <th width="80">ID</th>
             <th width="120">Name</th>

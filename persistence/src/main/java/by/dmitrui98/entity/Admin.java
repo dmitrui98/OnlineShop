@@ -14,7 +14,7 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "admin_id")
-    private long admin_id;
+    private long adminId;
 
     @Column(name = "login", unique = true, nullable = false)
     private String login;
@@ -40,12 +40,12 @@ public class Admin {
         this.password = password;
     }
 
-    public long getAdmin_id() {
-        return admin_id;
+    public long getAdminId() {
+        return adminId;
     }
 
-    public void setAdmin_id(long admin_id) {
-        this.admin_id = admin_id;
+    public void setAdminId(long adminId) {
+        this.adminId = adminId;
     }
 
     public String getLogin() {

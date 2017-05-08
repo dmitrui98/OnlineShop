@@ -81,4 +81,8 @@ public class Category {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
