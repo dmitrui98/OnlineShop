@@ -49,7 +49,7 @@
             </div>
 		</div>
 
-		<jsp:include page="products.jsp" flush="true" />
+		<jsp:include page="allProducts.jsp" flush="true" />
 
 	<body>
 <html>

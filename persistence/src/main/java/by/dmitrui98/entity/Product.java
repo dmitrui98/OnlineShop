@@ -43,23 +43,17 @@ public class Product {
     @JoinColumn(name = "image_id")
     private Image image;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "created_by", nullable = false)
     private Admin admin;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
     private Set<OrderProduct> orderProducts = new HashSet<>();
 
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "product_materia",
-//            joinColumns = @JoinColumn(name = "product_id"),
-//            inverseJoinColumns = @JoinColumn(name = "materia_id"))
-
-//    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.product", cascade=CascadeType.ALL)
     private Set<ProductMateria> productMaterias = new HashSet<>();
 

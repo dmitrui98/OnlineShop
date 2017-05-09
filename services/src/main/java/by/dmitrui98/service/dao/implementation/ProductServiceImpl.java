@@ -4,6 +4,7 @@ import by.dmitrui98.dao.ProductDao;
 import by.dmitrui98.entity.Materia;
 import by.dmitrui98.entity.Product;
 import by.dmitrui98.entity.ProductMateria;
+import by.dmitrui98.service.dao.ImageService;
 import by.dmitrui98.service.dao.MateriaService;
 import by.dmitrui98.service.dao.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,13 @@ import java.util.Set;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    ProductDao productDao;
+    private ProductDao productDao;
 
     @Autowired
-    MateriaService materiaService;
+    private MateriaService materiaService;
+
+    @Autowired
+    private ImageService imageService;
 
     @Override
     public List<Product> getAll() {
@@ -51,11 +55,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(Product product, int[] materiaIds, double[] persants) {
-        if (product.getProductId() == 0) {
-            product.setCreatedAt(new Date());
-            product.setUpdatedAt(new Date());
-        } else
-            product.setUpdatedAt(new Date());
+
+        this.setDate(product);
+        if (product.getImage() == null)
+            product.setImage(imageService.getDefaultImage());
 
         Set<ProductMateria> productMaterias = new HashSet<>();
         for (int i = 0; i < materiaIds.length; i++) {
@@ -75,8 +78,19 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+
+
     @Override
     public void remove(Long id) {
         productDao.delete(id);
     }
+
+    private void setDate(Product product) {
+        if (product.getProductId() == 0) {
+            product.setCreatedAt(new Date());
+            product.setUpdatedAt(new Date());
+        } else
+            product.setUpdatedAt(new Date());
+    }
+
 }

@@ -115,7 +115,7 @@
             headers:{'X-Csrf-Token':csrfValue},
             data:data,
             method: "post",
-            success:function () {
+            success:function (response) {
                 $('body').html(response);
             },
             error: function () {

@@ -38,7 +38,7 @@
 
     <form:input type="text" path="name" placeholder="Название" autofocus="true"/> <br/>
 
-    <form:textarea path="description" placeholder="Описание"/> <br/>
+    <form:textarea path="description" placeholder="Описание" cols="40" rows="10"/> <br/>
 
     Цена: <br/>
     <form:input type="number" path="price" placeholder="Цена" step="any"/> <br/>
@@ -121,7 +121,7 @@
         </td>
         <td>
             <input type="hidden" name="materiaId[]" value="{{id}}">
-            <input type="text" placeholder="Процент" name="persant[]" value="{{persant}}">
+            <input type="number" step="any" name="persant[]" value="{{persant}}">
         </td>
         <td>
             <button class="delete">Удалить</button>

@@ -34,7 +34,7 @@ public class AdminDaoImpl implements AdminDao {
     public void delete(Long id) {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        Admin myObject = (Admin) session.load(Admin.class,id);
+        Admin myObject = (Admin) session.get(Admin.class,id);
         session.delete(myObject);
         sessionUtil.closeTransactionSession();
     }

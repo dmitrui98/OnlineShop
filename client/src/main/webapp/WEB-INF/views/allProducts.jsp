@@ -6,25 +6,29 @@
 %>
 <table border="0" cellpadding="0" width="100%">
     <tr>
-        <td><b>Название</b></td>
-        <td><b>Цена</b></td>
-        <td><b>Описание</b></td>
-        <td><b>Категория</b></td>
-        <td><b>Материал</b></td>
-        <td></td>
+        <th> <b>Название</b> </th>
+        <th> <b>Цена</b> </th>
+        <th> <b>Категория</b> </th>
+        <th> <b>Фото</b> </th>
+        <td> <b>Информация</b> </td>
+        <td> <b>В корзину</b> </td>
     </tr>
     <%
         Iterator<Product> iterator = products.iterator();
-        long index = -1;
         while (iterator.hasNext()){
             Product product = iterator.next();
     %>
     <tr>
         <td><b><%= product.getName() %></b></td>
         <td><b><%= product.getPrice() %></b></td>
-        <td><b><%= product.getDescription() %></b></td>
         <td><b><%= product.getCategory().getName() %></b></td>
-        <td><b><%= product.getProductMaterias() %></b></td>
+        <td><img src="<%= product.getImage().getImageDirectory() %>"/></td>
+        <td>
+            <form action="/product/info" method="get">
+                <input type="hidden" name="id" value="<%=product.getProductId()%>">
+                <button type="submit"> Подробнее </button>
+            </form>
+        </td>
         <td>
             <button class="addInPottleButton"
                     data-id="<%= product.getProductId() %>"
@@ -48,19 +52,19 @@
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-           url:"/pottleController/put",
-           headers:{'X-Csrf-Token':csrfValue},
-           data:data,
-           method:"post",
-           success:function (response, textStatus, xhr) {
+            url:"/pottleController/put",
+            headers:{'X-Csrf-Token':csrfValue},
+            data:data,
+            method:"post",
+            success:function (response, textStatus, xhr) {
 
-               if (response.length > 0)
-                   location.href = "/comeIn";
+                if (response.length > 0)
+                    location.href = "/comeIn";
 
-           },
-           error:function (response) {
-               alert("что-то пошло не так");
-           }
+            },
+            error:function (response) {
+                alert("что-то пошло не так");
+            }
         });
     });
 </script>

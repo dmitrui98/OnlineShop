@@ -1,7 +1,7 @@
 package by.dmitrui98.editor;
 
 import by.dmitrui98.entity.Image;
-import by.dmitrui98.service.ImageService;
+import by.dmitrui98.service.dao.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 

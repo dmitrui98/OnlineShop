@@ -3,11 +3,7 @@ package by.dmitrui98.controller.security;
 import by.dmitrui98.editor.CategoryEditor;
 import by.dmitrui98.editor.ImageEditor;
 import by.dmitrui98.entity.*;
-import by.dmitrui98.service.ImageService;
-import by.dmitrui98.service.dao.AdminService;
-import by.dmitrui98.service.dao.CategoryService;
-import by.dmitrui98.service.dao.MateriaService;
-import by.dmitrui98.service.dao.ProductService;
+import by.dmitrui98.service.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -26,7 +23,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping(value = "/security/product")
-public class ProductController {
+public class AdminProductController {
 
     @Autowired
     private ProductService productService;
@@ -57,7 +54,7 @@ public class ProductController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String productAdd(@ModelAttribute("product") Product productForm,
-                             HttpServletRequest request){//, @RequestParam("image") MultipartFile image) {
+                             HttpServletRequest request){
         Admin admin = adminService.getByName(request.getUserPrincipal().getName());
         productForm.setAdmin(admin);
 
@@ -83,8 +80,6 @@ public class ProductController {
         long id = Long.parseLong(request.getParameter("id"));
         Product product = productService.getById(id);
         model.addAttribute("product", product);
-        File file = new File(product.getImage().getImageDirectory());
-        System.out.println(file);
         return "/security/productView";
     }
 
@@ -97,11 +92,12 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String productDelete(HttpServletRequest request) {
+    public String productDelete(HttpServletRequest request, Model model) {
         long id = Long.parseLong(request.getParameter("id"));
 
         productService.remove(id);
 
+        model.addAttribute("products", productService.getAll());
         return "/security/product";
     }
 

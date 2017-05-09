@@ -16,25 +16,10 @@
 </head>
 <body>
 <a href="<c:url value="/security/product" />">Назад</a> <br/>
-    <tr>
-        <tb>name</tb>
-        <tb>image</tb>
-        <tb>materias</tb>
-    </tr>
-
-    <% Product product = (Product) request.getAttribute("product");
-        Set<ProductMateria> productMaterias = product.getProductMaterias();
-    %>
-    <tr>
-        <td> ${product.name} </td>
-        <td> <img src="${product.image.imageDirectory}"/></td>
-        <td> ${product.image.imageDirectory}" </td>
-    <%
-        for(ProductMateria pm : productMaterias) {
-    %>
-
-            <td> <%=pm.getMateria().getName()%></td>
-    <% } %>
-    </tr>
+    ID: ${product.productId} <br/>
+    CreatedAt: ${product.createdAt} <br/>
+    UpdatedAt: ${product.updatedAt} <br/>
+    CreatedBy: ${product.admin.login} <br/>
+    <jsp:include page="../productInfo.jsp" flush="true"/>
 </body>
 </html>
