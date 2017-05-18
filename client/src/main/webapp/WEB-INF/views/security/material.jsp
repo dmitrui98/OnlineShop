@@ -12,9 +12,9 @@
 <body>
 <a href="<c:url value="/security" />">Назад</a> <br/>
 
-<a href="<c:url value="/security/materia/add" />"> Добавить материал </a>
+<a href="<c:url value="/security/material/add" />"> Добавить материал </a>
 
-<c:if test="${!empty materias}">
+<c:if test="${!empty materials}">
     <table>
         <tr>
             <th width="80">ID</th>
@@ -26,18 +26,18 @@
             <th width="60">Delete</th>
             <th width="120">Delete CASCADE</th>
         </tr>
-        <c:forEach items="${materias}" var="materia">
+        <c:forEach items="${materials}" var="material">
             <tr>
-                <td>${materia.materiaId}</td>
-                <td>${materia.name}</td>
-                <td>${materia.admin.login}</td>
-                <td>${materia.createdAt}</td>
-                <td>${materia.updatedAt}</td>
+                <td>${material.materialId}</td>
+                <td>${material.name}</td>
+                <td>${material.admin.login}</td>
+                <td>${material.createdAt}</td>
+                <td>${material.updatedAt}</td>
 
                 <td>
                     <button
                             class="editButton"
-                            data-id="${materia.materiaId}">
+                            data-id="${material.materialId}">
                         Редактировать
                     </button>
                 </td>
@@ -45,7 +45,7 @@
                 <td>
                     <button
                             class="deleteButton"
-                            data-id="${materia.materiaId}"
+                            data-id="${material.materialId}"
                             data-csrf-name="${_csrf.parameterName}"
                             data-csrf-value="${_csrf.token}">
                         Удалить
@@ -55,7 +55,7 @@
                 <td>
                     <button
                             class="deleteCascadeButton"
-                            data-id="${materia.materiaId}"
+                            data-id="${material.materialId}"
                             data-csrf-name="${_csrf.parameterName}"
                             data-csrf-value="${_csrf.token}">
                         Удалить каскадно
@@ -81,7 +81,7 @@
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-            url:"/security/materia/delete",
+            url:"/security/material/delete",
             headers:{'X-Csrf-Token':csrfValue},
             data:data,
             method:"post",
@@ -101,7 +101,7 @@
         var data = {'id':id};
 
         jQuery.ajax({
-            url:"/security/materia/edit",
+            url:"/security/material/edit",
             data:data,
             method:"get",
             success:function (response, textStatus, xhr) {

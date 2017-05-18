@@ -43,7 +43,7 @@ public class Product {
     @JoinColumn(name = "image_id")
     private Image image;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
@@ -55,12 +55,12 @@ public class Product {
     private Set<OrderProduct> orderProducts = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.product", cascade=CascadeType.ALL)
-    private Set<ProductMateria> productMaterias = new HashSet<>();
+    private Set<ProductMaterial> productMaterials = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(int countPottleProducts, String name, double price, String description, Date createdAt, Date updatedAt, Image image, Category category, Admin admin, Set<OrderProduct> orderProducts, Set<ProductMateria> productMaterias) {
+    public Product(int countPottleProducts, String name, double price, String description, Date createdAt, Date updatedAt, Image image, Category category, Admin admin, Set<OrderProduct> orderProducts, Set<ProductMaterial> productMaterials) {
         this.countPottleProducts = countPottleProducts;
         this.name = name;
         this.price = price;
@@ -71,7 +71,7 @@ public class Product {
         this.category = category;
         this.admin = admin;
         this.orderProducts = orderProducts;
-        this.productMaterias = productMaterias;
+        this.productMaterials = productMaterials;
     }
 
     public long getProductId() {
@@ -162,12 +162,12 @@ public class Product {
         this.orderProducts = orderProducts;
     }
 
-    public Set<ProductMateria> getProductMaterias() {
-        return productMaterias;
+    public Set<ProductMaterial> getProductMaterials() {
+        return productMaterials;
     }
 
-    public void setProductMaterias(Set<ProductMateria> productMaterias) {
-        this.productMaterias = productMaterias;
+    public void setProductMaterials(Set<ProductMaterial> productMaterials) {
+        this.productMaterials = productMaterials;
     }
 
     @Override

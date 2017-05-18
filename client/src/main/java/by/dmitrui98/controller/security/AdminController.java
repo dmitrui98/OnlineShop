@@ -16,7 +16,13 @@ public class AdminController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView mainAdminPage() {
-        return new ModelAndView("security/index");
+        return new ModelAndView("/security/index");
+    }
+
+    @RequestMapping(value = "image", method = RequestMethod.GET)
+    public String imageUpload() {
+
+        return "/security/image";
     }
 
 

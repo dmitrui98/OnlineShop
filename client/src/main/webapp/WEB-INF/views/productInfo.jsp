@@ -12,12 +12,12 @@
         <td> ${product.name} </td>
         <td> ${product.price} </td>
         <td> ${product.category.name} </td>
-        <td> <img src="${product.image.imageDirectory}"/> </td>
+        <td> <img src="${product.image.imageDirectory}" width="70" height="50"/> </td>
     </tr>
 </table> <br/>
 
 <h3>Описание:</h3>
-<textarea readonly="true" cols="50" rows="10" class="descriptionClass">
+<textarea readonly="true" cols="50" rows="10" class="descriptionTextArea">
     ${product.description}
 </textarea> <br/>
 
@@ -27,10 +27,10 @@
         <th width="100"><b>Материал</b></th>
         <th width="60"><b>Процент</b></th>
     </tr>
-    <c:forEach items="${product.productMaterias}" var="productMateria">
+    <c:forEach items="${product.productMaterials}" var="productMaterial">
         <tr>
-            <td> ${productMateria.materia} </td>
-            <td> ${productMateria.persantMateria} </td>
+            <td> ${productMaterial.material} </td>
+            <td> ${productMaterial.persentMaterial} </td>
         </tr>
     </c:forEach>
 </table>

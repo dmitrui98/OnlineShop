@@ -13,7 +13,7 @@
 </head>
 <body>
     <a href = "<c:url value = "/security/category"/>">Редактировать категории товаров</a><br/>
-    <a href = "<c:url value = "/security/materia"/>">Редактировать материалы товаров</a><br/>
+    <a href = "<c:url value = "/security/material"/>">Редактировать материалы товаров</a><br/>
     <a href = "<c:url value = "/security/product"/>">Редактировать товары</a><br/>
 </body>
 </html>

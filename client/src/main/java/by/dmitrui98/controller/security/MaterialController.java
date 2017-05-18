@@ -1,9 +1,9 @@
 package by.dmitrui98.controller.security;
 
 import by.dmitrui98.entity.Admin;
-import by.dmitrui98.entity.Materia;
+import by.dmitrui98.entity.Material;
 import by.dmitrui98.service.dao.AdminService;
-import by.dmitrui98.service.dao.MateriaService;
+import by.dmitrui98.service.dao.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -24,67 +24,75 @@ import java.util.Date;
  * Created by Администратор on 29.04.2017.
  */
 @Controller
-@RequestMapping(value = "/security/materia")
-public class MateriaController {
+@RequestMapping(value = "/security/material")
+public class MaterialController {
     @Autowired
-    MateriaService materiaService;
+    MaterialService materialService;
 
     @Autowired
     AdminService adminService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String editMateriaPage(Model model) {
+    public String editMaterialPage(Model model) {
 
-        model.addAttribute("materias", materiaService.getAll());
+        model.addAttribute("materials", materialService.getAll());
 
-        return "/security/materia";
+        return "/security/material";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addCategory(Model model) {
-        model.addAttribute("materia", new Materia());
+        model.addAttribute("material", new Material());
 
-        return "/security/materiaAdd";
+        return "/security/materialAdd";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editCategory(HttpServletRequest request, HttpServletResponse response, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
-        model.addAttribute("materia", materiaService.getById(id));
+        model.addAttribute("material", materialService.getById(id));
 
-        return "/security/materiaEdit";
+        return "/security/materialEdit";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addOrUpdate(@ModelAttribute("materia") Materia materia, Model model, HttpServletRequest request) {
+    public String addOrUpdate(@ModelAttribute("material") Material material, Model model, HttpServletRequest request) {
         String adminName = request.getUserPrincipal().getName();
         Admin admin = adminService.getByName(adminName);
 
         try {
-            materia.setName(new String (materia.getName().getBytes("ISO-8859-1"), "UTF-8"));
+            material.setName(new String (material.getName().getBytes("ISO-8859-1"), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         boolean isEdit = true;
-        if (materia.getMateriaId() == 0)
+        if (material.getMaterialId() == 0)
             isEdit = false;
 
-        materia.setAdmin(admin);
-        materiaService.save(materia);
+        material.setAdmin(admin);
+        materialService.save(material);
 
         if (isEdit)
-            return "redirect:/security/materia";
+            return "redirect:/security/material";
         else
-            return "redirect:/security/materia/add";
+            return "redirect:/security/material/add";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        materiaService.remove(id);
+        materialService.remove(id);
 
-        return "redirect:/security/materia";
+        return "redirect:/security/material";
+    }
+
+    @RequestMapping(value = "/deleteCascade", method = RequestMethod.POST)
+    public String deleteCascade(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        materialService.removeCascade(id);
+
+        return "redirect:/security/material";
     }
 
     @InitBinder

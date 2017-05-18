@@ -22,7 +22,7 @@
         <td><b><%= product.getName() %></b></td>
         <td><b><%= product.getPrice() %></b></td>
         <td><b><%= product.getCategory().getName() %></b></td>
-        <td><img src="<%= product.getImage().getImageDirectory() %>"/></td>
+        <td><img src="<%= product.getImage().getImageDirectory() %>" width="70" height="50"/></td>
         <td>
             <form action="/product/info" method="get">
                 <input type="hidden" name="id" value="<%=product.getProductId()%>">

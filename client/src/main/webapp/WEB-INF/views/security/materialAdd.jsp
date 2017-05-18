@@ -8,12 +8,12 @@
 </head>
 <body>
 
-<a href="<c:url value="/security/materia" />">Назад</a>
+<a href="<c:url value="/security/material" />">Назад</a>
 
 
 <h1>Добавить материал</h1>
 
-<form:form action="/security/materia" modelAttribute="materia" method="POST">
+<form:form action="/security/material" modelAttribute="material" method="POST">
     <table>
 
         <tr>

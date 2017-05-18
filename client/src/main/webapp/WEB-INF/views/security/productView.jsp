@@ -1,5 +1,5 @@
 <%@ page import="by.dmitrui98.entity.Product" %>
-<%@ page import="by.dmitrui98.entity.ProductMateria" %>
+<%@ page import="by.dmitrui98.entity.ProductMaterial" %>
 <%@ page import="java.util.Set" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--

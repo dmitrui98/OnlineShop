@@ -49,14 +49,13 @@
 
     <input type="file" name="image" accept="image/*,image/jpeg"/> <br/>
 
-    <select id="selectedMateria">
-        <c:forEach items="${materias}" var="m">
-            <option value="${m.materiaId}">${m.name}</option>
+    <select id="selectedMaterial">
+        <c:forEach items="${materials}" var="m">
+            <option value="${m.materialId}">${m.name}</option>
         </c:forEach>
     </select>
-
-    <input type="number" value="0" step="any" id = "persant"/>
-    <button id="materiaAddButton"> Добавить материал </button> <br/>
+    <input type="number" value="0" step="any" id = "persent"/>
+    <button id="materialAddButton"> Добавить материал </button> <br/>
 
     <button type="submit">Добавить товар</button> <br/>
 
@@ -72,15 +71,15 @@
 <script>
 
     $(document).ready(function() {
-        $('#materiaAddButton').on('click', function(e) {
+        $('#materialAddButton').on('click', function(e) {
             e.preventDefault();
 
             $('#composition').removeClass('hide');
             $('#emptyCompositionLabel').addClass('hide');
 
-            var id = $('#selectedMateria').val();
-            var name = $('#selectedMateria').find('option:selected').text();
-            var persant = $('#persant').val();
+            var id = $('#selectedMaterial').val();
+            var name = $('#selectedMaterial').find('option:selected').text();
+            var persent = $('#persent').val();
 
             var source = $("#table-row").html();
             var template = Handlebars.compile(source);
@@ -88,7 +87,7 @@
             var context = {
                 id: id,
                 name: name,
-                persant: persant
+                persent: persent
             };
 
             console.log(context);
@@ -120,8 +119,8 @@
             {{name}}
         </td>
         <td>
-            <input type="hidden" name="materiaId[]" value="{{id}}">
-            <input type="number" step="any" name="persant[]" value="{{persant}}">
+            <input type="hidden" name="materialId[]" value="{{id}}">
+            <input type="number" step="any" name="persent[]" value="{{persent}}">
         </td>
         <td>
             <button class="delete">Удалить</button>

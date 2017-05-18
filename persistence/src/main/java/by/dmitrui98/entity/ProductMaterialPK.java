@@ -7,20 +7,20 @@ import java.io.Serializable;
  * Created by Администратор on 03.05.2017.
  */
 @Embeddable
-public class ProductMateriaPK implements Serializable {
+public class ProductMaterialPK implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Product product;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Materia materia;
+    private Material material;
 
-    public ProductMateriaPK() {
+    public ProductMaterialPK() {
     }
 
-    public ProductMateriaPK(Product product, Materia materia) {
+    public ProductMaterialPK(Product product, Material material) {
         this.product = product;
-        this.materia = materia;
+        this.material = material;
     }
 
     public Product getProduct() {
@@ -31,11 +31,11 @@ public class ProductMateriaPK implements Serializable {
         this.product = product;
     }
 
-    public Materia getMateria() {
-        return materia;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 }

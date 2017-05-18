@@ -6,6 +6,9 @@ import by.dmitrui98.entity.Image;
  * Created by Администратор on 09.05.2017.
  */
 public interface ImageService extends BaseService<Image, Long> {
-    Image save(byte[] bytes);
+    Image write(byte[] bytes);
+
+    byte[] read(String imageName);
+
     Image getDefaultImage();
 }

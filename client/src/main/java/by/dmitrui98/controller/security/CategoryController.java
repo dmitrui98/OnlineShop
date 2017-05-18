@@ -85,6 +85,14 @@ public class CategoryController {
         return "redirect:/security/category";
     }
 
+    @RequestMapping(value = "/deleteCascade", method = RequestMethod.POST)
+    public String deleteCascade(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        categoryService.removeCascade(id);
+
+        return "redirect:/security/category";
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

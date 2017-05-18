@@ -1,8 +1,6 @@
 package by.dmitrui98.initialization;
 
 
-import by.dmitrui98.config.DatabaseConfig;
-import by.dmitrui98.config.SecurityConfig;
 import by.dmitrui98.config.WebConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -21,6 +19,20 @@ import javax.servlet.ServletRegistration;
 public class ApplicationInitializer implements WebApplicationInitializer {
 
     private final static String DISPATCHER = "dispatcher";
+
+    // TODO !!! подключить к серверу папку с ресурсами
+    // <Context docBase="/server/file_storage/images" path="/images" reloadable="true"/>
+
+    // TODO !!! правильная обработка исключения удаления
+
+    // TODO перевести время на час вперед
+    // TODO изменить формат вывода даты: "yyyy/MM/dd HH:mm:ss"
+    // TODO перехватить исключения, выбрасываемые на браузер
+    // TODO перенести скрипты в .js - файлы
+    // TODO сделать <jsp:include> для title
+    // TODO страница comeIn только для неаутентифицированных пользователей
+
+
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {

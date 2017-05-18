@@ -8,21 +8,21 @@
 </head>
 <body>
 
-<a href="<c:url value="/security/materia" />">Назад</a>
+<a href="<c:url value="/security/material" />">Назад</a>
 
 <h1>Редактировать материал</h1>
 
-<form:form action="/security/materia" modelAttribute="materia" method="POST">
+<form:form action="/security/material" modelAttribute="material" method="POST">
     <table>
         <tr>
             <td>
-                <form:label path="materiaId">
+                <form:label path="materialId">
                     <spring:message text="ID"/>
                 </form:label>
             </td>
             <td>
-                <form:input path="materiaId" readonly="true" size="8" disabled="true"/>
-                <form:hidden path="materiaId"/>
+                <form:input path="materialId" readonly="true" size="8" disabled="true"/>
+                <form:hidden path="materialId"/>
             </td>
         </tr>
 

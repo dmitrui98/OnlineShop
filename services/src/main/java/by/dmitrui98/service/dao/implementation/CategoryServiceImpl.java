@@ -40,7 +40,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void remove(Integer id) {
+    public void remove(Integer id)
+    {
+        Category category = categoryDao.getById(id);
+
+        if (category.getProducts().size() == 0)
+            categoryDao.delete(id);
+    }
+
+    @Override
+    public void removeCascade(Integer id) {
         categoryDao.delete(id);
     }
 }

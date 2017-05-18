@@ -1,11 +1,11 @@
 package by.dmitrui98.service.dao.implementation;
 
 import by.dmitrui98.dao.ProductDao;
-import by.dmitrui98.entity.Materia;
+import by.dmitrui98.entity.Material;
 import by.dmitrui98.entity.Product;
-import by.dmitrui98.entity.ProductMateria;
+import by.dmitrui98.entity.ProductMaterial;
 import by.dmitrui98.service.dao.ImageService;
-import by.dmitrui98.service.dao.MateriaService;
+import by.dmitrui98.service.dao.MaterialService;
 import by.dmitrui98.service.dao.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Autowired
-    private MateriaService materiaService;
+    private MaterialService materialService;
 
     @Autowired
     private ImageService imageService;
@@ -54,26 +54,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void save(Product product, int[] materiaIds, double[] persants) {
+    public void save(Product product, int[] materialIds, double[] persents) {
 
         this.setDate(product);
         if (product.getImage() == null)
             product.setImage(imageService.getDefaultImage());
 
-        Set<ProductMateria> productMaterias = new HashSet<>();
-        for (int i = 0; i < materiaIds.length; i++) {
-            ProductMateria productMateria = new ProductMateria();
+        Set<ProductMaterial> productMaterials = new HashSet<>();
+        for (int i = 0; i < materialIds.length; i++) {
+            ProductMaterial productMaterial = new ProductMaterial();
 
-            Materia materia = materiaService.getById(materiaIds[i]);
+            Material material = materialService.getById(materialIds[i]);
 
-            productMateria.setMateria(materia);
-            productMateria.setProduct(product);
-            productMateria.setPersantMateria(persants[i]);
+            productMaterial.setMaterial(material);
+            productMaterial.setProduct(product);
+            productMaterial.setPersentMaterial(persents[i]);
 
-            productMaterias.add(productMateria);
+            productMaterials.add(productMaterial);
         }
 
-        product.setProductMaterias(productMaterias);
+        product.setProductMaterials(productMaterials);
         productDao.addOrUpdate(product);
 
     }
@@ -82,6 +82,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void remove(Long id) {
+//        TODO удалить картинку, прикрепленную к товару
+//        TODO удалить картинку, прикрепленную к товару
         productDao.delete(id);
     }
 

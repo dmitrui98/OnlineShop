@@ -87,36 +87,6 @@ public class UserController {
         }
 
         return "comeIn";
-
-
-
-//        response.setContentType ("text/html; charset=UTF-8");
-//        try {
-//            request.setCharacterEncoding("UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        String login = request.getParameter("login");
-//        String password = request.getParameter("password");
-//        String login2 = "testValue";
-//        if (login != null) {
-//            request.getSession().setAttribute("login2", login);
-//        }
-//        login2 = (String) request.getSession().getAttribute("login2");
-//
-//        System.out.println("Пользователь пытается войти:");
-//        System.out.println("login: " + login + " password" + password);
-//
-//
-//
-////        request.getRequestDispatcher("/comeIn").forward(request, response);
-//
-//        request.setAttribute("login", login);
-//        request.setAttribute("login2", login2);
-//        response.setStatus(200);
-//        return "comeIn";
-        //response.getWriter().println("<html><body><p>" + login + "</p></body></html>");
     }
 
     @RequestMapping(value="/logout", method = RequestMethod.GET)

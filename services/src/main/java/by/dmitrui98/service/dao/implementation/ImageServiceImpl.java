@@ -3,6 +3,7 @@ package by.dmitrui98.service.dao.implementation;
 import by.dmitrui98.dao.ImageDao;
 import by.dmitrui98.entity.Image;
 import by.dmitrui98.service.dao.ImageService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +25,13 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private ImageDao imageDao;
 
-    public Image save(byte[] bytes) {
+    public Image write(byte[] bytes) {
 
         Image image = null;
         if (bytes.length != 0) {
             File folder = createFolder(dir);
 
-            SimpleDateFormat format = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+            SimpleDateFormat format = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss_SSS");
             String imageName = format.format(new Date()) + ".jpg";
 
             try {
@@ -47,6 +48,29 @@ public class ImageServiceImpl implements ImageService {
         }
 
         return image;
+    }
+
+    @Override
+    public byte[] read(String imageName) {
+        File folder = createFolder(dir);
+        File image = new File(folder, imageName + ".jpg");
+
+        FileInputStream stream = null;
+        try{
+
+            if (image.exists()) {
+                stream =
+                        new FileInputStream(image);
+            } else {
+                stream =
+                        new FileInputStream(new File(folder, defaultImageName));
+//                throw new IllegalArgumentException("Image with name " + imageName + " not found");
+            }
+            return IOUtils.toByteArray(stream);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @Override

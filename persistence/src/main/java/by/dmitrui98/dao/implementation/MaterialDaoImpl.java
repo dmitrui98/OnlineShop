@@ -1,29 +1,34 @@
 package by.dmitrui98.dao.implementation;
 
-import by.dmitrui98.dao.MateriaDao;
-import by.dmitrui98.entity.Materia;
+import by.dmitrui98.dao.MaterialDao;
+import by.dmitrui98.dao.ProductDao;
+import by.dmitrui98.entity.Material;
+import by.dmitrui98.entity.Product;
+import by.dmitrui98.entity.ProductMaterial;
 import by.dmitrui98.util.SessionUtil;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by Администратор on 29.04.2017.
  */
 @Repository
-public class MateriaDaoImpl implements MateriaDao {
+public class MaterialDaoImpl implements MaterialDao {
 
     @Autowired
     SessionUtil sessionUtil;
 
     @Override
-    public void addOrUpdate(Materia materia) {
+    public void addOrUpdate(Material material) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
-        session.saveOrUpdate(materia);
+        session.saveOrUpdate(material);
 
         sessionUtil.closeTransactionSession();
     }
@@ -32,16 +37,23 @@ public class MateriaDaoImpl implements MateriaDao {
     public void delete(Integer id) {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        Materia myObject = (Materia) session.get(Materia.class,id);
-        session.delete(myObject);
+        Material material = (Material) session.get(Material.class,id);
+
+        Iterator<ProductMaterial> iterator = material.getProductMaterials().iterator();
+        while (iterator.hasNext()) {
+            Product product = iterator.next().getProduct();
+            session.delete(product.getProductId());
+        }
+
+        session.delete(material);
         sessionUtil.closeTransactionSession();
     }
 
     @Override
-    public List<Materia> findAll() {
+    public List<Material> findAll() {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        List<Materia> result = session.createQuery("from Materia").list();
+        List<Material> result = session.createQuery("from Material").list();
 
         sessionUtil.closeTransactionSession();
 
@@ -49,10 +61,10 @@ public class MateriaDaoImpl implements MateriaDao {
     }
 
     @Override
-    public Materia getById(Integer id) {
+    public Material getById(Integer id) {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
-        Materia result = (Materia) session.get(Materia.class, id);
+        Material result = (Material) session.get(Material.class, id);
         sessionUtil.closeTransactionSession();
         return result;
     }
