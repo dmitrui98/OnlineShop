@@ -41,4 +41,5 @@ public class Image {
     public void setImageDirectory(String imageDirectory) {
         this.imageDirectory = imageDirectory;
     }
+
 }

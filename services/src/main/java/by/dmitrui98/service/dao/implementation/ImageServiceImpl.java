@@ -2,6 +2,7 @@ package by.dmitrui98.service.dao.implementation;
 
 import by.dmitrui98.dao.ImageDao;
 import by.dmitrui98.entity.Image;
+import by.dmitrui98.entity.Product;
 import by.dmitrui98.service.dao.ImageService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +35,24 @@ public class ImageServiceImpl implements ImageService {
             SimpleDateFormat format = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss_SSS");
             String imageName = format.format(new Date()) + ".jpg";
 
+            BufferedOutputStream stream = null;
             try {
-                BufferedOutputStream stream =
+                stream =
                         new BufferedOutputStream(new FileOutputStream(new File(folder, imageName)));
                 stream.write(bytes);
-                stream.close();
+
 
                 image = imageDao.save(serverDir + imageName);
 
             } catch (Exception ex) {
                 ex.printStackTrace();
+            } finally {
+                try {
+                    if (stream != null)
+                        stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -66,15 +75,26 @@ public class ImageServiceImpl implements ImageService {
                         new FileInputStream(new File(folder, defaultImageName));
 //                throw new IllegalArgumentException("Image with name " + imageName + " not found");
             }
-            return IOUtils.toByteArray(stream);
+
+            byte[] bytes = IOUtils.toByteArray(stream);
+
+            return bytes;
         } catch (IOException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                if (stream != null)
+                    stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
 
     @Override
     public Image getDefaultImage() {
+        // TODO переместить изображение default.jpg из classpath, если оно не сущетсвует
         return new Image(serverDir + defaultImageName);
     }
 
@@ -87,22 +107,20 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<Image> getAll() {
-        throw new UnsupportedOperationException();
+    public boolean remove(String serverDirectory) {
+        String imageName = serverDirectory.substring(serverDir.length());
+        File folder = createFolder(dir);
+        File image = new File(folder, imageName);
+
+        if (!imageName.equals(defaultImageName))
+            if (image.delete())
+                return true;
+        return false;
     }
 
     @Override
-    public Image getById(Long aLong) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void save(Image entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void remove(Long aLong) {
-        throw new UnsupportedOperationException();
+    public boolean removeImage(Product product) {
+        String imageDir = product.getImage().getImageDirectory();
+        return remove(imageDir);
     }
 }

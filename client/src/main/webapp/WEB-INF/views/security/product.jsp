@@ -14,6 +14,7 @@
 <head>
     <title>Товар</title>
     <script type = "text/javascript" src = "/js/jquery-3.2.0.min.js"> </script>
+    <script type = "text/javascript" src = "/js/product.js"> </script>
 </head>
 <body>
     <a href="<c:url value="/security" />">Назад</a> <br/>
@@ -26,6 +27,7 @@
             <tr>
                 <td>ID</td>
                 <td>Name</td>
+                <td>Image</td>
                 <td>Admin</td>
                 <td>Created at</td>
                 <td>Updated at</td>
@@ -41,6 +43,7 @@
         <tr>
             <td> <%=product.getProductId()%> </td>
             <td> <%=product.getName()%> </td>
+            <td><img src="<%= product.getImage().getImageDirectory() %>" width="70" height="50"/></td>
             <td> <%=product.getAdmin().getLogin()%> </td>
             <td> <%=product.getCreatedAt()%> </td>
             <td> <%=product.getUpdatedAt()%> </td>
@@ -70,57 +73,4 @@
 </body>
 </html>
 
-<script>
-    jQuery(".viewButton").on("click", function () {
-        var id = $(this).data("id");
-        $.ajax({
-           url:"/security/product/view",
-           data:{'id' : id},
-           method: "get",
-           success:function (response) {
-               $('body').html(response);
-           },
-           error: function () {
-               alert("ошибка");
-           }
-        });
-    })
 
-    jQuery(".editButton").on("click", function () {
-        var id = $(this).data("id");
-
-        var data = {'id':id};
-        $.ajax({
-            url:"/security/product/edit",
-            data:data,
-            method: "get",
-            success:function (response) {
-                $('body').html(response);
-            },
-            error: function () {
-                alert("ошибка");
-            }
-        });
-    })
-
-    jQuery(".deleteButton").on("click", function () {
-        var id = $(this).data("id");
-        var csrfValue = $(this).data("csrf-value");
-        var csrfName = $(this).data("csrf-name");
-
-        var data = {'id':id};
-        data[csrfName] = csrfValue;
-        $.ajax({
-            url:"/security/product/delete",
-            headers:{'X-Csrf-Token':csrfValue},
-            data:data,
-            method: "post",
-            success:function (response) {
-                $('body').html(response);
-            },
-            error: function () {
-                alert("ошибка");
-            }
-        });
-    })
-</script>

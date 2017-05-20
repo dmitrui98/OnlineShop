@@ -20,7 +20,7 @@ public class Material {
     @Column(name = "material_id")
     private int materialId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -34,6 +34,7 @@ public class Material {
     private Admin admin;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.material", cascade=CascadeType.ALL)
+//    @Transient
     private Set<ProductMaterial> productMaterials = new HashSet<>();
 
     public Material() {

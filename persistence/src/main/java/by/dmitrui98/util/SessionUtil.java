@@ -1,6 +1,5 @@
 package by.dmitrui98.util;
 
-import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -30,7 +29,6 @@ public class SessionUtil {
 
     public Session openTransactionSession() {
         session = openSession();
-//        session.setFlushMode(FlushMode.MANUAL);
         transaction = session.beginTransaction();
         return session;
     }
@@ -40,7 +38,6 @@ public class SessionUtil {
     }
 
     public void closeTransactionSession() {
-//        session.flush();
         transaction.commit();
         closeSession();
     }

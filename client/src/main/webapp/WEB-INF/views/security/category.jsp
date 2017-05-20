@@ -15,6 +15,7 @@
 <head>
     <title>Категория</title>
     <script type = "text/javascript" src = "/js/jquery-3.2.0.min.js"> </script>
+    <script type = "text/javascript" src = "/js/category.js"> </script>
 </head>
 <body>
 <a href="<c:url value="/security" />">Назад</a> <br/>
@@ -78,45 +79,6 @@
 </body>
 </html>
 
-<script>
-    jQuery(".deleteButton").on("click", function() {
-        var id = $(this).data("id");
-        var csrfValue = $(this).data("csrf-value");
-        var csrfName = $(this).data("csrf-name");
 
-        var data = {'id':id};
-        data[csrfName] = csrfValue;
 
-        jQuery.ajax({
-            url:"/security/category/delete",
-            headers:{'X-Csrf-Token':csrfValue},
-            data:data,
-            method:"post",
-            success:function (response, textStatus, xhr) {
-                $("body").html(response);
-            },
-            error:function (response) {
-                alert("Какой-то продукт ссылается на данную категорию, " +
-                        "чтобы удалить категорию вместе с продуктами," +
-                        "нажмите кнопку \"удалить каскадно\"");
-            }
-        });
-    });
 
-    jQuery(".editButton").on("click", function() {
-        var id = $(this).data("id");
-        var data = {'id':id};
-
-        jQuery.ajax({
-            url:"/security/category/edit",
-            data:data,
-            method:"get",
-            success:function (response, textStatus, xhr) {
-                $('body').html(response);
-            },
-            error:function (response) {
-                alert("что-то пошло не так");
-            }
-        });
-    });
-</script>

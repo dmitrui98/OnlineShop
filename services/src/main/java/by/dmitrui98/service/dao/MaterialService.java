@@ -8,4 +8,5 @@ import by.dmitrui98.entity.Material;
  */
 public interface MaterialService extends BaseService<Material, Integer> {
     void removeCascade(Integer id);
+    Material getByName(String name);
 }

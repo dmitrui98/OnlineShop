@@ -6,12 +6,13 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title> Интернет-магазин одежды </title>
+		<title> Интернет-магазин товаров </title>
         <link href = "css/bootstrap.css" rel="stylesheet" type ="text/css" />
         <link href = "css/style.css" rel="stylesheet" type ="text/css" />
 
-		<script type = "text/javascript" src = "/js/jquery-3.2.0.min.js"> </script>
-		<script type = "text/javascript" src="/js/script.js"> </script>
+		<script type = "text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.2.0.min.js"> </script>
+		<script type = "text/javascript" src="${pageContext.request.contextPath}/js/script.js"> </script>
+		<script type = "text/javascript" src="${pageContext.request.contextPath}/js/allProducts.js"> </script>
 	<head>
 	
 	<body>

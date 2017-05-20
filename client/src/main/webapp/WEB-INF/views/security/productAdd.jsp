@@ -1,19 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Администратор
-  Date: 05.05.2017
-  Time: 9:31
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Добавить продукт</title>
+    <title>Добавить товар</title>
 
     <script type = "text/javascript" src = "/js/jquery-3.2.0.min.js"> </script>
     <script type = "text/javascript" src = "/js/handlebars-v4.0.5.js"> </script>
+    <script type = "text/javascript" src = "/js/productAdd.js"> </script>
 
     <style>
         .container {
@@ -34,84 +29,122 @@
 
 <form:form action="/security/product/add?${_csrf.parameterName}=${_csrf.token}" method="post"
            modelAttribute="product" enctype="multipart/form-data">
-    <h2> Добавление товара </h2>
-
-    <form:input type="text" path="name" placeholder="Название" autofocus="true"/> <br/>
-
-    <form:textarea path="description" placeholder="Описание" cols="40" rows="10"/> <br/>
-
-    Цена: <br/>
-    <form:input type="number" path="price" placeholder="Цена" step="any"/> <br/>
-
-    Категория: <br/>
-    <form:select path="category" items="${categories}"
-                 itemValue="categoryId" itemLabel="name"/> <br/>
-
-    <input type="file" name="image" accept="image/*,image/jpeg"/> <br/>
-
-    <select id="selectedMaterial">
-        <c:forEach items="${materials}" var="m">
-            <option value="${m.materialId}">${m.name}</option>
-        </c:forEach>
-    </select>
-    <input type="number" value="0" step="any" id = "persent"/>
-    <button id="materialAddButton"> Добавить материал </button> <br/>
-
-    <button type="submit">Добавить товар</button> <br/>
+    <h3> Добавление товара </h3>
 
     <div>
-        <h2>Состав</h2>
-        <table id="composition" class="hide"  style="width:100%"></table>
-        <span id="emptyCompositionLabel">Состав не задан</span>
+        <spring:bind path="category">
+            <form:errors path="category"/>
+        </spring:bind>
+        <spring:bind path="productMaterials">
+            <form:errors path="productMaterials"/>
+        </spring:bind>
     </div>
-    <br>
+
+    <table>
+        <tr>
+            <td>
+                <form:label path="name">
+                    <spring:message text="Название:"/>
+                </form:label>
+            </td>
+            <td>
+                <spring:bind path="name">
+                    <form:input type="text" path="name" placeholder="Название" autofocus="true"/> <br/>
+                    <form:errors path="name"/>
+                </spring:bind>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="description">
+                    <spring:message text="Описание:"/>
+                </form:label>
+            </td>
+            <td>
+                <form:textarea path="description" placeholder="Описание" cols="40" rows="10"/> <br/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:label path="price">
+                    <spring:message text="Цена:"/>
+                </form:label>
+            </td>
+            <td>
+                <form:input type="number" path="price" placeholder="Цена" step="any"/> <br/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:label path="category">
+                    <spring:message text="Категория:"/>
+                </form:label>
+            </td>
+            <td>
+
+                    <form:select path="category" items="${categories}"
+                                 itemValue="categoryId" itemLabel="name"/> <br/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <%--TODO выберите файл. Обработать отмена--%>
+                <%--TODO при получении ошибки нужно заново выбирать изображение--%>
+                <input id="inputImage" type="file" name="image" accept="image/*,image/jpeg" />
+                <img src="/images/default.jpg" width="70" height="50" id = "image"/>
+            </td>
+        </tr>
+
+    </table>
+    <table>
+    <tr>
+        <td>
+            <select id="selectedMaterial">
+                <c:forEach items="${materials}" var="m">
+                    <option value="${m.materialId}">${m.name}</option>
+                </c:forEach>
+            </select>
+            <input type="number" value="0" step="any" id = "percent"/>
+        </td>
+        <td>
+            <button id="materialAddButton"> Добавить материал </button> <br/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button type="submit">Добавить товар</button>
+        </td>
+    </tr>
+    </table>
+    <div>
+        <h3>Состав</h3>
+        <table id="composition" style="width:100%">
+            <c:forEach items="${product.productMaterials}" var="pm">
+                <tr>
+                    <td>
+                            ${pm.material.name}
+                    </td>
+                    <td>
+                        <input type="hidden" name="materialId[]" value="${pm.material.materialId}">
+                        <input type="number" step="any" name="percent[]" value="${pm.percentMaterial}">
+                    </td>
+                    <td>
+                        <button class="delete">Удалить</button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+        <span id="emptyCompositionLabel"
+                <c:if test="${not empty product.productMaterials}">
+                    class="hide"
+                </c:if> >
+              Состав не задан </span>
+    </div>
+    <br/>
 
 </form:form>
-
-<script>
-
-    $(document).ready(function() {
-        $('#materialAddButton').on('click', function(e) {
-            e.preventDefault();
-
-            $('#composition').removeClass('hide');
-            $('#emptyCompositionLabel').addClass('hide');
-
-            var id = $('#selectedMaterial').val();
-            var name = $('#selectedMaterial').find('option:selected').text();
-            var persent = $('#persent').val();
-
-            var source = $("#table-row").html();
-            var template = Handlebars.compile(source);
-
-            var context = {
-                id: id,
-                name: name,
-                persent: persent
-            };
-
-            console.log(context);
-
-            var html = template(context);
-            $('#composition').append(html);
-        });
-
-
-        $(document).on('click', '.delete', function(e) {
-            e.preventDefault();
-            $(this).closest('tr').remove();
-
-            if ($('#composition').find('tr').length == 0) {
-                $('#composition').addClass('hide');
-                $('#emptyCompositionLabel').removeClass('hide');
-            }
-        });
-
-
-    });
-
-</script>
-
 
 <script id="table-row" type="text/x-handlebars-template">
     <tr>
@@ -120,7 +153,7 @@
         </td>
         <td>
             <input type="hidden" name="materialId[]" value="{{id}}">
-            <input type="number" step="any" name="persent[]" value="{{persent}}">
+            <input type="number" step="any" name="percent[]" value="{{percent}}">
         </td>
         <td>
             <button class="delete">Удалить</button>

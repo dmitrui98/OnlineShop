@@ -11,7 +11,7 @@
 <a href="<c:url value="/security/material" />">Назад</a>
 
 
-<h1>Добавить материал</h1>
+<h3>Добавить материал</h3>
 
 <form:form action="/security/material" modelAttribute="material" method="POST">
     <table>
@@ -23,7 +23,12 @@
                 </form:label>
             </td>
             <td>
-                <form:input path="name" autofocus="true"/>
+                <spring:bind path="name">
+                    <form:input path="name" autofocus="true"/>
+                    <div>
+                        <form:errors path="name"/>
+                    </div>
+                </spring:bind>
             </td>
         </tr>
         <tr>

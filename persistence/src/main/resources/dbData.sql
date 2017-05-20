@@ -17,4 +17,3 @@ INSERT INTO user VALUES (NULL,
                          'test',
                          NULL);
 
-# INSERT INTO material VALUES (NULL, NULL, 'стекло', NULL, 1, )

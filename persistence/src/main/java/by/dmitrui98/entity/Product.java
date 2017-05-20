@@ -1,8 +1,6 @@
 package by.dmitrui98.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -43,7 +41,7 @@ public class Product {
     @JoinColumn(name = "image_id")
     private Image image;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
@@ -54,7 +52,7 @@ public class Product {
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
     private Set<OrderProduct> orderProducts = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.product", cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.product", cascade = CascadeType.ALL)
     private Set<ProductMaterial> productMaterials = new HashSet<>();
 
     public Product() {
@@ -172,8 +170,14 @@ public class Product {
 
     @Override
     public boolean equals(Object obj) {
-        Product product = (Product) obj;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Product))
+            return false;
 
-        return product.getProductId() == productId;
+        Product product = (Product) obj;
+        return product.getProductId() == getProductId();
     }
 }

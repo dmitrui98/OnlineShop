@@ -39,7 +39,7 @@ public class UserValidator implements Validator {
             }
         }
 
-        // проверить дубликаты с таблицы admin!!!
+        // также проверяем дубликаты с таблицы admin
         if ( (userService.getByName(user.getLogin()) != null) || (adminService.getByName(user.getLogin()) != null)) {
             errors.rejectValue("login", "Duplicate.userForm.login");
         }

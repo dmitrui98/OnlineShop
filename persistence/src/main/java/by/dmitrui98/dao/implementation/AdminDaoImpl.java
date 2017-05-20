@@ -31,12 +31,20 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public void delete(Long id) {
-        sessionUtil.openTransactionSession();
-        Session session = sessionUtil.getSession();
-        Admin myObject = (Admin) session.get(Admin.class,id);
-        session.delete(myObject);
-        sessionUtil.closeTransactionSession();
+    public boolean delete(Long id) {
+
+        try {
+            sessionUtil.openTransactionSession();
+            Session session = sessionUtil.getSession();
+            Admin myObject = (Admin) session.get(Admin.class, id);
+            session.delete(myObject);
+            sessionUtil.closeTransactionSession();
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override

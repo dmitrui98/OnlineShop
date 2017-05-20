@@ -7,6 +7,7 @@ import by.dmitrui98.entity.Category;
 import by.dmitrui98.entity.Product;
 import by.dmitrui98.util.SessionUtil;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,19 +35,26 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public void delete(Integer id) {
-        sessionUtil.openTransactionSession();
-        Session session = sessionUtil.getSession();
-        Category category = (Category) session.get(Category.class,id);
+    public boolean delete(Integer id) {
+        try {
+            sessionUtil.openTransactionSession();
+            Session session = sessionUtil.getSession();
+            Category category = (Category) session.get(Category.class, id);
 
-        Iterator<Product> iterator = category.getProducts().iterator();
-        while (iterator.hasNext()) {
-            Product product = iterator.next();
-            session.delete(product);
+            Iterator<Product> iterator = category.getProducts().iterator();
+            while (iterator.hasNext()) {
+                Product product = iterator.next();
+                session.delete(product);
+            }
+
+            session.delete(category);
+            sessionUtil.closeTransactionSession();
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
         }
-
-        session.delete(category);
-        sessionUtil.closeTransactionSession();
     }
 
     @Override
@@ -67,5 +75,22 @@ public class CategoryDaoImpl implements CategoryDao {
         Category result = (Category) session.get(Category.class, id);
         sessionUtil.closeTransactionSession();
         return result;
+    }
+
+    @Override
+    public Category getByName(String name) {
+        sessionUtil.openTransactionSession();
+        Session session = sessionUtil.getSession();
+        Query query = session.createQuery("FROM Category c where c.name=:name", Category.class);
+        query.setParameter("name", name);
+        List<Category> categories = ((List<Category>) query.getResultList());
+        sessionUtil.closeTransactionSession();
+
+        Category category = null;
+        if (categories.size() > 0) {
+            category = categories.get(0);
+        }
+
+        return category;
     }
 }

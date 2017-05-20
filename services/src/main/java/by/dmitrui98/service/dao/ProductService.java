@@ -6,5 +6,8 @@ import by.dmitrui98.entity.Product;
  * Created by Администратор on 16.04.2017.
  */
 public interface ProductService extends BaseService<Product, Long> {
-    public void save(Product product, int[] materialIds, double[] persents);
+    public void save(Product product, String[] materialIds, String[] percents);
+    public void save(Product product, String[] materialIds, String[] percents,
+                     String imageDirectory, long imageId);
+    void setProductMaterias(Product product, String[] materialIds, String[] percents);
 }

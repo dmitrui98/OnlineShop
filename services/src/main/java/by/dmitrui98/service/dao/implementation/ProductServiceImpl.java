@@ -1,6 +1,7 @@
 package by.dmitrui98.service.dao.implementation;
 
 import by.dmitrui98.dao.ProductDao;
+import by.dmitrui98.entity.Image;
 import by.dmitrui98.entity.Material;
 import by.dmitrui98.entity.Product;
 import by.dmitrui98.entity.ProductMaterial;
@@ -54,37 +55,75 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void save(Product product, int[] materialIds, double[] persents) {
+    public void save(Product product, String[] stringMaterialIds, String[] stringPercents) {
+
+        if (product.getProductMaterials() == null)
+            setProductMaterias(product, stringMaterialIds, stringPercents);
 
         this.setDate(product);
         if (product.getImage() == null)
             product.setImage(imageService.getDefaultImage());
 
-        Set<ProductMaterial> productMaterials = new HashSet<>();
-        for (int i = 0; i < materialIds.length; i++) {
-            ProductMaterial productMaterial = new ProductMaterial();
-
-            Material material = materialService.getById(materialIds[i]);
-
-            productMaterial.setMaterial(material);
-            productMaterial.setProduct(product);
-            productMaterial.setPersentMaterial(persents[i]);
-
-            productMaterials.add(productMaterial);
-        }
-
-        product.setProductMaterials(productMaterials);
         productDao.addOrUpdate(product);
 
     }
 
+    @Override
+    public void save(Product product, String[] materialIds, String[] percents, String imageDirectory, long imageId) {
+        if ((product.getProductId() != 0) && (imageDirectory != null)) {
 
+            if (product.getImage() == null) {
+                Image image = new Image(imageDirectory);
+                image.setImageId(imageId);
+                product.setImage(image);
+            } else { // если изображение изменено, то удаляем старое изображение
+                imageService.remove(imageDirectory);
+            }
+        }
+        save(product, materialIds, percents);
+    }
 
     @Override
-    public void remove(Long id) {
-//        TODO удалить картинку, прикрепленную к товару
-//        TODO удалить картинку, прикрепленную к товару
-        productDao.delete(id);
+    public void setProductMaterias(Product product, String[] stringMaterialIds, String[] stringPercents) {
+        if (stringMaterialIds != null && stringPercents != null) {
+            int[] materialIds = new int[stringMaterialIds.length];
+            double[] percents = new double[stringPercents.length];
+
+            for (int i = 0; i < stringMaterialIds.length; i++) {
+                materialIds[i] = Integer.parseInt(stringMaterialIds[i]);
+                percents[i] = Double.parseDouble(stringPercents[i]);
+            }
+
+            Set<ProductMaterial> productMaterials = new HashSet<>();
+            for (int i = 0; i < materialIds.length; i++) {
+                ProductMaterial productMaterial = new ProductMaterial();
+
+                Material material = materialService.getById(materialIds[i]);
+
+                productMaterial.setMaterial(material);
+                productMaterial.setProduct(product);
+                productMaterial.setPercentMaterial(percents[i]);
+
+                productMaterials.add(productMaterial);
+            }
+
+            product.setProductMaterials(productMaterials);
+        }
+    }
+
+    @Override
+    public boolean remove(Long id) {
+        Product product = productDao.getById(id);
+
+        if (imageService.removeImage(product))
+            System.out.println("Изображение: " + product.getImage().getImageDirectory() + " удалено успешно");
+        else
+            System.err.println("Изображение: " + product.getImage().getImageDirectory() + " не удалено!!!!");
+
+        if (productDao.delete(id))
+            return true;
+        else
+            return false;
     }
 
     private void setDate(Product product) {

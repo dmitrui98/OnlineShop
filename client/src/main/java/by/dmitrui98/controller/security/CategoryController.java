@@ -4,10 +4,12 @@ import by.dmitrui98.entity.Admin;
 import by.dmitrui98.entity.Category;
 import by.dmitrui98.service.dao.AdminService;
 import by.dmitrui98.service.dao.CategoryService;
+import by.dmitrui98.validation.CategoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +27,11 @@ import java.util.Date;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
-
+    private CategoryService categoryService;
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
+    @Autowired
+    private CategoryValidator categoryValidator;
 
     @RequestMapping(method = RequestMethod.GET)
     public String editCategoryPage(Model model) {
@@ -54,10 +57,7 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addOrUpdate(@ModelAttribute("category") Category category, Model model, HttpServletRequest request) {
-        String adminName = request.getUserPrincipal().getName();
-        Admin admin = adminService.getByName(adminName);
-
+    public String addOrUpdate(@ModelAttribute("category") Category category, BindingResult bindingResult, HttpServletRequest request) {
         try {
             category.setName(new String (category.getName().getBytes("ISO-8859-1"), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -67,6 +67,17 @@ public class CategoryController {
         boolean isEdit = true;
         if (category.getCategoryId() == 0)
             isEdit = false;
+
+        categoryValidator.validate(category, bindingResult);
+        if (bindingResult.hasErrors()) {
+            if (isEdit)
+                return "/security/categoryEdit";
+            else
+                return "/security/categoryAdd";
+        }
+
+        String adminName = request.getUserPrincipal().getName();
+        Admin admin = adminService.getByName(adminName);
 
         category.setAdmin(admin);
         categoryService.save(category);
@@ -80,9 +91,11 @@ public class CategoryController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        categoryService.remove(id);
 
-        return "redirect:/security/category";
+        if (categoryService.remove(id))
+            return "redirect:/security/category";
+        else
+            return "redirect:/security/category?error";
     }
 
     @RequestMapping(value = "/deleteCascade", method = RequestMethod.POST)

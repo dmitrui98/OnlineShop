@@ -102,4 +102,5 @@ public class Address {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
 }

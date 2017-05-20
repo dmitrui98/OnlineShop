@@ -18,7 +18,7 @@ public class Category {
     @Column(name = "category_id")
     private int categoryId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -96,4 +96,5 @@ public class Category {
     public String toString() {
         return getName();
     }
+
 }

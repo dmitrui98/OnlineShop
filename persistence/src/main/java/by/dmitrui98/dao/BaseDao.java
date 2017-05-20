@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface BaseDao<T, T_ID> {
     public void addOrUpdate(T entity);
-    public  void delete(T_ID id);
+    public  boolean delete(T_ID id);
     public List<T> findAll();
     public T getById(T_ID id);
 }

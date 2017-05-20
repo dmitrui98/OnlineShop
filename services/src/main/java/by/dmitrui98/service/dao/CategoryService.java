@@ -8,4 +8,5 @@ import by.dmitrui98.entity.Category;
 public interface CategoryService extends BaseService<Category, Integer> {
 
     void removeCascade(Integer id);
+    Category getByName(String name);
 }

@@ -10,7 +10,7 @@
 
 <a href="<c:url value="/security/category" />">Назад</a>
 
-<h1>Редактировать категорию</h1>
+<h3>Редактировать категорию</h3>
 
 <form:form action="/security/category" modelAttribute="category" method="POST">
     <table>
@@ -57,7 +57,12 @@
                 </form:label>
             </td>
             <td>
-                <form:input path="name"/>
+                <spring:bind path="name">
+                    <form:input path="name" autofocus="true"/>
+                    <div>
+                        <form:errors path="name"/>
+                    </div>
+                </spring:bind>
             </td>
         </tr>
         <tr>

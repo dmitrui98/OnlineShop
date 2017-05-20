@@ -44,10 +44,8 @@ public class UserController {
 
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
 
-//        response.setContentType ("text/html; charset=UTF-8");
-//        request.setCharacterEncoding("UTF-8");
         try {
             userForm.setFname(new String (userForm.getFname().getBytes("ISO-8859-1"), "UTF-8"));
             userForm.setSurname(new String (userForm.getSurname().getBytes("ISO-8859-1"), "UTF-8"));

@@ -32,12 +32,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(Long id) {
-        sessionUtil.openTransactionSession();
-        Session session = sessionUtil.getSession();
-        User myObject = (User) session.get(User.class,id);
-        session.delete(myObject);
-        sessionUtil.closeTransactionSession();
+    public boolean delete(Long id) {
+        try {
+            sessionUtil.openTransactionSession();
+            Session session = sessionUtil.getSession();
+            User myObject = (User) session.get(User.class, id);
+            session.delete(myObject);
+            sessionUtil.closeTransactionSession();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override

@@ -32,6 +32,7 @@
 
 					<input class="btn btn-lg btn-primary btn-block" type="submit" value="Войти"/>
 					<h4 class="text-center"><a href="/registration">Создать аккаунт</a></h4>
+					<h4 class="text-center"><a href="/">Главная страница</a></h4>
 				</div>
 			</form>
 

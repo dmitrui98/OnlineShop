@@ -4,11 +4,13 @@ import by.dmitrui98.editor.CategoryEditor;
 import by.dmitrui98.editor.ImageEditor;
 import by.dmitrui98.entity.*;
 import by.dmitrui98.service.dao.*;
+import by.dmitrui98.validation.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +21,12 @@ import java.util.*;
 /**
  * Created by Администратор on 29.04.2017.
  */
-@Controller
+@Controller("AdminProductController")
 @RequestMapping(value = "/security/product")
-public class AdminProductController {
+public class ProductController {
 
+    @Autowired
+    private ProductValidator productValidator;
     @Autowired
     private ProductService productService;
     @Autowired
@@ -52,40 +56,46 @@ public class AdminProductController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String productAdd(@ModelAttribute("product") Product productForm,
-                             HttpServletRequest request){
+                          BindingResult bindingResult, HttpServletRequest request, Model model){
 
         boolean isEdit = true;
         if (productForm.getProductId() == 0)
             isEdit = false;
 
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        String[] stringMaterialIds = parameterMap.get("materialId[]");
+        String[] stringPercents = parameterMap.get("percent[]");
 
-        if (isEdit) {
-            String imageDirectory = request.getParameter("imageDirectory");
-            long imageId = Long.parseLong(request.getParameter("imageId"));
+        productService.setProductMaterias(productForm, stringMaterialIds, stringPercents);
 
-            if (productForm.getImage() == null && imageDirectory != null) {
-                Image image = new Image(imageDirectory);
-                image.setImageId(imageId);
-                productForm.setImage(image);
+        productValidator.validate(productForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("product", productForm);
+            model.addAttribute("categories", categoryService.getAll());
+            model.addAttribute("materials", materialService.getAll());
+
+
+
+            if (isEdit)
+                return "/security/productEdit";
+            else {
+                if (productForm.getImage() != null)
+                    imageService.remove(productForm.getImage().getImageDirectory());
+                return "/security/productAdd";
             }
         }
 
         Admin admin = adminService.getByName(request.getUserPrincipal().getName());
         productForm.setAdmin(admin);
+        if (isEdit) {
+            String imageDirectory = request.getParameter("imageDirectory");
+            long imageId = Long.parseLong(request.getParameter("imageId"));
 
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        String[] stringMaterialIds = parameterMap.get("materialId[]");
-        String[] stringPersents = parameterMap.get("persent[]");
-
-        int[] materialIds = new int[stringMaterialIds.length];
-        double[] persents = new double[stringPersents.length];
-
-        for(int i = 0; i < stringMaterialIds.length; i++) {
-            materialIds[i] = Integer.parseInt(stringMaterialIds[i]);
-            persents[i] = Double.parseDouble(stringPersents[i]);
+            productService.save(productForm, stringMaterialIds, stringPercents,
+                    imageDirectory, imageId);
         }
-
-        productService.save(productForm, materialIds, persents);
+        else
+            productService.save(productForm, stringMaterialIds, stringPercents);
 
 
         if (isEdit)
@@ -94,7 +104,6 @@ public class AdminProductController {
             return "redirect:/security/product/add";
     }
 
-//    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public String productViewPage(HttpServletRequest request, Model model) {
         long id = Long.parseLong(request.getParameter("id"));
@@ -106,7 +115,8 @@ public class AdminProductController {
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String productEditPage(HttpServletRequest request, Model model) {
         long id = Long.parseLong(request.getParameter("id"));
-        model.addAttribute("product", productService.getById(id));
+        Product product = productService.getById(id);
+        model.addAttribute("product", product);
         model.addAttribute("categories", categoryService.getAll());
         model.addAttribute("materials", materialService.getAll());
 

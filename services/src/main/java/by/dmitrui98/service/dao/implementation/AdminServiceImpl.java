@@ -43,7 +43,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void remove(Long id) {
-        adminDao.delete(id);
+    public boolean remove(Long id) {
+        if (adminDao.delete(id))
+            return true;
+        else
+            return false;
     }
 }

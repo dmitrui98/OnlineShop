@@ -3,6 +3,7 @@ package by.dmitrui98.entity;
 import org.springframework.web.bind.annotation.CookieValue;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Created by Администратор on 03.05.2017.
@@ -19,15 +20,15 @@ public class ProductMaterial {
     @EmbeddedId
     private ProductMaterialPK id = new ProductMaterialPK();
 
-    @Column(name = "persent_material", columnDefinition = "DOUBLE(4,2) DEFAULT 0.00")
-    private double persentMaterial;
+    @Column(name = "percent_material", columnDefinition = "DOUBLE(6,2) DEFAULT 0.00")
+    private double percentMaterial;
 
     public ProductMaterial() {
     }
 
-    public ProductMaterial(ProductMaterialPK id, double persentMaterial) {
+    public ProductMaterial(ProductMaterialPK id, double percentMaterial) {
         this.id = id;
-        this.persentMaterial = persentMaterial;
+        this.percentMaterial = percentMaterial;
     }
 
     public ProductMaterialPK getId() {
@@ -38,12 +39,12 @@ public class ProductMaterial {
         this.id = id;
     }
 
-    public double getPersentMaterial() {
-        return persentMaterial;
+    public double getPercentMaterial() {
+        return percentMaterial;
     }
 
-    public void setPersentMaterial(double persentMaterial) {
-        this.persentMaterial = persentMaterial;
+    public void setPercentMaterial(double percentMaterial) {
+        this.percentMaterial = percentMaterial;
     }
 
     @Transient

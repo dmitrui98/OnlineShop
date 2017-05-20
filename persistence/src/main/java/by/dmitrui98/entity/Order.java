@@ -1,9 +1,5 @@
 package by.dmitrui98.entity;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -32,7 +28,7 @@ public class Order {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
-    private Address addressId;
+    private Address address;
 
 //    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable(name = "order_product",
@@ -44,11 +40,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(double amount, Date createdAt, Date updatedAt, Address addressId, Set<OrderProduct> orderProducts) {
+    public Order(double amount, Date createdAt, Date updatedAt, Address address, Set<OrderProduct> orderProducts) {
         this.amount = amount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.addressId = addressId;
+        this.address = address;
         this.orderProducts = orderProducts;
     }
 
@@ -84,12 +80,12 @@ public class Order {
         this.updatedAt = updatedAt;
     }
 
-    public Address getAddressId() {
-        return addressId;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressId(Address addressId) {
-        this.addressId = addressId;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public Set<OrderProduct> getOrderProducts() {
@@ -99,4 +95,5 @@ public class Order {
     public void setOrderProducts(Set<OrderProduct> orderProducts) {
         this.orderProducts = orderProducts;
     }
+
 }

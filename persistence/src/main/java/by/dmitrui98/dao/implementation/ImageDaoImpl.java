@@ -32,22 +32,49 @@ public class ImageDaoImpl implements ImageDao {
     }
 
     @Override
-    public void addOrUpdate(Image entity) {
-        throw new UnsupportedOperationException();
+    public void addOrUpdate(Image image) {
+        sessionUtil.openTransactionSession();
+
+        Session session = sessionUtil.getSession();
+        session.saveOrUpdate(image);
+
+        sessionUtil.closeTransactionSession();
+
     }
 
     @Override
-    public void delete(Long aLong) {
-        throw new UnsupportedOperationException();
+    public boolean delete(Long id) {
+        try {
+            sessionUtil.openTransactionSession();
+            Session session = sessionUtil.getSession();
+            Image image = (Image) session.get(Image.class, id);
+            session.delete(image);
+            sessionUtil.closeTransactionSession();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public List<Image> findAll() {
-        throw new UnsupportedOperationException();
+        sessionUtil.openTransactionSession();
+        Session session = sessionUtil.getSession();
+        List<Image> result = session.createQuery("from Image").list();
+
+        sessionUtil.closeTransactionSession();
+
+        return result;
     }
 
     @Override
-    public Image getById(Long aLong) {
-        throw new UnsupportedOperationException();
+    public Image getById(Long id) {
+        sessionUtil.openTransactionSession();
+        Session session = sessionUtil.getSession();
+        Image result = (Image) session.get(Image.class, id);
+        sessionUtil.closeTransactionSession();
+        return result;
     }
+
 }

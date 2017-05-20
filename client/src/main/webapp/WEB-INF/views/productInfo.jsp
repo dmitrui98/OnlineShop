@@ -22,15 +22,20 @@
 </textarea> <br/>
 
 <h3>Состав:</h3>
-<table>
-    <tr>
-        <th width="100"><b>Материал</b></th>
-        <th width="60"><b>Процент</b></th>
-    </tr>
-    <c:forEach items="${product.productMaterials}" var="productMaterial">
+<c:if test="${not empty product.productMaterials}">
+    <table>
         <tr>
-            <td> ${productMaterial.material} </td>
-            <td> ${productMaterial.persentMaterial} </td>
+            <th width="100"><b>Материал</b></th>
+            <th width="60"><b>Процент</b></th>
         </tr>
-    </c:forEach>
-</table>
+        <c:forEach items="${product.productMaterials}" var="productMaterial">
+            <tr>
+                <td> ${productMaterial.material} </td>
+                <td> ${productMaterial.percentMaterial} </td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+<c:if test="${empty product.productMaterials}">
+    <span>Состав не задан</span>
+</c:if>

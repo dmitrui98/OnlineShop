@@ -4,10 +4,12 @@ import by.dmitrui98.entity.Admin;
 import by.dmitrui98.entity.Material;
 import by.dmitrui98.service.dao.AdminService;
 import by.dmitrui98.service.dao.MaterialService;
+import by.dmitrui98.validation.MaterialValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,10 +29,11 @@ import java.util.Date;
 @RequestMapping(value = "/security/material")
 public class MaterialController {
     @Autowired
-    MaterialService materialService;
-
+    private MaterialService materialService;
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
+    @Autowired
+    private MaterialValidator materialValidator;
 
     @RequestMapping(method = RequestMethod.GET)
     public String editMaterialPage(Model model) {
@@ -56,10 +59,7 @@ public class MaterialController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addOrUpdate(@ModelAttribute("material") Material material, Model model, HttpServletRequest request) {
-        String adminName = request.getUserPrincipal().getName();
-        Admin admin = adminService.getByName(adminName);
-
+    public String addOrUpdate(@ModelAttribute("material") Material material, BindingResult bindingResult, HttpServletRequest request) {
         try {
             material.setName(new String (material.getName().getBytes("ISO-8859-1"), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -69,6 +69,17 @@ public class MaterialController {
         boolean isEdit = true;
         if (material.getMaterialId() == 0)
             isEdit = false;
+
+        materialValidator.validate(material, bindingResult);
+        if (bindingResult.hasErrors()) {
+            if (isEdit)
+                return "/security/materialEdit";
+            else
+                return "/security/materialAdd";
+        }
+
+        String adminName = request.getUserPrincipal().getName();
+        Admin admin = adminService.getByName(adminName);
 
         material.setAdmin(admin);
         materialService.save(material);
@@ -82,9 +93,11 @@ public class MaterialController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        materialService.remove(id);
 
-        return "redirect:/security/material";
+        if (materialService.remove(id))
+            return "redirect:/security/material";
+        else
+            return "redirect:/security/material?error";
     }
 
     @RequestMapping(value = "/deleteCascade", method = RequestMethod.POST)
