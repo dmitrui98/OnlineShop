@@ -1,5 +1,8 @@
 <%@ page session="true" import="java.util.*, by.dmitrui98.entity.Product" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script>
+    <%@include file="/js/pottleProducts.js"%>
+</script>
 <%
     List<Product> products = (List<Product>) session.getAttribute("pottleProducts");
     if (products != null && (products.size() > 0)) {
