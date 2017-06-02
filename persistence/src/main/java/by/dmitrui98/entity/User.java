@@ -57,6 +57,13 @@ public class User {
     public User() {
     }
 
+    public User(String login, String email, String password, String fname) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.fname = fname;
+    }
+
     public User(String confirmPassword, String login, String email, String password, String fname, String lname, String surname, String phone, double discont, Date createdAt, Date updatedAt) {
         this.confirmPassword = confirmPassword;
         this.login = login;

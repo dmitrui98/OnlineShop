@@ -25,6 +25,8 @@
         <spring-security-config.version>4.2.2.RELEASE</spring-security-config.version>
         <spring-security-core.version>4.2.2.RELEASE</spring-security-core.version>
         <spring-boot.version>1.1.2.RELEASE</spring-boot.version>
+        <spring-test.version>2.5</spring-test.version>
+        <h2.version>1.4.195</h2.version>
     </properties>
 
     <modules>
@@ -80,6 +82,20 @@
             <artifactId>org.apache.commons.io</artifactId>
             <version>2.4</version>
         </dependency>
+
+        <!--******************TEST ******************-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+
 
     </dependencies>
     <build>

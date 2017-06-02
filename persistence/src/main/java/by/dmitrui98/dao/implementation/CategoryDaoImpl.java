@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,13 +26,17 @@ public class CategoryDaoImpl implements CategoryDao {
 
 
     @Override
-    public void addOrUpdate(Category category) {
+    public Integer addOrUpdate(Category category) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
         session.saveOrUpdate(category);
 
+        Integer lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).intValue();
+
         sessionUtil.closeTransactionSession();
+
+        return lastId;
     }
 
     @Override

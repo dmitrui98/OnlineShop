@@ -14,8 +14,11 @@ jQuery('document').ready(function() {
             method: "post",
             success: function (response, textStatus, xhr) {
 
-                if (response.length > 0)
+                if (response.length > 0) {
                     location.href = "/comeIn";
+                } else{
+                    alert("Товар добавлен в корзину");
+                }
 
             },
             error: function (response) {

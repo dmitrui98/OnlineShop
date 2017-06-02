@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -20,13 +21,17 @@ public class AdminDaoImpl implements AdminDao {
 
 
     @Override
-    public void addOrUpdate(Admin admin) {
+    public Long addOrUpdate(Admin admin) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
         session.saveOrUpdate(admin);
 
+        Long lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
+
         sessionUtil.closeTransactionSession();
+
+        return  lastId;
 
     }
 

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -41,13 +42,17 @@ public class MaterialDaoImpl implements MaterialDao {
 
 
     @Override
-    public void addOrUpdate(Material material) {
+    public Integer addOrUpdate(Material material) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
         session.saveOrUpdate(material);
 
+        Integer lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).intValue();
+
         sessionUtil.closeTransactionSession();
+
+        return lastId;
     }
 
     @Override

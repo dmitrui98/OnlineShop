@@ -68,13 +68,21 @@ public class ProductController {
 
         productService.setProductMaterias(productForm, stringMaterialIds, stringPercents);
 
+
         productValidator.validate(productForm, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("product", productForm);
             model.addAttribute("categories", categoryService.getAll());
             model.addAttribute("materials", materialService.getAll());
 
+            if (isEdit && productForm.getImage() == null) {
+                String imageDirectory = request.getParameter("imageDirectory");
+                long imageId = Long.parseLong(request.getParameter("imageId"));
 
+                Image image = new Image(imageDirectory);
+                image.setImageId(imageId);
+                productForm.setImage(image);
+            }
 
             if (isEdit)
                 return "/security/productEdit";

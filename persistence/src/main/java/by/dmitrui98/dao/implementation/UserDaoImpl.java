@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -21,13 +22,17 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public void addOrUpdate(User user) {
+    public Long addOrUpdate(User user) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
         session.saveOrUpdate(user);
 
+        Long lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
+
         sessionUtil.closeTransactionSession();
+
+        return lastId;
 
     }
 

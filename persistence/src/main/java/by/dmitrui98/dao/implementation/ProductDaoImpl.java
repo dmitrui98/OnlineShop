@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -35,14 +36,18 @@ public class ProductDaoImpl implements ProductDao {
 
 
     @Override
-    public void addOrUpdate(Product product) {
+    public Long addOrUpdate(Product product) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
 
         session.saveOrUpdate(product);
 
+        Long lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
+
         sessionUtil.closeTransactionSession();
+
+        return lastId;
     }
 
 

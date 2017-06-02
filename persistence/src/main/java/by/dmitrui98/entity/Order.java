@@ -12,23 +12,23 @@ import java.util.Set;
 @Table(name = "order_")
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
-    private long orderId;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(name = "order_id")
+   private long orderId;
 
-    @Column(name = "amount", nullable = false)
-    private double amount;
+   @Column(name = "amount", nullable = false)
+   private double amount;
 
-    @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdAt;
+   @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+   private Date createdAt;
 
-    @Column(name = "updated_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date updatedAt;
+   @Column(name = "updated_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+   private Date updatedAt;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "address_id")
-    private Address address;
+   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @JoinColumn(name = "address_id")
+   private Address address;
 
 //    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable(name = "order_product",

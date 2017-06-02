@@ -40,6 +40,7 @@ public class Admin {
         this.password = password;
     }
 
+
     public long getAdminId() {
         return adminId;
     }

@@ -89,13 +89,15 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String delete(HttpServletRequest request) {
+    public String delete(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
 
         if (categoryService.remove(id))
             return "redirect:/security/category";
-        else
-            return "redirect:/security/category?error";
+        else {
+            response.setStatus(304); // не изменялось
+            return "security/category";
+        }
     }
 
     @RequestMapping(value = "/deleteCascade", method = RequestMethod.POST)

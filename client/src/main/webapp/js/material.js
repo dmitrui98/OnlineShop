@@ -13,36 +13,42 @@ jQuery('document').ready(function() {
             data: data,
             method: "post",
             success: function (response, textStatus, xhr) {
-                $("body").html(response);
+                if (textStatus.toString() === "notmodified") {
+                    alert("Какой-то товар имеет в своем составе данный материал, " +
+                        "чтобы удалить материал вместе с товарами," +
+                        "нажмите кнопку \"удалить каскадно\"");
+                } else
+                    $("body").html(response);
             },
-            error: function (response) {
-                alert("Какой-то продукт имеет в своем составе на данный материал, " +
-                    "чтобы удалить материал вместе с продуктами," +
-                    "нажмите кнопку \"удалить каскадно\"");
+            error: function (response, textStatus) {
+                alert("ошибка: " + textStatus);
             }
         });
     });
 
     jQuery(".deleteCascadeButton").on("click", function () {
-        var id = $(this).data("id");
-        var csrfValue = $(this).data("csrf-value");
-        var csrfName = $(this).data("csrf-name");
+        var result = confirm("Вы действительно хотите удалить все товары, связанные с данным материалом?");
+        if (result) {
+            var id = $(this).data("id");
+            var csrfValue = $(this).data("csrf-value");
+            var csrfName = $(this).data("csrf-name");
 
-        var data = {'id': id};
-        data[csrfName] = csrfValue;
+            var data = {'id': id};
+            data[csrfName] = csrfValue;
 
-        jQuery.ajax({
-            url: "/security/material/deleteCascade",
-            headers: {'X-Csrf-Token': csrfValue},
-            data: data,
-            method: "post",
-            success: function (response, textStatus, xhr) {
-                $("body").html(response);
-            },
-            error: function (response) {
-                alert("ошибка");
-            }
-        });
+            jQuery.ajax({
+                url: "/security/material/deleteCascade",
+                headers: {'X-Csrf-Token': csrfValue},
+                data: data,
+                method: "post",
+                success: function (response, textStatus, xhr) {
+                    $("body").html(response);
+                },
+                error: function (response) {
+                    alert("ошибка");
+                }
+            });
+        }
     });
 
     jQuery(".editButton").on("click", function () {

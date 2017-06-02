@@ -82,6 +82,7 @@
             </td>
             <td>
                 <form:input path="name"/>
+                <form:errors path="name"/>
             </td>
         </tr>
         <tr>

@@ -28,7 +28,6 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     // TODO перевести время на час вперед
     // TODO изменить формат вывода даты: "yyyy/MM/dd HH:mm:ss"
     // TODO перехватить исключения, выбрасываемые на браузер
-    // TODO перенести скрипты в .js - файлы
     // TODO сделать <jsp:include> для title
     // TODO страница comeIn только для неаутентифицированных пользователей
 

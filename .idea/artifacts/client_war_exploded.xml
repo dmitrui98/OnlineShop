@@ -59,6 +59,8 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:4.2.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:4.2.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.apache.directory.studio:org.apache.commons.io:2.4" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-test:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Maven: com.h2database:h2:1.4.195" />
         </element>
       </element>
       <element id="directory" name="META-INF">

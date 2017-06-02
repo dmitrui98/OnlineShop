@@ -91,13 +91,15 @@ public class MaterialController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String delete(HttpServletRequest request) {
+    public String delete(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
 
         if (materialService.remove(id))
             return "redirect:/security/material";
-        else
-            return "redirect:/security/material?error";
+        else {
+            response.setStatus(304); // not modified
+            return "security/material";
+        }
     }
 
     @RequestMapping(value = "/deleteCascade", method = RequestMethod.POST)
