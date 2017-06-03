@@ -1,22 +1,16 @@
+<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
-	<head>
-		<meta charset="UTF-8"/>
-		<title> Корзина </title>
-		<link href = "css/style.css" rel="stylesheet" type ="text/css" />
-		<script type = "text/javascript" src = "/js/jquery-3.2.0.min.js"> </script>
-		<%--<script type = "text/javascript" src = "/js/pottleProducts.js"> </script>--%>
-	<head>
+<head>
+	<meta charset="UTF-8"/>
+	<title> Корзина </title>
+	<jsp:include page="headers/userHeader.jsp" flush="true"/>
+<head>
 	
-	<body>
+<body>
 	<a href="<c:url value="/" />">Главная страница</a>
-
-	<%--TODO после ответа не подключается .js файл--%>
 	<jsp:include page="pottleProducts.jsp" flush= "true" />
-
-
-	</body>
-	
+</body>
 	
 </html>

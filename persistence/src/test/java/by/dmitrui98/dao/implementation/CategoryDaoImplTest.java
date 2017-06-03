@@ -1,5 +1,6 @@
 package by.dmitrui98.dao.implementation;
 
+import by.dmitrui98.dao.AdminDao;
 import by.dmitrui98.dao.BaseDaoImplTest;
 import by.dmitrui98.dao.CategoryDao;
 import by.dmitrui98.entity.Admin;
@@ -16,25 +17,20 @@ import static org.junit.Assert.*;
 /**
  * Created by Администратор on 30.05.2017.
  */
-@Ignore
 public class CategoryDaoImplTest extends BaseDaoImplTest {
-
-
-    @BeforeClass
-    public static void init() {
-
-    }
 
     @Autowired
     private CategoryDao categoryDao;
+
+    @Autowired
+    private AdminDao adminDao;
 
     @Test
     public void addOrUpdate() throws Exception {
         Category category = createTestCategory();
         long expectedId = 1;
 
-        int id = categoryDao.addOrUpdate(category);
-        Category result = categoryDao.getById(id);
+        Category result = categoryDao.addOrUpdate(category);
 
         assertEquals(expectedId, result.getCategoryId());
         assertEquals(category.getName(), result.getName());
@@ -43,16 +39,17 @@ public class CategoryDaoImplTest extends BaseDaoImplTest {
     @Test
     public void delete() throws Exception {
         Category category = createTestCategory();
-        int id = categoryDao.addOrUpdate(category);
+        Category result = categoryDao.addOrUpdate(category);
+        int id = result.getCategoryId();
         categoryDao.delete(id);
-        Category result = categoryDao.getById(id);
+        result = categoryDao.getById(id);
         assertNull(result);
     }
 
     @Test
     public void findAll() throws Exception {
         Category category = createTestCategory();
-        Category category1 = new Category("name", new Admin(), new Date(), new Date());
+        Category category1 = new Category("name", admin, new Date(), new Date());
 
         categoryDao.addOrUpdate(category);
         categoryDao.addOrUpdate(category1);
@@ -73,23 +70,30 @@ public class CategoryDaoImplTest extends BaseDaoImplTest {
     }
 
     private Category createTestCategory() {
-        Category category = new Category("testName", new Admin(), new Date(), new Date());
+        Category category = new Category("testName", admin, new Date(), new Date());
         return category;
     }
 
+    private Admin admin;
     @Before
     public void before() {
         System.out.println("**********BEFORE**********");
+        admin = adminDao.addOrUpdate(new Admin("login", "email", "password", new Date(), new Date()));
     }
 
     @After
     public void clearTable() {
         System.out.println("**********AFTER**********");
+
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
 
         session.createNativeQuery("DELETE FROM category").executeUpdate();
-        session.createNativeQuery("ALTER TABLE category AUTO_INCREMENT=1").executeUpdate();
+        session.createNativeQuery("ALTER TABLE category ALTER COLUMN category_id RESTART WITH 1").executeUpdate();
+
+        session.createNativeQuery("DELETE FROM admin").executeUpdate();
+        session.createNativeQuery("ALTER TABLE admin ALTER COLUMN admin_id RESTART WITH 1").executeUpdate();
+        admin = null;
 
         sessionUtil.closeTransactionSession();
     }

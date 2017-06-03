@@ -53,9 +53,6 @@ public class DatabaseConfigTest {
         BasicDataSource ds = new BasicDataSource();
         ds.setUrl(env.getProperty("test_db.url"));
         ds.setDriverClassName(env.getRequiredProperty("test_db.driver"));
-        ds.setUsername(env.getRequiredProperty("test_db.username"));
-        ds.setPassword(env.getRequiredProperty("test_db.password"));
-
 
         System.out.println("configured TEST DataSource");
 

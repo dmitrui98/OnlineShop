@@ -26,17 +26,15 @@ public class CategoryDaoImpl implements CategoryDao {
 
 
     @Override
-    public Integer addOrUpdate(Category category) {
+    public Category addOrUpdate(Category category) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
         session.saveOrUpdate(category);
 
-        Integer lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).intValue();
-
         sessionUtil.closeTransactionSession();
 
-        return lastId;
+        return category;
     }
 
     @Override

@@ -28,26 +28,22 @@ public class ProductDaoImpl implements ProductDao {
     @Autowired
     private SessionUtil sessionUtil;
 
-
-
     @Autowired
     @Qualifier("materialDao")
     private MaterialDao materialDao;
 
 
     @Override
-    public Long addOrUpdate(Product product) {
+    public Product addOrUpdate(Product product) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
 
         session.saveOrUpdate(product);
 
-        Long lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
-
         sessionUtil.closeTransactionSession();
 
-        return lastId;
+        return product;
     }
 
 

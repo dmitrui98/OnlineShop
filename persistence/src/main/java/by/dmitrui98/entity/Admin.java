@@ -40,6 +40,13 @@ public class Admin {
         this.password = password;
     }
 
+    public Admin(String login, String email, String password, Date createdAt, Date updatedAt) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     public long getAdminId() {
         return adminId;

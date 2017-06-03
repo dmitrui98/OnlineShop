@@ -33,17 +33,15 @@ public class ImageDaoImpl implements ImageDao {
     }
 
     @Override
-    public Long addOrUpdate(Image image) {
+    public Image addOrUpdate(Image image) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
         session.saveOrUpdate(image);
 
-        Long lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
-
         sessionUtil.closeTransactionSession();
 
-        return lastId;
+        return image;
 
     }
 

@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
 /**
  * Created by Администратор on 30.05.2017.
  */
-@Ignore
 public class UserDaoImplTest extends BaseDaoImplTest {
 
     @Autowired
@@ -29,8 +28,7 @@ public class UserDaoImplTest extends BaseDaoImplTest {
         User user = createTestUser();
         long expectedId = 1;
 
-        long id = userDao.addOrUpdate(user);
-        User result = userDao.getById(id);
+        User result = userDao.addOrUpdate(user);
 
         assertEquals(expectedId, result.getUserId());
         assertEquals(user.getLogin(), result.getLogin());
@@ -42,9 +40,10 @@ public class UserDaoImplTest extends BaseDaoImplTest {
     @Test
     public void delete() throws Exception {
         User user = createTestUser();
-        long id = userDao.addOrUpdate(user);
+        User result = userDao.addOrUpdate(user);
+        long id = result.getUserId();
         userDao.delete(id);
-        User result = userDao.getById(id);
+        result = userDao.getById(id);
         assertNull(result);
     }
 
@@ -62,8 +61,6 @@ public class UserDaoImplTest extends BaseDaoImplTest {
 
         assertEquals(2, resultList.size());
     }
-
-
 
     @Test
     public void getByName() throws Exception {
@@ -107,7 +104,7 @@ public class UserDaoImplTest extends BaseDaoImplTest {
         Session session = sessionUtil.getSession();
 
         session.createNativeQuery("DELETE FROM user").executeUpdate();
-        session.createNativeQuery("ALTER TABLE user AUTO_INCREMENT=1").executeUpdate();
+        session.createNativeQuery("ALTER TABLE user ALTER COLUMN user_id RESTART WITH 1").executeUpdate();
 
         sessionUtil.closeTransactionSession();
     }

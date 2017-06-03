@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -6,24 +7,38 @@
 <head>
     <title>Добавить товар</title>
 
-    <script type = "text/javascript" src = "/js/jquery-3.2.0.min.js"> </script>
+    <jsp:include page="headers/adminHeader.jsp" flush="true"/>
     <script type = "text/javascript" src = "/js/handlebars-v4.0.5.js"> </script>
     <script type = "text/javascript" src = "/js/productAdd.js"> </script>
 
     <style>
-        .container {
-            width:600px;
-            margin: 50px auto;
-        }
-
         .hide {
             display:none;
         }
-
     </style>
-
 </head>
 <body>
+<div class="container">
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-6 col-md-offset-3">
+            <h3> Добавление товара </h3>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <label for="inputEmail3" class="control-label">Email</label>
+                        <%--<form:label path="name">--%>
+                            <%--<spring:message text="Название:"/>--%>
+                        <%--</form:label>--%>
+                    </div>
+
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <a href="<c:url value="/security/product" />">Назад</a> <br/>
 
@@ -49,7 +64,7 @@
             </td>
             <td>
                 <spring:bind path="name">
-                    <form:input type="text" path="name" placeholder="Название" autofocus="true"/> <br/>
+                    <form:input type="text" path="name" class="form-control" placeholder="Название" autofocus="true"/> <br/>
                     <form:errors path="name"/>
                 </spring:bind>
             </td>

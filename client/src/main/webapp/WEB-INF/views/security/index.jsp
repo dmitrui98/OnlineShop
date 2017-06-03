@@ -1,19 +1,21 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Администратор
-  Date: 16.04.2017
-  Time: 10:24
-  To change this template use File | Settings | File Templates.
---%>
+<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title> Защищенная страничка</title>
+    <jsp:include page="headers/adminHeader.jsp" flush="true"/>
 </head>
 <body>
-    <a href = "<c:url value = "/security/category"/>">Редактировать категории товаров</a><br/>
-    <a href = "<c:url value = "/security/material"/>">Редактировать материалы товаров</a><br/>
-    <a href = "<c:url value = "/security/product"/>">Редактировать товары</a><br/>
+    <div class="container">
+        <div class="row" style="margin-top:10px;">
+            <div class="col-md-4 col-md-offset-4">
+                <a class="btn btn-default btn-block" href="<c:url value = "/security/category"/>">Редактировать категории товаров</a>
+                <a class="btn btn-default btn-block" href="<c:url value = "/security/material"/>">Редактировать материалы товаров</a>
+                <a class="btn btn-default btn-block" href="<c:url value = "/security/product"/>">Редактировать товары</a>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>

@@ -42,17 +42,15 @@ public class MaterialDaoImpl implements MaterialDao {
 
 
     @Override
-    public Integer addOrUpdate(Material material) {
+    public Material addOrUpdate(Material material) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
         session.saveOrUpdate(material);
 
-        Integer lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).intValue();
-
         sessionUtil.closeTransactionSession();
 
-        return lastId;
+        return material;
     }
 
     @Override
@@ -63,11 +61,13 @@ public class MaterialDaoImpl implements MaterialDao {
             Session session = sessionUtil.getSession();
             Material material = (Material) session.get(Material.class, id);
 
-            Iterator<ProductMaterial> iterator = material.getProductMaterials().iterator();
-            while (iterator.hasNext()) {
-                Product product = iterator.next().getProduct();
-                session.delete(product);
-                removeAssosiations(product);
+            if (material.getProductMaterials() != null) {
+                Iterator<ProductMaterial> iterator = material.getProductMaterials().iterator();
+                while (iterator.hasNext()) {
+                    Product product = iterator.next().getProduct();
+                    session.delete(product);
+                    removeAssosiations(product);
+                }
             }
 
             session.delete(material);
@@ -104,7 +104,8 @@ public class MaterialDaoImpl implements MaterialDao {
         Session session = sessionUtil.getSession();
         Material material = (Material) session.get(Material.class, id);
 
-        Hibernate.initialize(material.getProductMaterials());
+        if (material != null)
+            Hibernate.initialize(material.getProductMaterials());
 
         sessionUtil.closeTransactionSession();
 

@@ -1,30 +1,25 @@
+<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>--%>
-<?xml version="1.0" encoding="UTF-8" ?>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%--<fmt:requestEncoding value="UTF-8" />--%>
 <html>
-	<head>
-		<meta charset="UTF-8"/>
-		<title> Интернет-магазин товаров </title>
-        <link href = "css/bootstrap.css" rel="stylesheet" type ="text/css" />
-        <link href = "css/style.css" rel="stylesheet" type ="text/css" />
-
-		<script type = "text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.2.0.min.js"> </script>
-		<script type = "text/javascript" src="${pageContext.request.contextPath}/js/script.js"> </script>
-		<script type = "text/javascript" src="${pageContext.request.contextPath}/js/allProducts.js"> </script>
-	<head>
+<head>
+	<meta charset="UTF-8"/>
+	<title> Интернет-магазин товаров </title>
+    <jsp:include page="headers/userHeader.jsp" flush="true"/>
+    <script type = "text/javascript" src="/js/allProducts.js"> </script>
+<head>
 	
-	<body>
-        <div id = "header" style="height: 80px;" >
+<body>
+	<div class="container">
+		<div id = "header" style="height: 80px;" >
 			<div id = "currency">
 				currency
 			</div>
-			
+
 			<div id = "siteName">
 				Интернет-магазин одежды
 			</div>
-			
+
 			<div id = "buttons">
 
 				<c:choose>
@@ -45,12 +40,12 @@
 
 			</div>
 
-            <div id = "language">
-                language
-            </div>
+			<div id = "language">
+				language
+			</div>
 		</div>
 
-		<jsp:include page="allProducts.jsp" flush="true" />
-
-	<body>
+		<jsp:include page="productList.jsp" flush="true" />
+	</div>
+<body>
 <html>

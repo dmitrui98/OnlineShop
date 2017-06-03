@@ -34,7 +34,6 @@ public class Material {
     private Admin admin;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.material", cascade=CascadeType.ALL)
-//    @Transient
     private Set<ProductMaterial> productMaterials = new HashSet<>();
 
     public Material() {
@@ -46,6 +45,13 @@ public class Material {
         this.updatedAt = updatedAt;
         this.admin = admin;
         this.productMaterials = productMaterials;
+    }
+
+    public Material(String name, Admin admin, Date createdAt, Date updatedAt) {
+        this.name = name;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.admin = admin;
     }
 
     public int getMaterialId() {

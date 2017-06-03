@@ -20,20 +20,16 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     SessionUtil sessionUtil;
 
-
     @Override
-    public Long addOrUpdate(User user) {
+    public User addOrUpdate(User user) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
         session.saveOrUpdate(user);
 
-        Long lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
-
         sessionUtil.closeTransactionSession();
 
-        return lastId;
-
+        return user;
     }
 
     @Override

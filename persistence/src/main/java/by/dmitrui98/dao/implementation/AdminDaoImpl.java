@@ -21,18 +21,15 @@ public class AdminDaoImpl implements AdminDao {
 
 
     @Override
-    public Long addOrUpdate(Admin admin) {
+    public Admin addOrUpdate(Admin admin) {
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
         session.saveOrUpdate(admin);
 
-        Long lastId = ((BigInteger) session.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
-
         sessionUtil.closeTransactionSession();
 
-        return  lastId;
-
+        return admin;
     }
 
     @Override

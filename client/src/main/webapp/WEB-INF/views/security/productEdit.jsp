@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -5,22 +6,15 @@
 <html>
 <head>
     <title>Редактировать товар</title>
+    <jsp:include page="headers/adminHeader.jsp" flush="true"/>
     <script type = "text/javascript" src = "/js/handlebars-v4.0.5.js"> </script>
-    <script type = "text/javascript" src = "/js/jquery-3.2.0.min.js"> </script>
     <script type = "text/javascript" src = "/js/productEdit.js"> </script>
 
     <style>
-        .container {
-            width:600px;
-            margin: 50px auto;
-        }
-
         .hide {
             display:none;
         }
-
     </style>
-
 </head>
 <body>
 <a href="<c:url value="/security/product" />">Назад</a> <br/>

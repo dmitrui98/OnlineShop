@@ -72,6 +72,17 @@ public class Product {
         this.productMaterials = productMaterials;
     }
 
+    public Product(String name, double price, String description, Date createdAt, Date updatedAt, Image image, Category category, Admin admin) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.image = image;
+        this.category = category;
+        this.admin = admin;
+    }
+
     public long getProductId() {
         return productId;
     }

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -5,6 +6,7 @@
 <html>
 <head>
     <title>Добавить категорию</title>
+    <jsp:include page="headers/adminHeader.jsp" flush="true"/>
 </head>
 <body>
 
@@ -13,11 +15,11 @@
 
 <h3>Добавить категорию</h3>
 
-<form:form action="/security/category" modelAttribute="category" method="POST">
+<form:form action="/security/category" modelAttribute="category" method="POST" class="form-horizontal">
     <table>
 
         <tr>
-            <td>
+            <td valign="top">
                 <form:label path="name">
                     <spring:message text="Имя"/>
                 </form:label>
@@ -26,7 +28,7 @@
                 <spring:bind path="name">
                     <form:input path="name" autofocus="true"/>
                     <div>
-                        <form:errors path="name"/>
+                        <form:errors path="name" class="error-message"/>
                     </div>
 
                 </spring:bind>

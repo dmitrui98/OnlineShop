@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
 /**
  * Created by Администратор on 30.05.2017.
  */
-@Ignore
 public class AdminDaoImplTest extends BaseDaoImplTest {
 
     @Autowired
@@ -29,8 +28,7 @@ public class AdminDaoImplTest extends BaseDaoImplTest {
         Admin admin = createTestAdmin();
         long expectedId = 1;
 
-        long id = adminDao.addOrUpdate(admin);
-        Admin result = adminDao.getById(id);
+        Admin result = adminDao.addOrUpdate(admin);
 
         assertEquals(expectedId, result.getAdminId());
         assertEquals(admin.getLogin(), result.getLogin());
@@ -41,9 +39,10 @@ public class AdminDaoImplTest extends BaseDaoImplTest {
     @Test
     public void delete() throws Exception {
         Admin admin = createTestAdmin();
-        long id = adminDao.addOrUpdate(admin);
+        Admin result = adminDao.addOrUpdate(admin);
+        long id = result.getAdminId();
         adminDao.delete(id);
-        Admin result = adminDao.getById(id);
+        result = adminDao.getById(id);
         assertNull(result);
     }
 
@@ -61,8 +60,6 @@ public class AdminDaoImplTest extends BaseDaoImplTest {
 
         assertEquals(2, resultList.size());
     }
-
-
 
     @Test
     public void getByName() throws Exception {
@@ -105,7 +102,7 @@ public class AdminDaoImplTest extends BaseDaoImplTest {
         Session session = sessionUtil.getSession();
 
         session.createNativeQuery("DELETE FROM admin").executeUpdate();
-        session.createNativeQuery("ALTER TABLE admin AUTO_INCREMENT=1").executeUpdate();
+        session.createNativeQuery("ALTER TABLE admin ALTER COLUMN admin_id RESTART WITH 1").executeUpdate();
 
         sessionUtil.closeTransactionSession();
     }
