@@ -8,9 +8,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Администратор on 09.04.2017.
- */
 @Entity
 @Table(name = "material")
 public class Material {

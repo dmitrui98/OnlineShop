@@ -10,38 +10,39 @@
 </head>
 <body>
 
-<a href="<c:url value="/security/category" />">Назад</a>
+<div class="container">
+    <a href="<c:url value="/security/category" />">Назад</a>
 
 
-<h3>Добавить категорию</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center"><b>Добавление категории</b></h3>
+        </div>
 
-<form:form action="/security/category" modelAttribute="category" method="POST" class="form-horizontal">
-    <table>
+        <form:form action="/security/category" modelAttribute="category" method="POST" class="form-horizontal">
 
-        <tr>
-            <td valign="top">
-                <form:label path="name">
-                    <spring:message text="Имя"/>
+            <div class="form-group">
+                <form:label path="name" class="col-sm-2 control-label">
+                    <spring:message text="Наименование:"/>
                 </form:label>
-            </td>
-            <td>
-                <spring:bind path="name">
-                    <form:input path="name" autofocus="true"/>
-                    <div>
-                        <form:errors path="name" class="error-message"/>
-                    </div>
 
-                </spring:bind>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                    <input type="submit"
-                           value="<spring:message text="Добавить"/>"/>
-            </td>
-        </tr>
-    </table>
-</form:form>
 
+                <div class="col-sm-9">
+                    <spring:bind path="name">
+                        <form:input path="name" autofocus="true" class="form-control"/>
+                        <div>
+                            <form:errors path="name" class="error-message"/>
+                        </div>
+                    </spring:bind>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-default col-sm-6 col-sm-offset-3"
+                    value="<spring:message text="Добавить"/>"/>
+            </div>
+        </form:form>
+    </div>
+</div>
 </body>
 </html>

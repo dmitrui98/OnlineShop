@@ -4,9 +4,6 @@ package by.dmitrui98.entity;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by Администратор on 03.04.2017.
- */
 @Entity
 @Table(name = "admin")
 public class Admin {

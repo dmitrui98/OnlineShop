@@ -7,6 +7,7 @@ import by.dmitrui98.entity.Material;
 import by.dmitrui98.entity.Product;
 import by.dmitrui98.entity.ProductMaterial;
 import by.dmitrui98.util.SessionUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,6 +29,7 @@ import java.util.Set;
  */
 @Repository("materialDao")
 public class MaterialDaoImpl implements MaterialDao {
+    private static final Logger logger = Logger.getLogger(MaterialDaoImpl.class);
 
     @Autowired
     private SessionUtil sessionUtil;
@@ -75,7 +77,7 @@ public class MaterialDaoImpl implements MaterialDao {
 
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Can not delete material with id " + id, ex);
             return false;
         }
     }

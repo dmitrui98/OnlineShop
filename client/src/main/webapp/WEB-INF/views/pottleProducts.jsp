@@ -24,7 +24,7 @@
         <td><b><%= product.getName() %></b></td>
         <td><b><%= product.getPrice() %></b></td>
         <td><b><%= product.getDescription() %></b></td>
-        <td><b><%= product.getCountPottleProducts() %></b></td>
+        <td><b><%= product.getCountProductsInPottle() %></b></td>
         <td>
             <%--<form name="addForm"--%>
                   <%--action="/pottleController/delete"--%>

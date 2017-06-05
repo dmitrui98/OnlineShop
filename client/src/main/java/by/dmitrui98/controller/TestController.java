@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 public class TestController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/test")
     public String registrationAction(Model model, HttpServletRequest request, HttpServletResponse response) {

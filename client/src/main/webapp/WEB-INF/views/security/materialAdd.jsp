@@ -10,37 +10,39 @@
 </head>
 <body>
 
-<a href="<c:url value="/security/material" />">Назад</a>
+<div class="container">
 
+    <a href="<c:url value="/security/material" />">Назад</a>
 
-<h3>Добавить материал</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center"><b>Добавление материала</b></h3>
+        </div>
 
-<form:form action="/security/material" modelAttribute="material" method="POST">
-    <table>
-
-        <tr>
-            <td>
-                <form:label path="name">
-                    <spring:message text="Имя"/>
+        <form:form action="/security/material" modelAttribute="material" method="POST" class="form-horizontal">
+            <div class="form-group">
+                <form:label path="name" class="col-sm-2 control-label">
+                    <spring:message text="Наименование:"/>
                 </form:label>
-            </td>
-            <td>
-                <spring:bind path="name">
-                    <form:input path="name" autofocus="true"/>
-                    <div>
-                        <form:errors path="name"/>
-                    </div>
-                </spring:bind>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit"
+
+
+                <div class="col-sm-9">
+                    <spring:bind path="name">
+                        <form:input path="name" autofocus="true" class="form-control"/>
+                        <div>
+                            <form:errors path="name" class="error-message"/>
+                        </div>
+                    </spring:bind>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-default col-sm-6 col-sm-offset-3"
                        value="<spring:message text="Добавить"/>"/>
-            </td>
-        </tr>
-    </table>
-</form:form>
+            </div>
+        </form:form>
+    </div>
+</div>
 
 </body>
 </html>

@@ -9,10 +9,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -41,6 +38,55 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
 
         assertEquals(expectedId, result.getProductId());
         assertEquals(product.getName(), result.getName());
+    }
+
+    @Test
+    public void editMaterial() throws Exception {
+        Product product = createTestProduct();
+        int compositionSize = product.getProductMaterials().size();
+
+        Product result = productDao.addOrUpdate(product);
+
+        Material[] expectedMaterials = changeMaterial(result);
+        productDao.addOrUpdate(result);
+
+        result = productDao.getById(result.getProductId());
+
+        Material[] actualMaterials = getMaterials(result.getProductMaterials().iterator(), result.getProductMaterials().size());
+
+        assertEquals(expectedMaterials.length, actualMaterials.length);
+
+    }
+
+    private Material[] getMaterials(Iterator<ProductMaterial> iterator, int size) {
+        Material[] materials = new Material[size];
+        int i = 0;
+        while (iterator.hasNext()) {
+            materials[i] = iterator.next().getMaterial();
+            i++;
+        }
+        return materials;
+    }
+
+    private Material[] changeMaterial(Product product) {
+        Iterator<ProductMaterial> iterator = product.getProductMaterials().iterator();
+        Material[] materials = new Material[product.getProductMaterials().size()];
+        double[] percents = new double[product.getProductMaterials().size()];
+        int i = 0;
+        while (iterator.hasNext()) {
+            ProductMaterial productMaterial = iterator.next();
+            Material material = productMaterial.getMaterial();
+            double percent = productMaterial.getPercentMaterial();
+
+            materials[i] = material;
+            percents[i] = percent;
+            i++;
+        }
+
+        materials[0] = new Material("material777", admin, new Date(), new Date());
+        materialDao.addOrUpdate(materials[0]);
+        setComposition(product, materials, percents);
+        return materials;
     }
 
     @Test

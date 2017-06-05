@@ -5,9 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-/**
- * Created by Администратор on 11.04.2017.
- */
 
 @Entity
 @Table(name = "order_product")

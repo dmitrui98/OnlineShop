@@ -20,7 +20,7 @@ body {
 	float : right;
 	margin : 5px;
 	margin-top: 10px;
-	font-size : 20px;
+	font-size : 17px;
 }
 
 #buttons {
@@ -38,6 +38,3 @@ body {
 	width: 50px;
 }
 
-.descriptionTextArea {
-	background-color: #7DA5AD;
-}

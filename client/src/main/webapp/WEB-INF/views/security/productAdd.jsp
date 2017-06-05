@@ -19,122 +19,115 @@
 </head>
 <body>
 <div class="container">
-    <div class="row" style="margin-top: 10px;">
-        <div class="col-md-6 col-md-offset-3">
-            <h3> Добавление товара </h3>
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-md-3">
-                        <label for="inputEmail3" class="control-label">Email</label>
-                        <%--<form:label path="name">--%>
-                            <%--<spring:message text="Название:"/>--%>
-                        <%--</form:label>--%>
-                    </div>
+    <a href="<c:url value="/security/product" />">Назад</a> <br/>
 
-                    <div class="col-sm-9">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                    </div>
-                </div>
-            </form>
+    <form:form action="/security/product/add?${_csrf.parameterName}=${_csrf.token}" method="post"
+               modelAttribute="product" enctype="multipart/form-data" class="form-horizontal">
+        <div class="text-center">
+            <h4> Добавление товара </h4>
         </div>
-    </div>
-</div>
 
-<a href="<c:url value="/security/product" />">Назад</a> <br/>
+        <div>
+            <spring:bind path="category">
+                <form:errors path="category" class="error-message"/>
+            </spring:bind>
+            <spring:bind path="productMaterials">
+                <form:errors path="productMaterials" class="error-message"/>
+            </spring:bind>
+        </div>
 
-<form:form action="/security/product/add?${_csrf.parameterName}=${_csrf.token}" method="post"
-           modelAttribute="product" enctype="multipart/form-data">
-    <h3> Добавление товара </h3>
+        <div class="form-group text-left">
+            <form:label path="name" class="col-sm-2 control-label">
+                <spring:message text="Название:"/>
+            </form:label>
 
-    <div>
-        <spring:bind path="category">
-            <form:errors path="category"/>
-        </spring:bind>
-        <spring:bind path="productMaterials">
-            <form:errors path="productMaterials"/>
-        </spring:bind>
-    </div>
-
-    <table>
-        <tr>
-            <td>
-                <form:label path="name">
-                    <spring:message text="Название:"/>
-                </form:label>
-            </td>
-            <td>
+            <div class="col-sm-10">
                 <spring:bind path="name">
-                    <form:input type="text" path="name" class="form-control" placeholder="Название" autofocus="true"/> <br/>
-                    <form:errors path="name"/>
+                    <form:input type="text" path="name" class="form-control" placeholder="Название" autofocus="true"/>
+                    <form:errors path="name" class="error-message"/>
                 </spring:bind>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="description">
-                    <spring:message text="Описание:"/>
-                </form:label>
-            </td>
-            <td>
-                <form:textarea path="description" placeholder="Описание" cols="40" rows="10"/> <br/>
-            </td>
-        </tr>
+            </div>
+        </div>
 
-        <tr>
-            <td>
-                <form:label path="price">
-                    <spring:message text="Цена:"/>
-                </form:label>
-            </td>
-            <td>
-                <form:input type="number" path="price" placeholder="Цена" step="any"/> <br/>
-            </td>
-        </tr>
+        <div class="form-group">
+            <form:label path="description" class="col-sm-2 control-label">
+                <spring:message text="Описание:"/>
+            </form:label>
+            <div class="col-sm-10">
+                <spring:bind path="description">
+                    <form:textarea path="description" class="form-control" placeholder="Описание" rows="5"/>
+                    <form:errors path="description" class="error-message"/>
+                </spring:bind>
+            </div>
+        </div>
 
-        <tr>
-            <td>
-                <form:label path="category">
-                    <spring:message text="Категория:"/>
-                </form:label>
-            </td>
-            <td>
+        <div class="form-group">
 
-                    <form:select path="category" items="${categories}"
-                                 itemValue="categoryId" itemLabel="name"/> <br/>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <%--TODO выберите файл. Обработать отмена--%>
-                <%--TODO при получении ошибки нужно заново выбирать изображение--%>
-                <input id="inputImage" type="file" name="image" accept="image/*,image/jpeg" />
-                <img src="/images/default.jpg" width="70" height="50" id = "image"/>
-            </td>
-        </tr>
+            <form:label path="price" class="col-sm-2 control-label">
+                <spring:message text="Цена:"/>
+            </form:label>
+            <div class="col-sm-10">
+                <spring:bind path="price">
+                    <form:input type="number" path="price" class="form-control" placeholder="Цена" step="any"/>
+                    <form:errors path="price" class="error-message"/>
+                </spring:bind>
+            </div>
+        </div>
 
-    </table>
-    <table>
-    <tr>
-        <td>
-            <select id="selectedMaterial">
-                <c:forEach items="${materials}" var="m">
-                    <option value="${m.materialId}">${m.name}</option>
-                </c:forEach>
-            </select>
-            <input type="number" value="0" step="any" id = "percent"/>
-        </td>
-        <td>
-            <button id="materialAddButton"> Добавить материал </button> <br/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <button type="submit">Добавить товар</button>
-        </td>
-    </tr>
-    </table>
-    <div>
-        <h3>Состав</h3>
+        <div class="form-group">
+            <form:label path="category" class="col-sm-2 control-label">
+                <spring:message text="Категория:"/>
+            </form:label>
+
+            <div class="col-sm-10">
+            <form:select path="category" items="${categories}" class="form-control"
+                         itemValue="categoryId" itemLabel="name"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputImage" class="col-sm-2 control-label">Изображение:</label>
+            <%--TODO выберите файл. Обработать отмена--%>
+            <%--TODO при получении ошибки нужно заново выбирать изображение--%>
+            <div class="col-sm-10">
+                <input id="inputImage" type="file" name="image" accept="image/*,image/jpeg"
+                        class="form-control" />
+                <img src="/images/default.jpg" id = "image" width="150px" height="150px"
+                     class="img-responsive"/>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <h4>Состав</h4>
+        </div>
+        <div class="form-group">
+            <div class="text-right">
+                <label  for="selectedMaterial" class="col-sm-2">Материал:</label>
+            </div>
+
+            <div class="col-sm-2">
+                <select id="selectedMaterial" class="form-control">
+                    <c:forEach items="${materials}" var="m">
+                        <option value="${m.materialId}">${m.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <label for="percent" class="col-sm-1">Процент:</label>
+
+            <div class="col-sm-2">
+                <input type="number" value="0" step="any" id = "percent" class="form-control"/>
+            </div>
+
+            <button id="materialAddButton" class="btn btn-default col-sm-2"> Добавить материал </button>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-default col-sm-12">Добавить товар</button>
+        </div>
+
+
+        <br/><br/>
+
         <table id="composition" style="width:100%">
             <c:forEach items="${product.productMaterials}" var="pm">
                 <tr>
@@ -146,7 +139,7 @@
                         <input type="number" step="any" name="percent[]" value="${pm.percentMaterial}">
                     </td>
                     <td>
-                        <button class="delete">Удалить</button>
+                        <button class="delete btn btn-default">Удалить</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -156,10 +149,10 @@
                     class="hide"
                 </c:if> >
               Состав не задан </span>
-    </div>
-    <br/>
-
-</form:form>
+    </form:form>
+</div>
+</body>
+</html>
 
 <script id="table-row" type="text/x-handlebars-template">
     <tr>
@@ -175,6 +168,3 @@
         </td>
     </tr>
 </script>
-
-</body>
-</html>

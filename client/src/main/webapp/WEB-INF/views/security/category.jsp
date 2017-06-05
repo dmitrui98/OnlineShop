@@ -17,12 +17,12 @@
 
     <br><br>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title"><b>Список категорий</b></h3>
-        </div>
-        <div class="table-responsive">
-            <c:if test="${!empty categories}">
+    <c:if test="${!empty categories}">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Список категорий</b></h3>
+            </div>
+            <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <tr>
                         <th>ID</th>
@@ -72,9 +72,9 @@
                         </tr>
                     </c:forEach>
                 </table>
-            </c:if>
+            </div>
         </div>
-    </div>
+    </c:if>
 </div>
 
 

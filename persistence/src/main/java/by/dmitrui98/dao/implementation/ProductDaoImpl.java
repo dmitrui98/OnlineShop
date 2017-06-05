@@ -7,6 +7,7 @@ import by.dmitrui98.entity.Material;
 import by.dmitrui98.entity.Product;
 import by.dmitrui98.entity.ProductMaterial;
 import by.dmitrui98.util.SessionUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import java.util.Set;
 @Repository("productDao")
 public class ProductDaoImpl implements ProductDao {
 
+    private static final Logger logger = Logger.getLogger(ProductDaoImpl.class);
+
     @Autowired
     private SessionUtil sessionUtil;
 
@@ -35,12 +38,20 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product addOrUpdate(Product product) {
+
+
         sessionUtil.openTransactionSession();
 
         Session session = sessionUtil.getSession();
 
-        session.saveOrUpdate(product);
+        // если не удалить, то hibernate просто увеличит состав, не удалив старые записи
+        if (product.getProductId() != 0) {
+            session.createNativeQuery("DELETE FROM product_material" +
+                    " where product_id="+product.getProductId()).executeUpdate();
+        }
 
+
+        session.saveOrUpdate(product);
         sessionUtil.closeTransactionSession();
 
         return product;
@@ -61,7 +72,7 @@ public class ProductDaoImpl implements ProductDao {
             sessionUtil.closeTransactionSession();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Can not delete product with id " + id, ex);
             return false;
         }
     }

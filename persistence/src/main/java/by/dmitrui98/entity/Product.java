@@ -1,15 +1,10 @@
 package by.dmitrui98.entity;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Администратор on 03.04.2017.
- */
 @Entity
 @Table(name = "product")
 public class Product {
@@ -20,7 +15,7 @@ public class Product {
     private long productId;
 
     @Transient
-    private int countPottleProducts;
+    private int countProductsInPottle;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -59,7 +54,7 @@ public class Product {
     }
 
     public Product(int countPottleProducts, String name, double price, String description, Date createdAt, Date updatedAt, Image image, Category category, Admin admin, Set<OrderProduct> orderProducts, Set<ProductMaterial> productMaterials) {
-        this.countPottleProducts = countPottleProducts;
+        this.countProductsInPottle = countPottleProducts;
         this.name = name;
         this.price = price;
         this.description = description;
@@ -91,12 +86,12 @@ public class Product {
         this.productId = productId;
     }
 
-    public int getCountPottleProducts() {
-        return countPottleProducts;
+    public int getCountProductsInPottle() {
+        return countProductsInPottle;
     }
 
-    public void setCountPottleProducts(int countPottleProducts) {
-        this.countPottleProducts = countPottleProducts;
+    public void setCountProductsInPottle(int countProductsInPottle) {
+        this.countProductsInPottle = countProductsInPottle;
     }
 
     public String getName() {

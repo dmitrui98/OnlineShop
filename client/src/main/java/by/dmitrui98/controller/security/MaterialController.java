@@ -5,6 +5,7 @@ import by.dmitrui98.entity.Material;
 import by.dmitrui98.service.dao.AdminService;
 import by.dmitrui98.service.dao.MaterialService;
 import by.dmitrui98.validation.MaterialValidator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import java.util.Date;
 @Controller
 @RequestMapping(value = "/security/material")
 public class MaterialController {
+    private static final Logger logger = Logger.getLogger(MaterialController.class);
     @Autowired
     private MaterialService materialService;
     @Autowired
@@ -61,9 +63,10 @@ public class MaterialController {
     @RequestMapping(method = RequestMethod.POST)
     public String addOrUpdate(@ModelAttribute("material") Material material, BindingResult bindingResult, HttpServletRequest request) {
         try {
-            material.setName(new String (material.getName().getBytes("ISO-8859-1"), "UTF-8"));
+            String name = new String (material.getName().getBytes("ISO-8859-1"), "UTF-8").toLowerCase();
+            material.setName(name);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("UnsupportedEncodingException (/security/material)", e);
         }
 
         boolean isEdit = true;

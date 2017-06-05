@@ -5,6 +5,7 @@ import by.dmitrui98.entity.Category;
 import by.dmitrui98.service.dao.AdminService;
 import by.dmitrui98.service.dao.CategoryService;
 import by.dmitrui98.validation.CategoryValidator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,8 @@ import java.util.Date;
 @Controller
 @RequestMapping(value = "/security/category")
 public class CategoryController {
+
+    private static final Logger logger = Logger.getLogger(CategoryController.class);
 
     @Autowired
     private CategoryService categoryService;
@@ -59,9 +62,10 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.POST)
     public String addOrUpdate(@ModelAttribute("category") Category category, BindingResult bindingResult, HttpServletRequest request) {
         try {
-            category.setName(new String (category.getName().getBytes("ISO-8859-1"), "UTF-8"));
+            String name = new String (category.getName().getBytes("ISO-8859-1"), "UTF-8").toLowerCase();
+            category.setName(name);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("UnsupportedEncodingException (/security/category)", e);
         }
 
         boolean isEdit = true;

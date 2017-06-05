@@ -26,6 +26,10 @@ public class MaterialValidator implements Validator {
         Material material = (Material) target;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Required");
+        if (errors.getFieldError("name") == null)
+            if (material.getName().length() < 3 || material.getName().length() > 32)
+                errors.rejectValue("name", "Size.name");
+
         if (materialService.getByName(material.getName()) != null) {
             errors.rejectValue("name", "Dublicate.materialForm.name");
         }

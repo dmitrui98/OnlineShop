@@ -3,6 +3,7 @@ package by.dmitrui98.dao.implementation;
 import by.dmitrui98.dao.ImageDao;
 import by.dmitrui98.entity.Image;
 import by.dmitrui98.util.SessionUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Repository
 public class ImageDaoImpl implements ImageDao {
+    private static final Logger logger = Logger.getLogger(ImageDaoImpl.class);
 
     @Autowired
     private SessionUtil sessionUtil;
@@ -55,7 +57,7 @@ public class ImageDaoImpl implements ImageDao {
             sessionUtil.closeTransactionSession();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Can not delete image with id " + id, ex);
             return false;
         }
     }

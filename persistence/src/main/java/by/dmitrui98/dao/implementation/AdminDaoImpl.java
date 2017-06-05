@@ -3,6 +3,7 @@ package by.dmitrui98.dao.implementation;
 import by.dmitrui98.dao.AdminDao;
 import by.dmitrui98.entity.Admin;
 import by.dmitrui98.util.SessionUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,10 @@ import java.util.List;
  */
 @Repository
 public class AdminDaoImpl implements AdminDao {
+    private static final Logger logger = Logger.getLogger(AdminDaoImpl.class);
+
     @Autowired
-    SessionUtil sessionUtil;
+    private SessionUtil sessionUtil;
 
 
     @Override
@@ -44,7 +47,7 @@ public class AdminDaoImpl implements AdminDao {
 
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Can not delete admin with id " + id, ex);
             return false;
         }
     }

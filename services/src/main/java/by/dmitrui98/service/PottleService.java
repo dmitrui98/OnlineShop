@@ -23,10 +23,10 @@ public class PottleService {
 
         Product pottleProduct = getProduct(pottleProducts.iterator(), puttingProduct);
         if (pottleProduct != null)
-            pottleProduct.setCountPottleProducts(pottleProduct.getCountPottleProducts() + 1);
+            pottleProduct.setCountProductsInPottle(pottleProduct.getCountProductsInPottle() + 1);
         else {
             pottleProducts.add(puttingProduct);
-            puttingProduct.setCountPottleProducts(puttingProduct.getCountPottleProducts() + 1);
+            puttingProduct.setCountProductsInPottle(puttingProduct.getCountProductsInPottle() + 1);
         }
     }
 
@@ -49,8 +49,8 @@ public class PottleService {
             Product product = pottleProductsIterator.next();
             if (product.getProductId() == removedProductId) {
 
-                product.setCountPottleProducts(product.getCountPottleProducts() - 1);
-                if (product.getCountPottleProducts() == 0)
+                product.setCountProductsInPottle(product.getCountProductsInPottle() - 1);
+                if (product.getCountProductsInPottle() == 0)
                     pottleProductsIterator.remove();
 
                 break;

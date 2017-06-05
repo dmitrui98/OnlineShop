@@ -4,6 +4,7 @@ import by.dmitrui98.entity.User;
 import by.dmitrui98.service.security.SecurityService;
 import by.dmitrui98.service.dao.UserService;
 import by.dmitrui98.validation.UserValidator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +26,8 @@ import java.util.Date;
  */
 @Controller
 public class UserController {
+
+    private static final Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -52,7 +55,7 @@ public class UserController {
             userForm.setLname(new String (userForm.getLname().getBytes("ISO-8859-1"), "UTF-8"));
             userForm.setPhone(new String (userForm.getPhone().getBytes("ISO-8859-1"), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("UnsupportedEncodingException (/registration).", e);
         }
 
         userValidator.validate(userForm, bindingResult);

@@ -27,13 +27,26 @@ public class ProductValidator implements Validator {
         Product product = (Product) target;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Required");
+        if (errors.getFieldError("name") == null)
+            if (product.getName().length() < 3 || product.getName().length() > 32)
+                errors.rejectValue("name", "Size.name");
+
+        if (product.getDescription().length() > 100)
+            errors.rejectValue("description", "Size.productForm.description");
+
         if (product.getCategory() == null)
             errors.rejectValue("category", "Empty.productForm.category");
+
+        if (product.getPrice() < 0)
+            errors.rejectValue("price", "Wrong.productForm.price");
 
         if (product.getProductMaterials() != null && product.getProductMaterials().size() > 0) {
 
             if (productHasDublicatesInMaterial(product))
                 errors.rejectValue("productMaterials", "Dublicate.productForm.materials");
+
+            if (haveWrongPercent(product))
+                errors.rejectValue("productMaterials", "Wrong.productForm.wrongPercent");
 
             double actualPercent = calculatePersants(product);
             if (expectedPercent != actualPercent)
@@ -59,12 +72,23 @@ public class ProductValidator implements Validator {
         return false;
     }
 
+    private boolean haveWrongPercent(Product product) {
+        Iterator<ProductMaterial> iterator = product.getProductMaterials().iterator();
+        while (iterator.hasNext()) {
+            ProductMaterial productMaterial = iterator.next();
+            if (productMaterial.getPercentMaterial() <= 0)
+                return true;
+        }
+        return false;
+    }
+
     private double calculatePersants(Product product) {
         Iterator<ProductMaterial> iterator = product.getProductMaterials().iterator();
         double actualPercent = 0.0;
         while (iterator.hasNext()) {
             ProductMaterial productMaterial = iterator.next();
-            actualPercent += productMaterial.getPercentMaterial();
+            if (productMaterial.getPercentMaterial() > 0)
+                actualPercent += productMaterial.getPercentMaterial();
         }
         return actualPercent;
     }

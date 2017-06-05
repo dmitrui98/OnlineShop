@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="java.util.Iterator" %>
-<%@ page import="by.dmitrui98.entity.Product" %>
-<%@ page import="java.util.List" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,59 +8,64 @@
     <script type = "text/javascript" src = "/js/product.js"> </script>
 </head>
 <body>
+<div class="container">
     <a href="<c:url value="/security" />">Назад</a> <br/>
     <a href="<c:url value="/security/product/add"/>"> Добавить товар </a>
-    <%
-        Iterator<Product> productIterator = ((List<Product>) request.getAttribute("products")).iterator();
-        if (productIterator != null && productIterator.hasNext()) {
-    %>
-        <table border="0" cellpadding="0" width="100%">
-            <tr>
-                <td>ID</td>
-                <td>Name</td>
-                <td>Image</td>
-                <td>Admin</td>
-                <td>Created at</td>
-                <td>Updated at</td>
-                <td>View</td>
-                <td>Edit</td>
-                <td>Delete</td>
-            </tr>
 
-    <%
-        while (productIterator.hasNext()) {
-            Product product = productIterator.next();
-    %>
-        <tr>
-            <td> <%=product.getProductId()%> </td>
-            <td> <%=product.getName()%> </td>
-            <td><img src="<%= product.getImage().getImageDirectory() %>" width="70" height="50"/></td>
-            <td> <%=product.getAdmin().getLogin()%> </td>
-            <td> <%=product.getCreatedAt()%> </td>
-            <td> <%=product.getUpdatedAt()%> </td>
-            <td>
-                <button class="viewButton"
-                        data-id="<%=product.getProductId()%>">
-                    view
-                </button>
-            </td>
-            <td> <button class="editButton"
-                         data-id="<%=product.getProductId()%>">
-                 edit
-                </button>
-            </td>
-            <td> <button class="deleteButton"
-                         data-id="<%=product.getProductId()%>"
-                         data-csrf-name = "${_csrf.parameterName}"
-                         data-csrf-value = "${_csrf.token}"   >
-                    delete
-                </button>
-            </td>
-        </tr>
-        <% } %>
-        </table>
-    <% } %>
+    <br><br>
 
+    <c:if test="${!empty products}">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Список товаров</b></h3>
+            </div>
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Admin</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
+                        <th>View</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <c:forEach items="${products}" var="product">
+                        <tr>
+                            <td> ${product.productId} </td>
+                            <td> ${product.name} </td>
+                            <td><img src="${product.image.imageDirectory}" width="70" height="50"/></td>
+                            <td> ${product.admin.login} </td>
+                            <td> ${product.createdAt} </td>
+                            <td> ${product.updatedAt} </td>
+                            <td>
+                                <button class="viewButton"
+                                        data-id="${product.productId}">
+                                    view
+                                </button>
+                            </td>
+                            <td> <button class="editButton"
+                                         data-id="${product.productId}">
+                                 edit
+                                </button>
+                            </td>
+                            <td> <button class="deleteButton"
+                                         data-id="${product.productId}"
+                                         data-csrf-name = "${_csrf.parameterName}"
+                                         data-csrf-value = "${_csrf.token}"   >
+                                    delete
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>
+    </c:if>
+</div>
 </body>
 </html>
 

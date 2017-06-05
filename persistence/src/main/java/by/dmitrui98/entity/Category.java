@@ -1,14 +1,11 @@
 package by.dmitrui98.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Created by Администратор on 09.04.2017.
- */
+
 @Entity
 @Table(name = "category")
 public class Category {

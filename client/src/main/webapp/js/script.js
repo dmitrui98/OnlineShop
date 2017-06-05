@@ -11,7 +11,6 @@ jQuery('document').ready(function() {
 		location.href = "/pottle";
 	});
 
-    //jQuery('#content').html('');
     jQuery.ajax({
         url: '/products',
         type: 'GET',
@@ -23,8 +22,6 @@ jQuery('document').ready(function() {
 
                 $("#content").append(p);
 
-//                    var img = $('<img>').attr('src', element.image);
-//                    p.append(img);
                 console.log(element);
             });
         }

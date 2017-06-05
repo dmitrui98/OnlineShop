@@ -2,6 +2,7 @@ package by.dmitrui98.editor;
 
 import by.dmitrui98.entity.Image;
 import by.dmitrui98.service.dao.ImageService;
+import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.beans.PropertyEditorSupport;
@@ -11,6 +12,7 @@ import java.io.IOException;
  * Created by Администратор on 08.05.2017.
  */
 public class ImageEditor extends PropertyEditorSupport {
+    private static final Logger logger = Logger.getLogger(ImageEditor.class);
 
     private ImageService imageService;
 
@@ -27,7 +29,7 @@ public class ImageEditor extends PropertyEditorSupport {
             try {
                 image = imageService.write(multipartFile.getBytes());
             } catch (IOException ex) {
-                ex.printStackTrace();
+                logger.error("Error in writing multipartFile.", ex);
             }
 
             super.setValue(image);

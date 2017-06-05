@@ -1,13 +1,8 @@
 package by.dmitrui98.entity;
 
-import org.springframework.web.bind.annotation.CookieValue;
-
 import javax.persistence.*;
-import java.util.Objects;
 
-/**
- * Created by Администратор on 03.05.2017.
- */
+
 @Entity
 @Table(name = "product_material")
 @AssociationOverrides({

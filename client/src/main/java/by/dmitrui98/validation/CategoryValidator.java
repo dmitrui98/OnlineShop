@@ -28,6 +28,10 @@ public class CategoryValidator implements Validator {
         Category category = (Category) target;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Required");
+        if (errors.getFieldError("name") == null)
+            if (category.getName().length() < 3 || category.getName().length() > 32)
+                errors.rejectValue("name", "Size.name");
+
         if (categoryService.getByName(category.getName()) != null) {
             errors.rejectValue("name", "Dublicate.categoryForm.name");
         }

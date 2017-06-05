@@ -4,6 +4,12 @@ INSERT INTO admin VALUES (NULL,
                           'qwert',
                           '$2a$11$aGhB.cGDGAx11uNzzKgcY.vslfkkTyLY5dWNff/pVjLVG0fDHZr2e',
                           NULL);
+INSERT INTO admin VALUES (NULL,
+                          NULL,
+                          'dmitrui9838@gmail.com',
+                          'admin',
+                          '$2a$11$aGhB.cGDGAx11uNzzKgcY.vslfkkTyLY5dWNff/pVjLVG0fDHZr2e',
+                          NULL);
 
 INSERT INTO user VALUES (NULL,
                          NULL,

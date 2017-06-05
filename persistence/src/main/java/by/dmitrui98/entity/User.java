@@ -1,15 +1,8 @@
 package by.dmitrui98.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GeneratorType;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by Администратор on 03.04.2017.
- */
 
 @Entity
 @Table(name = "user")

@@ -6,6 +6,7 @@ import by.dmitrui98.entity.Admin;
 import by.dmitrui98.entity.Category;
 import by.dmitrui98.entity.Product;
 import by.dmitrui98.util.SessionUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,10 @@ import java.util.List;
  */
 @Repository
 public class CategoryDaoImpl implements CategoryDao {
+    private static final Logger logger = Logger.getLogger(CategoryDaoImpl.class);
 
     @Autowired
-    SessionUtil sessionUtil;
+    private SessionUtil sessionUtil;
 
 
     @Override
@@ -55,7 +57,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Error in deleting category with id " + id, ex);
             return false;
         }
     }

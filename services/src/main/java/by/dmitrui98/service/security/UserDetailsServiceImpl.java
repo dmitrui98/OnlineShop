@@ -5,6 +5,7 @@ import by.dmitrui98.entity.User;
 import by.dmitrui98.entity.enums.UserRoleEnum;
 import by.dmitrui98.service.dao.AdminService;
 import by.dmitrui98.service.dao.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +23,7 @@ import java.util.Set;
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    private static final Logger logger = Logger.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
     private UserService userService;
@@ -37,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         try {
             user = userService.getByName(name);
         } catch (Exception ex) {
-            System.out.println("Пользователь с именем " + name + " не найден.");
+            logger.error("Пользователь с именем " + name + " не найден.", ex);
         }
         Set<GrantedAuthority> roles = new HashSet();
         UserDetails userDetails = null;

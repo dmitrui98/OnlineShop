@@ -1,12 +1,7 @@
 package by.dmitrui98.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
-/**
- * Created by Администратор on 09.04.2017.
- */
 @Entity
 @Table(name = "image")
 public class Image {

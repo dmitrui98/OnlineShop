@@ -5,6 +5,7 @@ import by.dmitrui98.entity.Image;
 import by.dmitrui98.entity.Product;
 import by.dmitrui98.service.dao.ImageService;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ import java.util.List;
  */
 @Service
 public class ImageServiceImpl implements ImageService {
+    private static final Logger logger = Logger.getLogger(ImageServiceImpl.class);
+
     private static final String dir = "/server/file_storage/images/";
     private static final String defaultImageName = "default.jpg";
     private static final String serverDir = "/images/";
@@ -44,14 +47,15 @@ public class ImageServiceImpl implements ImageService {
 
                 image = imageDao.save(serverDir + imageName);
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (IOException ex) {
+                logger.error("IOException in writing image. Image folder: " + folder.getAbsolutePath() +
+                        "; image name" + imageName, ex);
             } finally {
                 try {
                     if (stream != null)
                         stream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("IOException in closing BufferedOutputStream", e);
                 }
             }
         }
@@ -71,22 +75,23 @@ public class ImageServiceImpl implements ImageService {
                 stream =
                         new FileInputStream(image);
             } else {
+                logger.error("Image with name " + imageName + " not found");
                 stream =
                         new FileInputStream(new File(folder, defaultImageName));
-//                throw new IllegalArgumentException("Image with name " + imageName + " not found");
             }
 
             byte[] bytes = IOUtils.toByteArray(stream);
 
             return bytes;
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.error("IOException in reading image. Image folder: " + folder.getAbsolutePath() +
+                    "; image name" + imageName, ex);
         } finally {
             try {
                 if (stream != null)
                     stream.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("IOException in closing FileInputStream", e);
             }
         }
         return null;

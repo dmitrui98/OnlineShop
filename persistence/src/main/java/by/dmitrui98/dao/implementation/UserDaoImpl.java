@@ -3,6 +3,7 @@ package by.dmitrui98.dao.implementation;
 import by.dmitrui98.dao.UserDao;
 import by.dmitrui98.entity.User;
 import by.dmitrui98.util.SessionUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,10 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
+    private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
+
     @Autowired
-    SessionUtil sessionUtil;
+    private SessionUtil sessionUtil;
 
     @Override
     public User addOrUpdate(User user) {
@@ -42,7 +45,7 @@ public class UserDaoImpl implements UserDao {
             sessionUtil.closeTransactionSession();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Can not delete user with id " + id, ex);
             return false;
         }
     }

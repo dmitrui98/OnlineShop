@@ -17,7 +17,7 @@
 </table> <br/>
 
 <h3>Описание:</h3>
-<textarea readonly="true" cols="50" rows="10" class="descriptionTextArea">
+<textarea readonly="true" cols="50" rows="10"">
     ${product.description}
 </textarea> <br/>
 

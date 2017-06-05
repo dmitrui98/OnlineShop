@@ -3,9 +3,7 @@ package by.dmitrui98.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by Администратор on 26.04.2017.
- */
+
 @Embeddable
 public class OrderProductPK implements Serializable {
 

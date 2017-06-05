@@ -1,7 +1,7 @@
 package by.dmitrui98.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.context.embedded.MultipartConfigFactory;
+import org.apache.log4j.Logger;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,7 +20,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import javax.servlet.MultipartConfigElement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,12 +33,16 @@ import java.util.List;
 @Import({SecurityConfig.class, DatabaseConfig.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+    private static final Logger logger = Logger.getLogger(WebConfig.class);
+
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
+
+        logger.debug("ViewResolver bean is configured.");
 
         return viewResolver;
     }
@@ -53,6 +56,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         converters.add(converter);
         converters.add(byteArrayHttpMessageConverter());
+
+        logger.debug("MessageConverters are configured.");
     }
 
 
@@ -60,6 +65,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
         ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
         arrayHttpMessageConverter.setSupportedMediaTypes(getSupportedMediaTypes());
+
+        logger.debug("ByteArrayHttpMessageConverter is configured.");
+
         return arrayHttpMessageConverter;
     }
 
@@ -81,23 +89,29 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:validation");
         messageSource.setUseCodeAsDefaultMessage(true);
+
+        logger.debug("MessageSource is configured.");
+
         return messageSource;
     }
 
-//    @Bean
+    @Bean
+    public MultipartResolver multipartResolver() {
+        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(1000000);
+
+        logger.debug("MultipartResolver is configured.");
+
+        return multipartResolver;
+    }
+
+    //    @Bean
 //    MultipartConfigElement multipartConfigElement() {
 //        MultipartConfigFactory factory = new MultipartConfigFactory();
 //        factory.setMaxFileSize("128KB");
 //        factory.setMaxRequestSize("128KB");
 //        return factory.createMultipartConfig();
 //    }
-
-    @Bean
-    public MultipartResolver multipartResolver() {
-        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(1000000);
-        return multipartResolver;
-    }
 
 //    @Bean
 //    protected Filter[] getServletFilters() {
