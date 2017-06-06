@@ -24,9 +24,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
 
+        user.setFname(user.getFname().trim());
+        user.setLname(user.getLname().trim());
+        user.setSurname(user.getSurname().trim());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-        user.setCreatedAt(new Date());
+        if (user.getUserId() == 0)
+            user.setCreatedAt(new Date());
         user.setUpdatedAt(new Date());
 
         userDao.addOrUpdate(user);

@@ -75,6 +75,15 @@ public class UserValidator implements Validator {
             errors.rejectValue("confirmPassword", "Different.userForm.password");
         }
 
+        if ( (user.getFname().length() < 3 || user.getFname().length() > 32) && (!user.getFname().trim().equals("")) )
+            errors.rejectValue("fname", "Size.name");
+        if ((user.getLname().length() < 3 || user.getLname().length() > 32) && (!user.getLname().trim().equals("")))
+            errors.rejectValue("lname", "Size.name");
+        if ((user.getSurname().length() < 3 || user.getSurname().length() > 32) && (!user.getSurname().trim().equals("")))
+            errors.rejectValue("surname", "Size.name");
+        if ((user.getPhone().length() < 3 || user.getPhone().length() > 32) && (!user.getPhone().trim().equals("")))
+            errors.rejectValue("phone", "Size.name");
+
         Pattern p = Pattern.compile("\\+?[0-9]+");
         Matcher m = p.matcher(user.getPhone());
         if ((!m.matches()) && (user.getPhone().length() > 0)) {
