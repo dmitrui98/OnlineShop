@@ -1,5 +1,7 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -22,13 +24,13 @@ public class Address {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "country", nullable = false)
+    @Column(name = "country", nullable = false, length = 100)
     private String country;
 
-    @Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = false, length = 100)
     private String city;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false, length = 100)
     private String address;
 
     @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

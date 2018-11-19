@@ -1,5 +1,6 @@
 package by.dmitrui98.service.security;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,11 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by Администратор on 18.04.2017.
- */
+
 @Service
 public class SecurityServiceImpl implements SecurityService {
+    private static final Logger logger = Logger.getLogger(SecurityServiceImpl.class);
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -41,7 +41,7 @@ public class SecurityServiceImpl implements SecurityService {
         if (authenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-            System.out.println(String.format("Successfully %s auto logged in", username));
+            logger.debug(String.format("Successfully %s auto logged in", username));
         }
     }
 }

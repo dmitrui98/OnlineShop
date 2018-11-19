@@ -23,7 +23,7 @@ public class Product {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "description")
+    @Column(columnDefinition = "TEXT(500)", name = "description")
     private String description;
 
     @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

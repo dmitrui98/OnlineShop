@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Администратор on 29.04.2017.
@@ -39,7 +40,8 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.GET)
     public String editCategoryPage(Model model) {
 
-        model.addAttribute("categories", categoryService.getAll());
+        List<Category> categories = categoryService.getAll();
+        model.addAttribute("categories", categories);
 
         return "/security/category";
     }
@@ -61,12 +63,6 @@ public class CategoryController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String addOrUpdate(@ModelAttribute("category") Category category, BindingResult bindingResult, HttpServletRequest request) {
-        try {
-            String name = new String (category.getName().getBytes("ISO-8859-1"), "UTF-8").toLowerCase();
-            category.setName(name);
-        } catch (UnsupportedEncodingException e) {
-            logger.error("UnsupportedEncodingException (/security/category)", e);
-        }
 
         boolean isEdit = true;
         if (category.getCategoryId() == 0)

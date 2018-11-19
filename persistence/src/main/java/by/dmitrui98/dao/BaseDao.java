@@ -1,7 +1,6 @@
 package by.dmitrui98.dao;
 
 
-import javax.persistence.Entity;
 import java.util.List;
 
 /**

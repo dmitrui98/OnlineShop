@@ -26,6 +26,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <tr>
+                        <th>№</th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Admin</th>
@@ -35,8 +36,10 @@
                         <th>Delete</th>
                         <th>Delete CASCADE</th>
                     </tr>
+                    <%int i = 0; %>
                     <c:forEach items="${materials}" var="material">
                         <tr>
+                            <td><%=++i%></td>
                             <td>${material.materialId}</td>
                             <td>${material.name}</td>
                             <td>${material.admin.login}</td>

@@ -35,12 +35,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
 
-        User user = null;
-        try {
-            user = userService.getByName(name);
-        } catch (Exception ex) {
-            logger.error("Пользователь с именем " + name + " не найден.", ex);
+        User user = userService.getByName(name);
+        if (user == null) {
+            logger.debug("Пользователь с именем " + name + " не найден.");
         }
+
         Set<GrantedAuthority> roles = new HashSet();
         UserDetails userDetails = null;
         if (user != null) {
@@ -49,9 +48,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     user.getPassword(), roles);
         } else {
             Admin admin = adminService.getByName(name);
-            roles.add(new SimpleGrantedAuthority("ROLE_"+UserRoleEnum.ADMIN.name()));
-            userDetails = new org.springframework.security.core.userdetails.User(admin.getLogin(),
-                    admin.getPassword(), roles);
+            if (admin != null) {
+                roles.add(new SimpleGrantedAuthority("ROLE_" + UserRoleEnum.ADMIN.name()));
+                userDetails = new org.springframework.security.core.userdetails.User(admin.getLogin(),
+                        admin.getPassword(), roles);
+            } else {
+                logger.debug("Администратор с именем " + name + " не найден.");
+            }
         }
 
 

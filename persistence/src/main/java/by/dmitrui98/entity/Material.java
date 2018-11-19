@@ -2,6 +2,7 @@ package by.dmitrui98.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,14 +11,14 @@ import java.util.Set;
 
 @Entity
 @Table(name = "material")
-public class Material {
+public class Material implements Comparable<Material> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "material_id")
     private int materialId;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true, length = 50)
     private String name;
 
     @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -109,5 +110,10 @@ public class Material {
         Material material = (Material) obj;
 
         return material.getMaterialId() == this.getMaterialId();
+    }
+
+    @Override
+    public int compareTo(Material o) {
+        return getName().compareTo(o.getName());
     }
 }

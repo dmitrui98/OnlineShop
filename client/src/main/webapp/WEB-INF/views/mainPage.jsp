@@ -6,7 +6,7 @@
 	<meta charset="UTF-8"/>
 	<title> Интернет-магазин товаров </title>
     <jsp:include page="headers/userHeader.jsp" flush="true"/>
-    <script type = "text/javascript" src="/js/productList.js"> </script>
+	<script type="text/javascript" src="/js/mainPage.js"></script>
 <head>
 	
 <body>
@@ -45,7 +45,79 @@
 			</div>
 		</div>
 
-		<jsp:include page="productList.jsp" flush="true" />
+		<div class="productList">
+			<jsp:include page="productList.jsp" flush="true" />
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					Количество элементов на странице:
+					<select class="form-control countElements">
+						<option>5</option>
+						<option>10</option>
+						<option>15</option>
+						<option>20</option>
+						<option>25</option>
+						<option>30</option>
+					</select>
+				</div>
+				<div class = "col-sm-8">
+					<nav aria-label="...">
+						<ul class="pagination">
+							<li class="page-item disabled">
+								<a class="page-link" href="#">Предыдущая</a>
+							</li>
+							<li class="page-item active">
+								<a class="page-link number" href="#">1</a>
+							</li>
+
+							<li class="page-item">
+								<a class="page-link number" href="#">2 </a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">3</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">4</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">5</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">6</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">7</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">8</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">9</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">10</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">11</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">12</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">13</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link number" href="#">14</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">Следующая</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
 	</div>
 <body>
 <html>

@@ -62,12 +62,6 @@ public class MaterialController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String addOrUpdate(@ModelAttribute("material") Material material, BindingResult bindingResult, HttpServletRequest request) {
-        try {
-            String name = new String (material.getName().getBytes("ISO-8859-1"), "UTF-8").toLowerCase();
-            material.setName(name);
-        } catch (UnsupportedEncodingException e) {
-            logger.error("UnsupportedEncodingException (/security/material)", e);
-        }
 
         boolean isEdit = true;
         if (material.getMaterialId() == 0)

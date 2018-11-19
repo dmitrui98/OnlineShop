@@ -37,6 +37,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getElements(int from, int count) {
+        return productDao.getElements(from, count);
+    }
+
+    @Override
+    public long getCount() {
+        return productDao.getCount();
+    }
+
+    @Override
     public Product getById(Long id) {
         return productDao.getById(id);
     }

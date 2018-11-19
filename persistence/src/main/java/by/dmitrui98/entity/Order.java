@@ -15,7 +15,7 @@ public class Order {
    private long orderId;
 
    @Column(name = "amount", nullable = false)
-   private double amount;
+   private double amount; // сумма заказа
 
    @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
    private Date createdAt;

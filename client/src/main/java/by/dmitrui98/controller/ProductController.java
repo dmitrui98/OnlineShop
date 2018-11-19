@@ -26,4 +26,12 @@ public class ProductController {
 
         return "productView";
     }
+
+    @RequestMapping(value = "/infoPottle", method = RequestMethod.GET)
+    public String infoPottlePage(HttpServletRequest request, Model model) {
+        long id = Long.parseLong(request.getParameter("id"));
+        model.addAttribute("product", productService.getById(id));
+
+        return "productViewPottle";
+    }
 }

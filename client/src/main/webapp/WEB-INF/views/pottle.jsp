@@ -10,6 +10,8 @@
 	
 <body>
 	<a href="<c:url value="/" />">Главная страница</a>
+	<br/>
+	<br/>
 	<jsp:include page="pottleProducts.jsp" flush= "true" />
 </body>
 	

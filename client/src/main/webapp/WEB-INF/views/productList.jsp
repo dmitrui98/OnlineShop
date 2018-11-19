@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script type = "text/javascript" src="/js/productList.js"> </script>
 
 <div class="container">
     <c:if test="${!empty products}">
@@ -11,6 +12,7 @@
 
                     <table class="table table-bordered table-hover">
                         <tr>
+                            <th> <b>Номер</b> </th>
                             <th> <b>Название</b> </th>
                             <th> <b>Цена</b> </th>
                             <th> <b>Категория</b> </th>
@@ -18,8 +20,11 @@
                             <td> <b>Информация</b> </td>
                             <td> <b>В корзину</b> </td>
                         </tr>
+                        <% int i = 0; %>
                         <c:forEach items="${products}" var="product">
+                            <% i++; %>
                             <tr>
+                                <td> <%=i%> </td>
                                 <td> ${product.name} </td>
                                 <td> ${product.price} </td>
                                 <td> ${product.category.name} </td>
@@ -42,6 +47,7 @@
                         </c:forEach>
                     </table>
             </div>
+
         </div>
     </c:if>
 </div>

@@ -1,5 +1,7 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -25,16 +27,16 @@ public class User {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @Column(name = "fname")
+    @Column(name = "fname", length = 50)
     private String fname;
 
-    @Column(name = "lname")
+    @Column(name = "lname", length = 50)
     private String lname;
 
-    @Column(name = "surname")
+    @Column(name = "surname", length = 50)
     private String surname;
 
-    @Column(name = "phone")
+    @Column(name = "phone", length = 50)
     private String phone;
 
     @Column(name = "discont")

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -25,6 +25,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <tr>
+                        <th>№</th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Admin</th>
@@ -34,8 +35,10 @@
                         <th>Delete</th>
                         <th>Delete CASCADE</th>
                     </tr>
+                    <%int i = 0;%>
                     <c:forEach items="${categories}" var="category1">
                         <tr>
+                            <td><%=++i%></td>
                             <td>${category1.categoryId}</td>
                             <td>${category1.name}</td>
                             <td>${category1.admin.login}</td>

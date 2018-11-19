@@ -10,6 +10,7 @@ import by.dmitrui98.util.SessionUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -92,6 +93,30 @@ public class ProductDaoImpl implements ProductDao {
         sessionUtil.closeTransactionSession();
 
         return result;
+    }
+
+    @Override
+    public List<Product> getElements(int from, int count) {
+        sessionUtil.openTransactionSession();
+        Session session = sessionUtil.getSession();
+        List<Product> result = session.createQuery("from Product")
+                .setFirstResult(from)
+                .setMaxResults(count).list();
+        sessionUtil.closeTransactionSession();
+        return result;
+    }
+
+    @Override
+    public long getCount() {
+        sessionUtil.openTransactionSession();
+        Session session = sessionUtil.getSession();
+        Object o = session.createQuery("select count(*) from Product").uniqueResult();
+        Long count = null;
+        if (o != null) {
+            count = (Long) o;
+        }
+        sessionUtil.closeTransactionSession();
+        return count;
     }
 
     @Override

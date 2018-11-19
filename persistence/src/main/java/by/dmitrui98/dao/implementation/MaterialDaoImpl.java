@@ -100,6 +100,8 @@ public class MaterialDaoImpl implements MaterialDao {
         return result;
     }
 
+
+
     @Override
     public Material getById(Integer id) {
         sessionUtil.openTransactionSession();

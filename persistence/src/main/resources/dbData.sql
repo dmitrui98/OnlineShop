@@ -5,11 +5,12 @@ INSERT INTO admin VALUES (NULL,
                           '$2a$11$aGhB.cGDGAx11uNzzKgcY.vslfkkTyLY5dWNff/pVjLVG0fDHZr2e',
                           NULL);
 
+/* password = admin*/
 INSERT INTO admin VALUES (NULL,
                           NULL,
                           'dmitrui9838@gmail.com',
                           'admin',
-                          '$2a$11$aGhB.cGDGAx11uNzzKgcY.vslfkkTyLY5dWNff/pVjLVG0fDHZr2e',
+                          '$2a$11$c.xpCok6/cd3dVvY5oNV/.6S0nsrvN/J.XYSJrRSwwDQjrHdsvCtS',
                           NULL);
 
 INSERT INTO user VALUES (NULL,

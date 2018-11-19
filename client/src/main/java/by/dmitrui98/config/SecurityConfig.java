@@ -1,6 +1,7 @@
 package by.dmitrui98.config;
 
 import by.dmitrui98.entity.enums.UserRoleEnum;
+import by.dmitrui98.filter.EncodingFilter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 /**
  * Created by Администратор on 18.04.2017.
@@ -42,6 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.addFilterBefore(new EncodingFilter(), ChannelProcessingFilter.class);
 
         http.authorizeRequests()
                 .antMatchers("/security/**").hasRole(UserRoleEnum.ADMIN.name())

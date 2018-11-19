@@ -1,5 +1,7 @@
 package by.dmitrui98.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -8,14 +10,14 @@ import java.util.Set;
 
 @Entity
 @Table(name = "category")
-public class Category {
+public class Category implements Comparable<Category> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private int categoryId;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true, length = 50)
     private String name;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -94,4 +96,8 @@ public class Category {
         return getName();
     }
 
+    @Override
+    public int compareTo(Category o) {
+        return getName().compareTo(o.getName());
+    }
 }
