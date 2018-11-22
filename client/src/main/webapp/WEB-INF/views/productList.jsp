@@ -20,11 +20,14 @@
                             <td> <b>Информация</b> </td>
                             <td> <b>В корзину</b> </td>
                         </tr>
-                        <% int i = 0; %>
+                        <%
+                            int currentPage = (Integer) request.getAttribute("currentPage");
+                            int countPerPage = (Integer) request.getAttribute("countPerPage");
+                            int i = 0;
+                        %>
                         <c:forEach items="${products}" var="product">
-                            <% i++; %>
                             <tr>
-                                <td> <%=i%> </td>
+                                <td> <%=++i + (currentPage - 1) * countPerPage%> </td>
                                 <td> ${product.name} </td>
                                 <td> ${product.price} </td>
                                 <td> ${product.category.name} </td>

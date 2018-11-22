@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -17,6 +18,8 @@ import java.util.List;
  */
 @Controller
 public class MainController {
+
+    public static final int maxPages = 14;
 
     @Autowired
     private ProductService productService;
@@ -29,12 +32,15 @@ public class MainController {
 
         int countPages = (int) productCount / countElementsPerPage;
         if (productCount % countElementsPerPage != 0) {
-            countPages += 1;
+            countPages++;
         }
 
         model.addAttribute("products", products);
         model.addAttribute("countPages", countPages);
+
         model.addAttribute("currentPage", 1);
+        model.addAttribute("countPerPage", countElementsPerPage);
+        model.addAttribute("maxPages", maxPages);
 
         return "mainPage";
     }
@@ -45,15 +51,10 @@ public class MainController {
                                Model model) {
         int from = (page * countElementsPerPage) - countElementsPerPage;
         List<Product> products = productService.getElements(from, countElementsPerPage);
-        long productCount = productService.getCount();
 
-        int countPages = (int) productCount / countElementsPerPage;
-        if (productCount % countElementsPerPage != 0) {
-            countPages += 1;
-        }
         model.addAttribute("products", products);
-        model.addAttribute("countPages", countPages);
         model.addAttribute("currentPage", page);
+        model.addAttribute("countPerPage", countElementsPerPage);
 
         return "productList";
     }

@@ -67,49 +67,18 @@
 							<li class="page-item disabled">
 								<a class="page-link" href="#">Предыдущая</a>
 							</li>
-							<li class="page-item active">
+							<li class="page-item number active">
 								<a class="page-link number" href="#">1</a>
 							</li>
-
-							<li class="page-item">
-								<a class="page-link number" href="#">2 </a>
+							<%
+								Integer countPages =(Integer) request.getAttribute("countPages");
+								Integer maxPages = (Integer) request.getAttribute("maxPages");
+								for (int i = 2; i <=countPages && i <= maxPages; i++) {
+							%>
+							<li class="page-item number">
+								<a class="page-link number" href="#"><%=i%> </a>
 							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">3</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">4</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">5</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">6</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">7</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">8</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">9</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">10</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">11</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">12</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">13</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link number" href="#">14</a>
-							</li>
+							<%}%>
 							<li class="page-item">
 								<a class="page-link" href="#">Следующая</a>
 							</li>

@@ -3,6 +3,7 @@ package by.dmitrui98.util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -38,7 +39,8 @@ public class SessionUtil {
     }
 
     public void closeTransactionSession() {
-        transaction.commit();
+        if (transaction.getStatus().equals(TransactionStatus.ACTIVE))
+            transaction.commit();
         closeSession();
     }
 }

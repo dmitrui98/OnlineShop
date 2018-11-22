@@ -32,11 +32,6 @@ public class ProductDaoImpl implements ProductDao {
     @Autowired
     private SessionUtil sessionUtil;
 
-    @Autowired
-    @Qualifier("materialDao")
-    private MaterialDao materialDao;
-
-
     @Override
     public Product addOrUpdate(Product product) {
 
