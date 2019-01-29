@@ -10,18 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by Администратор on 13.04.2017.
  */
 public class SessionUtil {
-    private Session session;
-    private Transaction transaction;
+    private ThreadLocal<Session> session = new ThreadLocal<>();
+    private ThreadLocal<Transaction> transaction = new ThreadLocal<>();
 
     @Autowired
     private SessionFactory sessionFactory;
 
     public Session getSession() {
-        return session;
+        return session.get();
     }
 
     public Transaction getTransaction() {
-        return transaction;
+        return transaction.get();
     }
 
     public Session openSession() {
@@ -29,18 +29,20 @@ public class SessionUtil {
     }
 
     public Session openTransactionSession() {
-        session = openSession();
-        transaction = session.beginTransaction();
+        Session session = openSession();
+        this.session.set(session);
+        transaction.set(session.beginTransaction());
         return session;
     }
 
     public void closeSession() {
-        session.close();
+        session.get().close();
+        session.set(null);
     }
 
     public void closeTransactionSession() {
-        if (transaction.getStatus().equals(TransactionStatus.ACTIVE))
-            transaction.commit();
+        if (transaction.get().getStatus().equals(TransactionStatus.ACTIVE))
+            transaction.get().commit();
         closeSession();
     }
 }

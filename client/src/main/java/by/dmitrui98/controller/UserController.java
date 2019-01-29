@@ -1,8 +1,8 @@
 package by.dmitrui98.controller;
 
 import by.dmitrui98.entity.User;
-import by.dmitrui98.service.security.SecurityService;
 import by.dmitrui98.service.dao.UserService;
+import by.dmitrui98.service.security.SecurityService;
 import by.dmitrui98.validation.UserValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 
 /**
  * Created by Администратор on 14.04.2017.
@@ -49,14 +47,14 @@ public class UserController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
 
-        try {
-            userForm.setFname(new String (userForm.getFname().getBytes("ISO-8859-1"), "UTF-8"));
-            userForm.setSurname(new String (userForm.getSurname().getBytes("ISO-8859-1"), "UTF-8"));
-            userForm.setLname(new String (userForm.getLname().getBytes("ISO-8859-1"), "UTF-8"));
-            userForm.setPhone(new String (userForm.getPhone().getBytes("ISO-8859-1"), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            logger.error("UnsupportedEncodingException (/registration).", e);
-        }
+//        try {
+//            userForm.setFname(new String (userForm.getFname().getBytes("ISO-8859-1"), "UTF-8"));
+//            userForm.setSurname(new String (userForm.getSurname().getBytes("ISO-8859-1"), "UTF-8"));
+//            userForm.setLname(new String (userForm.getLname().getBytes("ISO-8859-1"), "UTF-8"));
+//            userForm.setPhone(new String (userForm.getPhone().getBytes("ISO-8859-1"), "UTF-8"));
+//        } catch (UnsupportedEncodingException e) {
+//            logger.error("UnsupportedEncodingException (/registration).", e);
+//        }
 
         userValidator.validate(userForm, bindingResult);
 

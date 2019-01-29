@@ -70,13 +70,14 @@ $(document).ready(function () {
             method: "get",
             success: function (response) {
                 $(".productList").html(response);
-                repaintPagination();
+
             },
             error: function (response) {
                 console.log(response);
                 alert("что-то пошло не так productList");
             }
         });
+        repaintPagination();
         return false;
     });
 

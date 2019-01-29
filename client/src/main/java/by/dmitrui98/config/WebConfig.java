@@ -6,7 +6,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
@@ -29,8 +28,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan({"by.dmitrui98.config.", "by.dmitrui98.controller/**"})
-@Import({SecurityConfig.class, DatabaseConfig.class})
+@ComponentScan("by.dmitrui98")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     private static final Logger logger = Logger.getLogger(WebConfig.class);
@@ -42,7 +40,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
 
-        logger.debug("ViewResolver bean is configured.");
+        logger.debug("ViewResolver bean is configured");
 
         return viewResolver;
     }
@@ -57,7 +55,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         converters.add(converter);
         converters.add(byteArrayHttpMessageConverter());
 
-        logger.debug("MessageConverters are configured.");
+        logger.debug("MessageConverters are configured");
     }
 
 
@@ -104,20 +102,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         return multipartResolver;
     }
-
-    //    @Bean
-//    MultipartConfigElement multipartConfigElement() {
-//        MultipartConfigFactory factory = new MultipartConfigFactory();
-//        factory.setMaxFileSize("128KB");
-//        factory.setMaxRequestSize("128KB");
-//        return factory.createMultipartConfig();
-//    }
-
-//    @Bean
-//    protected Filter[] getServletFilters() {
-//
-//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//        characterEncodingFilter.setEncoding("UTF-8");
-//        return new Filter[] { characterEncodingFilter};
-//    }
 }

@@ -28,9 +28,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
 @ComponentScan("by.dmitrui98")
-public class DatabaseConfig {
+public class HibernateConfig {
 
-    private static final Logger logger = Logger.getLogger(DatabaseConfig.class);
+    private static final Logger logger = Logger.getLogger(HibernateConfig.class);
 
     @Resource
     private Environment env;
@@ -40,7 +40,7 @@ public class DatabaseConfig {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory());
 
-        logger.debug("HibernateTransactionManager bean is configured.");
+        logger.debug("HibernateTransactionManager bean is configured");
         return txManager;
     }
 
@@ -50,7 +50,7 @@ public class DatabaseConfig {
         sessionBuilder.scanPackages(env.getRequiredProperty("db.entity.package"));
         sessionBuilder.addProperties(getHibernateProperties());
 
-        logger.debug("SessionFactory bean is configured.");
+        logger.debug("SessionFactory bean is configured");
         return sessionBuilder.buildSessionFactory();
     }
 
@@ -77,7 +77,7 @@ public class DatabaseConfig {
         ds.setTestOnBorrow(Boolean.valueOf(env.getRequiredProperty("db.testOnBorrow")));
         ds.setValidationQuery(env.getRequiredProperty("db.validationQuery"));
 
-        logger.debug("DataSource bean is configured.");
+        logger.debug("DataSource bean is configured");
 
         return ds;
     }
@@ -94,14 +94,10 @@ public class DatabaseConfig {
             Properties properties = new Properties();
             InputStream is = getClass().getClassLoader().getResourceAsStream("hibernate.properties");
             properties.load(is);
-
-            logger.debug("Getting hibernate properties...");
-
             return properties;
-
         } catch (IOException e) {
-            logger.error("Can't findAll 'hibernate.properties' in classpath!", e);
-            throw new IllegalArgumentException("Can't findAll 'hibernate.properties' in classpath!", e);
+            logger.error("Can't find 'hibernate.properties' in classpath!", e);
+            throw new IllegalArgumentException("Can't find 'hibernate.properties' in classpath!", e);
         }
     }
 }

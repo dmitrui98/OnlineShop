@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<script type = "text/javascript" src="/js/productList.js"> </script>
+<script type = "text/javascript" src="js/productList.js"> </script>
 
 <div class="container">
     <c:if test="${!empty products}">

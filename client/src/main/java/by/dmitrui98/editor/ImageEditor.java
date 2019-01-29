@@ -29,7 +29,7 @@ public class ImageEditor extends PropertyEditorSupport {
             try {
                 image = imageService.write(multipartFile.getBytes());
             } catch (IOException ex) {
-                logger.error("Error in writing multipartFile.", ex);
+                logger.error("Error in writing multipartFile", ex);
             }
 
             super.setValue(image);

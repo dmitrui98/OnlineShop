@@ -4,8 +4,8 @@
 <html>
 <head>
     <title>Test</title>
-    <script type = "text/javascript" src = "/js/jquery-3.2.0.min.js"> </script>
-    <script type = "text/javascript" src="/js/script.js"> </script>
+    <script type = "text/javascript" src = "js/jquery-3.2.0.min.js"> </script>
+    <script type = "text/javascript" src="js/script.js"> </script>
 </head>
 <body>
     HELLO WORLD!<br/>

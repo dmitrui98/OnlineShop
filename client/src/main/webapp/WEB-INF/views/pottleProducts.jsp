@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page session="true" import="java.util.*, by.dmitrui98.entity.Product" %>
+<%@ page session="true" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script>
-    <%@include file="/js/pottleProducts.js"%>
+    <%@include file="js/pottleProducts.js"%>
 </script>
 
 <c:if test="${!empty pottleProducts}">

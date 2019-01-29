@@ -5,7 +5,7 @@
 <head>
     <title>Товар</title>
     <jsp:include page="headers/adminHeader.jsp" flush="true"/>
-    <script type = "text/javascript" src = "/js/product.js"> </script>
+    <script type = "text/javascript" src = "js/product.js"> </script>
 </head>
 <body>
 <div class="container">

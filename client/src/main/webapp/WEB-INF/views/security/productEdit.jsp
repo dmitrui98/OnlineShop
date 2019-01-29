@@ -7,8 +7,8 @@
 <head>
     <title>Редактировать товар</title>
     <jsp:include page="headers/adminHeader.jsp" flush="true"/>
-    <script type = "text/javascript" src = "/js/handlebars-v4.0.5.js"> </script>
-    <script type = "text/javascript" src = "/js/productEdit.js"> </script>
+    <script type = "text/javascript" src = "js/handlebars-v4.0.5.js"> </script>
+    <script type = "text/javascript" src = "js/productEdit.js"> </script>
 
     <style>
         .hide {

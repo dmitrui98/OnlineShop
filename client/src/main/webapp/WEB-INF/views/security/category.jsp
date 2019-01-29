@@ -8,7 +8,7 @@
 <head>
     <title>Категория</title>
     <jsp:include page="headers/adminHeader.jsp" flush="true"/>
-    <script type = "text/javascript" src = "/js/category.js"> </script>
+    <script type = "text/javascript" src = "js/category.js"> </script>
 </head>
 <body>
 <div class="container">

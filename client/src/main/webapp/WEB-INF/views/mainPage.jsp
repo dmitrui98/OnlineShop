@@ -6,7 +6,7 @@
 	<meta charset="UTF-8"/>
 	<title> Интернет-магазин товаров </title>
     <jsp:include page="headers/userHeader.jsp" flush="true"/>
-	<script type="text/javascript" src="/js/mainPage.js"></script>
+	<script type="text/javascript" src="js/mainPage.js"></script>
 <head>
 	
 <body>
