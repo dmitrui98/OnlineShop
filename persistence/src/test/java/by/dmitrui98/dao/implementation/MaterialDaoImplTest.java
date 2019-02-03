@@ -11,10 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by Администратор on 02.06.2017.
@@ -50,7 +50,7 @@ public class MaterialDaoImplTest extends BaseDaoImplTest {
     @Test
     public void findAll() throws Exception {
         Material material = createTestMaterial();
-        Material material1 = new Material("name", admin, new Date(), new Date());
+        Material material1 = new Material("name", admin);
 
         materialDao.addOrUpdate(material);
         materialDao.addOrUpdate(material1);
@@ -71,7 +71,7 @@ public class MaterialDaoImplTest extends BaseDaoImplTest {
     }
 
     private Material createTestMaterial() {
-        Material material = new Material("testName", admin, new Date(), new Date());
+        Material material = new Material("testName", admin);
         return material;
     }
 
@@ -79,7 +79,7 @@ public class MaterialDaoImplTest extends BaseDaoImplTest {
     @Before
     public void before() {
         System.out.println("**********BEFORE**********");
-        admin = adminDao.addOrUpdate(new Admin("login", "email", "password", new Date(), new Date()));
+        admin = adminDao.addOrUpdate(new Admin("login", "email", "password"));
     }
 
     @After

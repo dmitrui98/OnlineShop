@@ -30,7 +30,7 @@
         </tr>
         <c:forEach items="${product.productMaterials}" var="productMaterial">
             <tr>
-                <td> ${productMaterial.material} </td>
+                <td> ${productMaterial.material.name} </td>
                 <td> ${productMaterial.percentMaterial} </td>
             </tr>
         </c:forEach>

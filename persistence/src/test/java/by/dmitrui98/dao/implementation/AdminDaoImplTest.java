@@ -6,14 +6,13 @@ import by.dmitrui98.entity.Admin;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by Администратор on 30.05.2017.
@@ -47,11 +46,9 @@ public class AdminDaoImplTest extends BaseDaoImplTest {
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void findAll() {
         Admin admin = createTestAdmin();
         Admin admin1 = new Admin("login", "email", "password");
-        admin1.setCreatedAt(new Date());
-        admin1.setUpdatedAt(new Date());
 
         adminDao.addOrUpdate(admin);
         adminDao.addOrUpdate(admin1);
@@ -84,8 +81,6 @@ public class AdminDaoImplTest extends BaseDaoImplTest {
         admin.setLogin("testAdminLogin");
         admin.setPassword("testAdminPassword");
         admin.setEmail("testAdminEmail");
-        admin.setCreatedAt(new Date());
-        admin.setUpdatedAt(new Date());
 
         return admin;
     }

@@ -5,6 +5,4 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 
 // автоматически добавляет the springSecurityFilterChain Filter for every URL
 public class SecurityWebInitializer extends AbstractSecurityWebApplicationInitializer {
-
-
 }

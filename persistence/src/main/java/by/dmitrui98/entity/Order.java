@@ -1,12 +1,21 @@
 package by.dmitrui98.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "order_")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Order {
 
    @Id
@@ -17,11 +26,13 @@ public class Order {
    @Column(name = "amount", nullable = false)
    private double amount; // сумма заказа
 
-   @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-   private Date createdAt;
+    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-   @Column(name = "updated_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-   private Date updatedAt;
+    @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinColumn(name = "address_id")
@@ -33,64 +44,4 @@ public class Order {
 //            inverseJoinColumns = @JoinColumn(name = "product_id"))
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.order", cascade = CascadeType.ALL)
     private Set<OrderProduct> orderProducts = new HashSet<>();
-
-    public Order() {
-    }
-
-    public Order(double amount, Date createdAt, Date updatedAt, Address address, Set<OrderProduct> orderProducts) {
-        this.amount = amount;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.address = address;
-        this.orderProducts = orderProducts;
-    }
-
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Set<OrderProduct> getOrderProducts() {
-        return orderProducts;
-    }
-
-    public void setOrderProducts(Set<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
-    }
-
 }

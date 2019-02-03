@@ -15,10 +15,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
     private final static String DISPATCHER = "dispatcher";
 
-    // TODO перевести время на час вперед
     // TODO изменить формат вывода даты: "yyyy/MM/dd HH:mm:ss"
     // TODO перехватить исключения, выбрасываемые на браузер
     // TODO страница comeIn только для неаутентифицированных пользователей
+    // TODO починить regex для email
 
 
     @Override

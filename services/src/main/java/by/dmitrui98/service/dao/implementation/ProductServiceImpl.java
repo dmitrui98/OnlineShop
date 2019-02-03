@@ -11,7 +11,6 @@ import by.dmitrui98.service.dao.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,13 +53,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(Product product) {
-
-        if (product.getProductId() == 0) {
-            product.setCreatedAt(new Date());
-            product.setUpdatedAt(new Date());
-        } else
-            product.setUpdatedAt(new Date());
-
         productDao.addOrUpdate(product);
     }
 
@@ -70,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
         if (product.getProductMaterials() == null)
             setProductMaterias(product, stringMaterialIds, stringPercents);
 
-        this.setDate(product);
         if (product.getImage() == null)
             product.setImage(imageService.getDefaultImage());
 
@@ -134,14 +125,6 @@ public class ProductServiceImpl implements ProductService {
             return true;
         else
             return false;
-    }
-
-    private void setDate(Product product) {
-        if (product.getProductId() == 0) {
-            product.setCreatedAt(new Date());
-            product.setUpdatedAt(new Date());
-        } else
-            product.setUpdatedAt(new Date());
     }
 
 }

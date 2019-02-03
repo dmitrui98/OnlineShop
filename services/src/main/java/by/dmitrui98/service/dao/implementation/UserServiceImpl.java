@@ -1,13 +1,12 @@
 package by.dmitrui98.service.dao.implementation;
 
 import by.dmitrui98.dao.UserDao;
-import by.dmitrui98.service.dao.UserService;
 import by.dmitrui98.entity.User;
+import by.dmitrui98.service.dao.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,10 +27,6 @@ public class UserServiceImpl implements UserService {
         user.setLname(user.getLname().trim());
         user.setSurname(user.getSurname().trim());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-        if (user.getUserId() == 0)
-            user.setCreatedAt(new Date());
-        user.setUpdatedAt(new Date());
 
         userDao.addOrUpdate(user);
     }

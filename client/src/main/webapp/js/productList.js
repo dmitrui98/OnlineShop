@@ -8,7 +8,7 @@ jQuery('document').ready(function() {
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-            url: "/pottle/put",
+            url: "pottle/put",
             headers: {'X-Csrf-Token': csrfValue},
             data: data,
             method: "post",

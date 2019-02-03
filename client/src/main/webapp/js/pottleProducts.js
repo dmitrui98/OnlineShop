@@ -8,7 +8,7 @@ jQuery('document').ready(function() {
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-            url: "/pottle/deleteAll",
+            url: "/onlineShop/pottle/deleteAll",
             headers: {'X-Csrf-Token': csrfValue},
             data: data,
             method: "post",
@@ -31,7 +31,7 @@ jQuery('document').ready(function() {
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-            url: "/pottle/delete",
+            url: "/onlineShop/pottle/delete",
             headers: {'X-Csrf-Token': csrfValue},
             data: data,
             method: "post",

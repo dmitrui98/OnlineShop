@@ -2,7 +2,7 @@
 <%@ page session="true" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script>
-    <%@include file="js/pottleProducts.js"%>
+    <%@include file="/js/pottleProducts.js"%>
 </script>
 
 <c:if test="${!empty pottleProducts}">
@@ -10,7 +10,7 @@
     <div id="content">
         <span>Общая сумма заказа: ${amount}</span>
 
-        <form action="/pottle/issueOrder" method="get">
+        <form action="/onlineShop/pottle/issueOrder" method="get">
             <button type="submit">Оформить заказ</button>
         </form>
         <br/>
@@ -28,7 +28,7 @@
                     <td><b> ${product.price} </b></td>
                     <td><b> ${product.countProductsInPottle} </b></td>
                     <td>
-                        <form action="/product/infoPottle" method="get">
+                        <form action="/onlineShop/product/infoPottle" method="get">
                             <input type="hidden" name="id" value="${product.productId}">
                             <button type="submit"> Подробнее </button>
                         </form>

@@ -1,7 +1,7 @@
 package by.dmitrui98.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,8 +14,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -27,11 +26,9 @@ import java.util.List;
  * Created by Администратор on 02.04.2017.
  */
 @Configuration
-@EnableWebMvc
 @ComponentScan("by.dmitrui98")
-public class WebConfig extends WebMvcConfigurerAdapter {
-
-    private static final Logger logger = Logger.getLogger(WebConfig.class);
+@Log4j
+public class WebConfig extends WebMvcConfigurationSupport {
 
     @Bean
     public ViewResolver viewResolver() {
@@ -40,31 +37,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
 
-        logger.debug("ViewResolver bean is configured");
+        log.debug("ViewResolver bean is configured");
 
         return viewResolver;
     }
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setObjectMapper(new ObjectMapper());
-        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-        converters.add(converter);
-        converters.add(byteArrayHttpMessageConverter());
-
-        logger.debug("MessageConverters are configured");
-    }
-
 
     @Bean
     public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
         ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
         arrayHttpMessageConverter.setSupportedMediaTypes(getSupportedMediaTypes());
 
-        logger.debug("ByteArrayHttpMessageConverter is configured.");
+        log.debug("ByteArrayHttpMessageConverter is configured.");
 
         return arrayHttpMessageConverter;
     }
@@ -78,6 +61,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        converter.setObjectMapper(new ObjectMapper());
+        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+        converters.add(converter);
+        converters.add(byteArrayHttpMessageConverter());
+
+        log.debug("MessageConverters are configured");
+    }
+
+    @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
@@ -88,7 +84,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         messageSource.setBasename("classpath:validation");
         messageSource.setUseCodeAsDefaultMessage(true);
 
-        logger.debug("MessageSource is configured.");
+        log.debug("MessageSource is configured.");
 
         return messageSource;
     }
@@ -98,7 +94,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(1000000);
 
-        logger.debug("MultipartResolver is configured.");
+        log.debug("MultipartResolver is configured.");
 
         return multipartResolver;
     }
