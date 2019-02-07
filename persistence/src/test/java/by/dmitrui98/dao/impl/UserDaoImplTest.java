@@ -1,4 +1,4 @@
-package by.dmitrui98.dao.implementation;
+package by.dmitrui98.dao.impl;
 
 import by.dmitrui98.dao.BaseDaoImplTest;
 import by.dmitrui98.dao.UserDao;

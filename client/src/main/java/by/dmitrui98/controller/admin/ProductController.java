@@ -64,7 +64,7 @@ public class ProductController {
                           BindingResult bindingResult, HttpServletRequest request, Model model){
 
         boolean isEdit = true;
-        if (productForm.getProductId() == 0)
+        if (productForm.getProductId() == null)
             isEdit = false;
 
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -102,7 +102,7 @@ public class ProductController {
         productForm.setAdmin(admin);
         if (isEdit) {
             String imageDirectory = request.getParameter("imageDirectory");
-            long imageId = Long.parseLong(request.getParameter("imageId"));
+            Long imageId = Long.parseLong(request.getParameter("imageId"));
 
             productService.save(productForm, stringMaterialIds, stringPercents,
                     imageDirectory, imageId);

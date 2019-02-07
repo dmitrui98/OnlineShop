@@ -19,12 +19,15 @@ import java.util.Set;
 @ToString
 public class Product {
 
+    // TODO добавить поле количество товаров
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     @EqualsAndHashCode.Include
     private Long productId;
 
+    // TODO переместить это поле в сессию
     @Transient
     private int countProductsInBasket;
 

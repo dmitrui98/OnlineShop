@@ -46,7 +46,7 @@ public class CategoryController {
     public String addOrUpdate(@ModelAttribute("category") Category category, BindingResult bindingResult, HttpServletRequest request) {
 
         boolean isEdit = true;
-        if (category.getCategoryId() == 0)
+        if (category.getCategoryId() == null)
             isEdit = false;
 
         categoryValidator.validate(category, bindingResult);

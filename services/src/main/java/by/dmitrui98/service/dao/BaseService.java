@@ -8,7 +8,8 @@ import java.util.List;
 public interface BaseService<T, T_ID> {
     List<T> getAll();
     T getById(T_ID id);
-    void save(T entity);
+
+    T save(T entity);
     boolean remove(T_ID id);
 
 }

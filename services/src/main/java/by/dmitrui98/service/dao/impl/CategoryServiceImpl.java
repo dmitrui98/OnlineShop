@@ -1,4 +1,4 @@
-package by.dmitrui98.service.dao.implementation;
+package by.dmitrui98.service.dao.impl;
 
 import by.dmitrui98.dao.CategoryDao;
 import by.dmitrui98.entity.Category;
@@ -15,10 +15,10 @@ import java.util.List;
  * Created by Администратор on 29.04.2017.
  */
 @Service
-public class CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl extends BaseServiceImpl<Category, Integer> implements CategoryService {
 
     @Autowired
-    CategoryDao categoryDao;
+    private CategoryDao categoryDao;
 
     @Autowired
     private ImageService imageService;
@@ -30,28 +30,36 @@ public class CategoryServiceImpl implements CategoryService {
         return categories;
     }
 
-    @Override
-    public Category getById(Integer id) {
-        return categoryDao.getById(id);
-    }
 
     @Override
-    public void save(Category category) {
+    public Category save(Category category) {
         category.setName(category.getName().toLowerCase());
-        categoryDao.addOrUpdate(category);
+        return categoryDao.addOrUpdate(category);
     }
 
+    /**
+     * Не удаляет категорию, если имеются продукты данной категории
+     *
+     * @param id id категории
+     * @return boolean удалилась ли категория
+     */
     @Override
     public boolean remove(Integer id) {
         Category category = categoryDao.getById(id);
         return (category.getProducts().size() == 0) && categoryDao.delete(id);
     }
 
+    /**
+     * удаляет продукты вместе с категориями каскадно,
+     * удаляет картинки, связанные с продуктами данной категории
+     * @param id id категории
+     */
     @Override
     public void removeCascade(Integer id) {
         Category category = categoryDao.getById(id);
-        for (Product product : category.getProducts())
+        for (Product product : category.getProducts()) {
             imageService.removeImage(product);
+        }
 
         categoryDao.delete(id);
     }

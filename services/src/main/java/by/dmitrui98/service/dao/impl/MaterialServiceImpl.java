@@ -1,4 +1,4 @@
-package by.dmitrui98.service.dao.implementation;
+package by.dmitrui98.service.dao.impl;
 
 import by.dmitrui98.dao.MaterialDao;
 import by.dmitrui98.entity.Material;
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Администратор on 29.04.2017.
  */
 @Service
-public class MaterialServiceImpl implements MaterialService {
+public class MaterialServiceImpl extends BaseServiceImpl<Material, Long> implements MaterialService {
     @Autowired
     MaterialDao materialDao;
 
@@ -30,22 +30,28 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public Material getById(Long id) {
-        return materialDao.getById(id);
-    }
-
-    @Override
-    public void save(Material material) {
+    public Material save(Material material) {
         material.setName(material.getName().toLowerCase());
-        materialDao.addOrUpdate(material);
+        return materialDao.addOrUpdate(material);
     }
 
+    /**
+     * Не удаляет материал, если имеются продукты, связанные с данным материалом
+     *
+     * @param id id материала
+     * @return boolean удалился ли материал
+     */
     @Override
     public boolean remove(Long id) {
         Material material = materialDao.getById(id);
         return (material.getProductMaterials().size() == 0) && (materialDao.delete(id));
     }
 
+    /**
+     * удаляет продукты вместе с материалами каскадно,
+     * удаляет картинки, связанные с продуктами данного материала
+     * @param id id материала
+     */
     @Override
     public void removeCascade(Long id) {
         Material material = materialDao.getById(id);

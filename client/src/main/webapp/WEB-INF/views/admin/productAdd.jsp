@@ -22,6 +22,7 @@
     <c:url value="/admin/product" var="productUrl"/>
     <a href="${productUrl}">Назад</a> <br/>
 
+    <%--TODO передать токен в теле запроса--%>
     <form:form action="${productUrl}/add?${_csrf.parameterName}=${_csrf.token}" method="post"
                modelAttribute="product" enctype="multipart/form-data" class="form-horizontal">
         <div class="text-center">

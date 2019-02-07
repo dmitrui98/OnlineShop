@@ -61,7 +61,7 @@ public class MaterialController {
     public String addOrUpdate(@ModelAttribute("material") Material material, BindingResult bindingResult, HttpServletRequest request) {
 
         boolean isEdit = true;
-        if (material.getMaterialId() == 0)
+        if (material.getMaterialId() == null)
             isEdit = false;
 
         materialValidator.validate(material, bindingResult);

@@ -1,4 +1,4 @@
-package by.dmitrui98.service.dao.implementation;
+package by.dmitrui98.service.dao.impl;
 
 import by.dmitrui98.dao.ProductDao;
 import by.dmitrui98.entity.Image;
@@ -21,7 +21,7 @@ import java.util.Set;
  */
 @Service
 @Log4j
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl extends BaseServiceImpl<Product, Long> implements ProductService {
 
     @Autowired
     private ProductDao productDao;
@@ -31,11 +31,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ImageService imageService;
-
-    @Override
-    public List<Product> getAll() {
-        return productDao.findAll();
-    }
 
     @Override
     public List<Product> getElements(int from, int count) {
@@ -48,31 +43,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getById(Long id) {
-        return productDao.getById(id);
-    }
-
-
-    @Override
-    public void save(Product product) {
-        productDao.addOrUpdate(product);
-    }
-
-    @Override
-    public void save(Product product, String[] stringMaterialIds, String[] stringPercents) {
-
+    public Product save(Product product, String[] stringMaterialIds, String[] stringPercents) {
         if (product.getProductMaterials() == null)
             setProductMaterias(product, stringMaterialIds, stringPercents);
-
-        if (product.getImage() == null)
-            product.setImage(imageService.getDefaultImage());
-
-        productDao.addOrUpdate(product);
+        return productDao.addOrUpdate(product);
 
     }
 
     @Override
-    public void save(Product product, String[] materialIds, String[] percents, String imageDirectory, long imageId) {
+    public Product save(Product product, String[] materialIds, String[] percents, String imageDirectory, Long imageId) {
         if ((product.getProductId() != null) && (imageDirectory != null)) {
 
             if (product.getImage() == null) {
@@ -83,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
                 imageService.remove(imageDirectory);
             }
         }
-        save(product, materialIds, percents);
+        return save(product, materialIds, percents);
     }
 
     @Override
@@ -108,6 +87,7 @@ public class ProductServiceImpl implements ProductService {
                 productMaterial.setPercentMaterial(percents[i]);
 
                 productMaterials.add(productMaterial);
+                material.setProductMaterials(productMaterials);
             }
 
             product.setProductMaterials(productMaterials);
@@ -120,6 +100,7 @@ public class ProductServiceImpl implements ProductService {
         if (imageService.removeImage(product)) {
             log.info("Изображение: " + product.getImage().getImageDirectory() + " удалено успешно");
         } else {
+            // TODO если изображение default, то не выводить сообщение
             log.error("Изображение: " + product.getImage().getImageDirectory() + " не удалено!!!!");
         }
         return productDao.delete(id);

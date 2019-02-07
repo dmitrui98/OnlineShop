@@ -1,4 +1,4 @@
-package by.dmitrui98.service.dao.implementation;
+package by.dmitrui98.service.dao.impl;
 
 import by.dmitrui98.dao.ImageDao;
 import by.dmitrui98.entity.Image;
@@ -62,6 +62,8 @@ public class ImageServiceImpl implements ImageService {
                     log.error("IOException in closing BufferedOutputStream", e);
                 }
             }
+        } else {
+            image = getDefaultImage();
         }
 
         return image;
@@ -105,8 +107,7 @@ public class ImageServiceImpl implements ImageService {
      *
      * @return default image
      */
-    @Override
-    public Image getDefaultImage() {
+    private Image getDefaultImage() {
         // TODO переместить изображение default.jpg из classpath, если оно не сущетсвует
         String defaultImagePath = getContextPath() + SERVER_DIR + DEFAULT_IMAGE_NAME;
         Image image = this.getImageByPath(defaultImagePath);

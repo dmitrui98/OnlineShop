@@ -1,4 +1,4 @@
-package by.dmitrui98.dao.implementation;
+package by.dmitrui98.dao.impl;
 
 import by.dmitrui98.dao.BaseDao;
 import by.dmitrui98.util.SessionUtil;
@@ -14,6 +14,7 @@ import java.util.List;
 @Component
 @Log4j
 public abstract class BaseDaoImpl<T, T_ID extends Serializable> implements BaseDao<T, T_ID> {
+    // TODO заменить на session из контекста spring
     @Autowired
     protected SessionUtil sessionUtil;
 

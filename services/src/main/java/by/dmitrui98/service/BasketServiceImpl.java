@@ -12,39 +12,37 @@ import java.util.List;
  * Created by Администратор on 29.04.2017.
  */
 @Service
-public class PottleServiceImpl implements PottleService<Product> {
+public class BasketServiceImpl implements BasketService<Product> {
 
     @Autowired
     private ProductService productService;
 
     @Override
-    public double getAmount(List<Product> pottleProducts) {
+    public double getAmount(List<Product> basketProducts) {
         double amount = 0;
-        if (pottleProducts != null) {
-            Iterator<Product> iterator = pottleProducts.iterator();
-            while (iterator.hasNext()) {
-                Product product = iterator.next();
+        if (basketProducts != null) {
+            for (Product product : basketProducts) {
                 amount += product.getCountProductsInBasket() * product.getPrice();
             }
         }
         return amount;
     }
 
-    public void putInPottle(List<Product> pottleProducts, long productId) {
+    public void putInPottle(List<Product> basketProducts, long productId) {
 
         Product puttingProduct = productService.getById(productId);
 
-        Product pottleProduct = getProduct(pottleProducts.iterator(), puttingProduct);
+        Product pottleProduct = getProduct(basketProducts.iterator(), puttingProduct);
         if (pottleProduct != null)
             pottleProduct.setCountProductsInBasket(pottleProduct.getCountProductsInBasket() + 1);
         else {
-            pottleProducts.add(puttingProduct);
+            basketProducts.add(puttingProduct);
             puttingProduct.setCountProductsInBasket(puttingProduct.getCountProductsInBasket() + 1);
         }
     }
 
-    public void removeFromPottleAll(List<Product> pottleProducts, long removedProductId) {
-        Iterator<Product> pottleProductsIterator = pottleProducts.iterator();
+    public void removeFromPottleAll(List<Product> basketProducts, long removedProductId) {
+        Iterator<Product> pottleProductsIterator = basketProducts.iterator();
 
         while (pottleProductsIterator.hasNext()) {
             Product product = pottleProductsIterator.next();
@@ -55,8 +53,8 @@ public class PottleServiceImpl implements PottleService<Product> {
         }
     }
 
-    public void removeFromPottle(List<Product> pottleProducts, long removedProductId) {
-        Iterator<Product> pottleProductsIterator = pottleProducts.iterator();
+    public void removeFromPottle(List<Product> basketProducts, long removedProductId) {
+        Iterator<Product> pottleProductsIterator = basketProducts.iterator();
 
         while (pottleProductsIterator.hasNext()) {
             Product product = pottleProductsIterator.next();
