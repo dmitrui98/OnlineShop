@@ -2,9 +2,10 @@ package by.dmitrui98.config;
 
 import by.dmitrui98.entity.enums.UserRoleEnum;
 import by.dmitrui98.filter.EncodingFilter;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -21,9 +22,9 @@ import org.springframework.security.web.access.channel.ChannelProcessingFilter;
  */
 @Configuration
 @EnableWebSecurity
+@ComponentScan("by.dmitrui98.service.security")
+@Log4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private static final Logger logger = Logger.getLogger(SecurityConfig.class);
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -35,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(getBCryptPasswordEncoder());
 
-        logger.debug("AuthenticationManager is configured.");
+        log.debug("AuthenticationManager is configured.");
     }
 
     @Override
@@ -57,20 +58,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .permitAll();
 
-        logger.debug("HttpSecurity is configured.");
+        log.debug("HttpSecurity is configured.");
     }
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        logger.debug("AuthenticationManager bean.");
+        log.debug("AuthenticationManager bean.");
         return super.authenticationManagerBean();
     }
 
 
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder(){
-        logger.debug("BCryptPasswordEncoder bean.");
+        log.debug("BCryptPasswordEncoder bean.");
         return new BCryptPasswordEncoder(11);
     }
 }

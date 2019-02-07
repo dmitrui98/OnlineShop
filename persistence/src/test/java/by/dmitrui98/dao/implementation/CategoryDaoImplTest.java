@@ -30,7 +30,7 @@ public class CategoryDaoImplTest extends BaseDaoImplTest {
     @Test
     public void addOrUpdate() throws Exception {
         Category category = createTestCategory();
-        long expectedId = 1;
+        Integer expectedId = 1;
 
         Category result = categoryDao.addOrUpdate(category);
 

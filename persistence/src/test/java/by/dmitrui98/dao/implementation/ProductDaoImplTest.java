@@ -19,6 +19,7 @@ import static org.junit.Assert.assertNull;
 /**
  * Created by Администратор on 02.06.2017.
  */
+
 public class ProductDaoImplTest extends BaseDaoImplTest{
     @Autowired
     private ProductDao productDao;
@@ -35,7 +36,7 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
     @Test
     public void addOrUpdate() throws Exception {
         Product product = createTestProduct();
-        long expectedId = 1;
+        Long expectedId = 1L;
 
         Product result = productDao.addOrUpdate(product);
 
@@ -103,7 +104,7 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void findAll() {
         Product product = createTestProduct();
         Product product1 = createSecondTestProduct();
 
@@ -111,6 +112,7 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
         productDao.addOrUpdate(product1);
 
         List<Product> resultList = productDao.findAll();
+        System.out.println(resultList);
 
         assertEquals(2, resultList.size());
     }
@@ -191,8 +193,8 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
             productMaterial.setMaterial(material);
             productMaterial.setProduct(product);
             productMaterial.setPercentMaterial(percents[i]);
-
             productMaterials.add(productMaterial);
+            material.setProductMaterials(productMaterials);
         }
 
         product.setProductMaterials(productMaterials);

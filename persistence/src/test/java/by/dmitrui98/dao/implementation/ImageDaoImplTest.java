@@ -6,7 +6,6 @@ import by.dmitrui98.entity.Image;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +25,7 @@ public class ImageDaoImplTest extends BaseDaoImplTest {
     public void save() throws Exception {
         String testDirectory = "/testDirectory";
         Image image = imageDao.save(testDirectory);
-        assertNotEquals(0, image.getImageId());
+        assertNotEquals(0L, (long) image.getImageId());
         assertEquals(testDirectory, image.getImageDirectory());
     }
 
@@ -34,7 +33,7 @@ public class ImageDaoImplTest extends BaseDaoImplTest {
     @Test
     public void addOrUpdate() throws Exception {
         Image image = createTestImage();
-        long expectedId = 1;
+        Long expectedId = 1L;
 
         Image result = imageDao.addOrUpdate(image);
 

@@ -42,14 +42,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean remove(Integer id)
-    {
+    public boolean remove(Integer id) {
         Category category = categoryDao.getById(id);
-
-        if ((category.getProducts().size() == 0) && categoryDao.delete(id))
-            return true;
-        else
-            return false;
+        return (category.getProducts().size() == 0) && categoryDao.delete(id);
     }
 
     @Override

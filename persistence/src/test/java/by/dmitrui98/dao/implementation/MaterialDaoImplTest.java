@@ -29,7 +29,7 @@ public class MaterialDaoImplTest extends BaseDaoImplTest {
     @Test
     public void addOrUpdate() throws Exception {
         Material material = createTestMaterial();
-        long expectedId = 1;
+        Long expectedId = 1L;
 
         Material result = materialDao.addOrUpdate(material);
 
@@ -41,7 +41,7 @@ public class MaterialDaoImplTest extends BaseDaoImplTest {
     public void delete() throws Exception {
         Material material = createTestMaterial();
         Material result = materialDao.addOrUpdate(material);
-        int id = result.getMaterialId();
+        Long id = result.getMaterialId();
         materialDao.delete(id);
         result = materialDao.getById(id);
         assertNull(result);

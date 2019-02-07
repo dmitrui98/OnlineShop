@@ -11,14 +11,15 @@
 <body>
 
 <div class="container">
-    <a href="<c:url value="/admin/category" />">Назад</a>
+    <c:url value="/admin/category" var="categoryUrl"/>
+    <a href="${categoryUrl}"/>">Назад</a>
 
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title text-center"><b>Редактирование категории</b></h3>
         </div>
 
-        <form:form action="/onlineShop/admin/category" modelAttribute="category" method="POST" class="form-horizontal">
+        <form:form action="${categoryUrl}" modelAttribute="category" method="POST" class="form-horizontal">
             <div class="form-group">
                 <form:label path="categoryId" class="col-sm-2">
                     <spring:message text="ID"/>

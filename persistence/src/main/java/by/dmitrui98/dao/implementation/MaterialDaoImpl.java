@@ -1,25 +1,16 @@
 package by.dmitrui98.dao.implementation;
 
 import by.dmitrui98.dao.MaterialDao;
-import by.dmitrui98.dao.ProductDao;
 import by.dmitrui98.entity.Category;
 import by.dmitrui98.entity.Material;
 import by.dmitrui98.entity.Product;
 import by.dmitrui98.entity.ProductMaterial;
-import by.dmitrui98.util.SessionUtil;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -28,40 +19,21 @@ import java.util.Set;
  * Created by Администратор on 29.04.2017.
  */
 @Repository("materialDao")
-public class MaterialDaoImpl implements MaterialDao {
-    private static final Logger logger = Logger.getLogger(MaterialDaoImpl.class);
+@Log4j
+public class MaterialDaoImpl extends BaseDaoImpl<Material, Long> implements MaterialDao {
 
-    @Autowired
-    private SessionUtil sessionUtil;
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    @Qualifier("productDao")
-    @Lazy
-    private ProductDao productDao;
-
-
-    @Override
-    public Material addOrUpdate(Material material) {
-        sessionUtil.openTransactionSession();
-
-        Session session = sessionUtil.getSession();
-        session.saveOrUpdate(material);
-
-        sessionUtil.closeTransactionSession();
-
-        return material;
+    public MaterialDaoImpl() {
+        setClazz(Material.class);
     }
 
     @Override
-    public boolean delete(Integer id) {
+    // TODO разобраться с каскадами
+    public boolean delete(Long id) {
 
         try {
             sessionUtil.openTransactionSession();
             Session session = sessionUtil.getSession();
-            Material material = (Material) session.get(Material.class, id);
+            Material material = session.get(Material.class, id);
 
             if (material.getProductMaterials() != null) {
                 Iterator<ProductMaterial> iterator = material.getProductMaterials().iterator();
@@ -77,7 +49,7 @@ public class MaterialDaoImpl implements MaterialDao {
 
             return true;
         } catch (Exception ex) {
-            logger.error("Can not delete material with id " + id, ex);
+            log.error("Can not delete material with id " + id, ex);
             return false;
         }
     }
@@ -88,22 +60,11 @@ public class MaterialDaoImpl implements MaterialDao {
         products.remove(product);
     }
 
-    @Override
-    public List<Material> findAll() {
-        sessionUtil.openTransactionSession();
-        Session session = sessionUtil.getSession();
-        List<Material> result = session.createQuery("from Material").list();
-
-
-        sessionUtil.closeTransactionSession();
-
-        return result;
-    }
-
 
 
     @Override
-    public Material getById(Integer id) {
+    // TODO разобраться с ленивой инициализацией
+    public Material getById(Long id) {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
         Material material = (Material) session.get(Material.class, id);

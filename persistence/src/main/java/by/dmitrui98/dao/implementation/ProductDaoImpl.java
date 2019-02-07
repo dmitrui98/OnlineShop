@@ -1,23 +1,12 @@
 package by.dmitrui98.dao.implementation;
 
-import by.dmitrui98.dao.MaterialDao;
 import by.dmitrui98.dao.ProductDao;
 import by.dmitrui98.entity.Category;
-import by.dmitrui98.entity.Material;
 import by.dmitrui98.entity.Product;
-import by.dmitrui98.entity.ProductMaterial;
-import by.dmitrui98.util.SessionUtil;
-import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -25,12 +14,12 @@ import java.util.Set;
  * Created by Администратор on 16.04.2017.
  */
 @Repository("productDao")
-public class ProductDaoImpl implements ProductDao {
+@Log4j
+public class ProductDaoImpl extends BaseDaoImpl<Product, Long> implements ProductDao {
 
-    private static final Logger logger = Logger.getLogger(ProductDaoImpl.class);
-
-    @Autowired
-    private SessionUtil sessionUtil;
+    public ProductDaoImpl() {
+        setClazz(Product.class);
+    }
 
     @Override
     public Product addOrUpdate(Product product) {
@@ -41,11 +30,11 @@ public class ProductDaoImpl implements ProductDao {
         Session session = sessionUtil.getSession();
 
         // если не удалить, то hibernate просто увеличит состав, не удалив старые записи
-        if (product.getProductId() != 0) {
+        // TODO убрать эту хрень
+        if (product.getProductId() != null) {
             session.createNativeQuery("DELETE FROM product_material" +
                     " where product_id="+product.getProductId()).executeUpdate();
         }
-
 
         session.saveOrUpdate(product);
         sessionUtil.closeTransactionSession();
@@ -55,6 +44,7 @@ public class ProductDaoImpl implements ProductDao {
 
 
     @Override
+    // TODO реализовать каскады
     public boolean delete(Long id) {
         try {
             sessionUtil.openTransactionSession();
@@ -68,7 +58,7 @@ public class ProductDaoImpl implements ProductDao {
             sessionUtil.closeTransactionSession();
             return true;
         } catch (Exception ex) {
-            logger.error("Can not delete product with id " + id, ex);
+            log.error("Can not delete product with id " + id, ex);
             return false;
         }
     }
@@ -77,17 +67,6 @@ public class ProductDaoImpl implements ProductDao {
         Category category = product.getCategory();
         Set<Product> products = category.getProducts();
         products.remove(product);
-    }
-
-    @Override
-    public List<Product> findAll() {
-        sessionUtil.openTransactionSession();
-        Session session = sessionUtil.getSession();
-        List<Product> result = session.createQuery("from Product").list();
-
-        sessionUtil.closeTransactionSession();
-
-        return result;
     }
 
     @Override
@@ -102,7 +81,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public long getCount() {
+    public Long getCount() {
         sessionUtil.openTransactionSession();
         Session session = sessionUtil.getSession();
         Object o = session.createQuery("select count(*) from Product").uniqueResult();
@@ -112,14 +91,5 @@ public class ProductDaoImpl implements ProductDao {
         }
         sessionUtil.closeTransactionSession();
         return count;
-    }
-
-    @Override
-    public Product getById(Long id) {
-        sessionUtil.openTransactionSession();
-        Session session = sessionUtil.getSession();
-        Product result = (Product) session.get(Product.class, id);
-        sessionUtil.closeTransactionSession();
-        return result;
     }
 }

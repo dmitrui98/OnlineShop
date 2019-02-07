@@ -15,7 +15,7 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    AdminDao adminDao;
+    private AdminDao adminDao;
 
     @Override
     public List<Admin> getAll() {
@@ -23,7 +23,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin getById(Long id) {
+    public Admin getById(Integer id) {
         return adminDao.getById(id);
     }
 
@@ -43,10 +43,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean remove(Long id) {
-        if (adminDao.delete(id))
-            return true;
-        else
-            return false;
+    public boolean remove(Integer id) {
+        return adminDao.delete(id);
     }
 }

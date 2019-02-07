@@ -8,6 +8,7 @@ import by.dmitrui98.entity.ProductMaterial;
 import by.dmitrui98.service.dao.ImageService;
 import by.dmitrui98.service.dao.MaterialService;
 import by.dmitrui98.service.dao.ProductService;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.Set;
  * Created by Администратор on 16.04.2017.
  */
 @Service
+@Log4j
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
@@ -71,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(Product product, String[] materialIds, String[] percents, String imageDirectory, long imageId) {
-        if ((product.getProductId() != 0) && (imageDirectory != null)) {
+        if ((product.getProductId() != null) && (imageDirectory != null)) {
 
             if (product.getImage() == null) {
                 Image image = new Image(imageDirectory);
@@ -87,11 +89,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void setProductMaterias(Product product, String[] stringMaterialIds, String[] stringPercents) {
         if (stringMaterialIds != null && stringPercents != null) {
-            int[] materialIds = new int[stringMaterialIds.length];
+            Long[] materialIds = new Long[stringMaterialIds.length];
             double[] percents = new double[stringPercents.length];
 
             for (int i = 0; i < stringMaterialIds.length; i++) {
-                materialIds[i] = Integer.parseInt(stringMaterialIds[i]);
+                materialIds[i] = Long.parseLong(stringMaterialIds[i]);
                 percents[i] = Double.parseDouble(stringPercents[i]);
             }
 
@@ -115,16 +117,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean remove(Long id) {
         Product product = productDao.getById(id);
-
-        if (imageService.removeImage(product))
-            System.out.println("Изображение: " + product.getImage().getImageDirectory() + " удалено успешно");
-        else
-            System.err.println("Изображение: " + product.getImage().getImageDirectory() + " не удалено!!!!");
-
-        if (productDao.delete(id))
-            return true;
-        else
-            return false;
+        if (imageService.removeImage(product)) {
+            log.info("Изображение: " + product.getImage().getImageDirectory() + " удалено успешно");
+        } else {
+            log.error("Изображение: " + product.getImage().getImageDirectory() + " не удалено!!!!");
+        }
+        return productDao.delete(id);
     }
 
 }

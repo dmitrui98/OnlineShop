@@ -13,7 +13,14 @@ public interface ImageService {
 
     boolean remove(String serverDirectory);
 
+    /**
+     * получает изображение по умолчанию из базы. Если такого нет, создает transient объект
+     *
+     * @return default image
+     */
     Image getDefaultImage();
 
     boolean removeImage(Product product);
+
+    Image getImageByPath(String defaultImagePath);
 }

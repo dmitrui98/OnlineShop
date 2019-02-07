@@ -2,72 +2,22 @@ package by.dmitrui98.dao.implementation;
 
 import by.dmitrui98.dao.UserDao;
 import by.dmitrui98.entity.User;
-import by.dmitrui98.util.SessionUtil;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**
  * Created by Администратор on 12.04.2017.
  */
 @Repository
-public class UserDaoImpl implements UserDao {
+@Log4j
+public class UserDaoImpl extends BaseDaoImpl<User, Long> implements UserDao {
 
-    private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
-
-    @Autowired
-    private SessionUtil sessionUtil;
-
-    @Override
-    public User addOrUpdate(User user) {
-        sessionUtil.openTransactionSession();
-
-        Session session = sessionUtil.getSession();
-        session.saveOrUpdate(user);
-
-        sessionUtil.closeTransactionSession();
-
-        return user;
-    }
-
-    @Override
-    public boolean delete(Long id) {
-        try {
-            sessionUtil.openTransactionSession();
-            Session session = sessionUtil.getSession();
-            User myObject = (User) session.get(User.class, id);
-            session.delete(myObject);
-            sessionUtil.closeTransactionSession();
-            return true;
-        } catch (Exception ex) {
-            logger.error("Can not delete user with id " + id, ex);
-            return false;
-        }
-    }
-
-    @Override
-    public List<User> findAll() {
-        sessionUtil.openTransactionSession();
-        Session session = sessionUtil.getSession();
-        List<User> result = session.createQuery("from User").list();
-
-        sessionUtil.closeTransactionSession();
-
-        return result;
-    }
-
-    @Override
-    public User getById(Long id) {
-        sessionUtil.openTransactionSession();
-        Session session = sessionUtil.getSession();
-        User result = (User) session.get(User.class, id);
-        sessionUtil.closeTransactionSession();
-        return result;
+    public UserDaoImpl() {
+        setClazz(User.class);
     }
 
     @Override

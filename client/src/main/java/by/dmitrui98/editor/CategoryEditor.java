@@ -3,19 +3,18 @@ package by.dmitrui98.editor;
 import by.dmitrui98.entity.Category;
 import by.dmitrui98.service.dao.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.beans.PropertyEditorSupport;
 
 /**
  * Created by Администратор on 05.05.2017.
  */
+@Component
 public class CategoryEditor extends PropertyEditorSupport {
 
+    @Autowired
     private CategoryService categoryService;
-
-    public CategoryEditor(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
 //    @Override
 //    public String getAsText() {

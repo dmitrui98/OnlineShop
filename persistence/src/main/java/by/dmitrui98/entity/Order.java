@@ -21,7 +21,7 @@ public class Order {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "order_id")
-   private long orderId;
+   private Long orderId;
 
    @Column(name = "amount", nullable = false)
    private double amount; // сумма заказа

@@ -24,7 +24,7 @@ public class Material implements Comparable<Material> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "material_id")
     @EqualsAndHashCode.Include
-    private int materialId;
+    private Long materialId;
 
     @Column(name = "name", nullable = false, unique = true, length = 50)
     private String name;

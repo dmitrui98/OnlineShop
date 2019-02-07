@@ -25,7 +25,7 @@ public class UserDaoImplTest extends BaseDaoImplTest {
     @Test
     public void addOrUpdate() throws Exception {
         User user = createTestUser();
-        long expectedId = 1;
+        Long expectedId = 1L;
 
         User result = userDao.addOrUpdate(user);
 

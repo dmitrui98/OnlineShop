@@ -30,7 +30,7 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public Material getById(Integer id) {
+    public Material getById(Long id) {
         return materialDao.getById(id);
     }
 
@@ -41,17 +41,13 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public boolean remove(Integer id) {
+    public boolean remove(Long id) {
         Material material = materialDao.getById(id);
-
-        if ((material.getProductMaterials().size() == 0) && (materialDao.delete(id)))
-            return true;
-        else
-            return false;
+        return (material.getProductMaterials().size() == 0) && (materialDao.delete(id));
     }
 
     @Override
-    public void removeCascade(Integer id) {
+    public void removeCascade(Long id) {
         Material material = materialDao.getById(id);
         for (ProductMaterial productMaterial : material.getProductMaterials()) {
             imageService.removeImage(productMaterial.getProduct());

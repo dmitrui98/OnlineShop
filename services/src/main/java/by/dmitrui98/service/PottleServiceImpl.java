@@ -24,7 +24,7 @@ public class PottleServiceImpl implements PottleService<Product> {
             Iterator<Product> iterator = pottleProducts.iterator();
             while (iterator.hasNext()) {
                 Product product = iterator.next();
-                amount += product.getCountProductsInPottle() * product.getPrice();
+                amount += product.getCountProductsInBasket() * product.getPrice();
             }
         }
         return amount;
@@ -36,10 +36,10 @@ public class PottleServiceImpl implements PottleService<Product> {
 
         Product pottleProduct = getProduct(pottleProducts.iterator(), puttingProduct);
         if (pottleProduct != null)
-            pottleProduct.setCountProductsInPottle(pottleProduct.getCountProductsInPottle() + 1);
+            pottleProduct.setCountProductsInBasket(pottleProduct.getCountProductsInBasket() + 1);
         else {
             pottleProducts.add(puttingProduct);
-            puttingProduct.setCountProductsInPottle(puttingProduct.getCountProductsInPottle() + 1);
+            puttingProduct.setCountProductsInBasket(puttingProduct.getCountProductsInBasket() + 1);
         }
     }
 
@@ -62,8 +62,8 @@ public class PottleServiceImpl implements PottleService<Product> {
             Product product = pottleProductsIterator.next();
             if (product.getProductId() == removedProductId) {
 
-                product.setCountProductsInPottle(product.getCountProductsInPottle() - 1);
-                if (product.getCountProductsInPottle() == 0)
+                product.setCountProductsInBasket(product.getCountProductsInBasket() - 1);
+                if (product.getCountProductsInBasket() == 0)
                     pottleProductsIterator.remove();
 
                 break;

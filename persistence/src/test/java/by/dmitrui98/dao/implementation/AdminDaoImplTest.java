@@ -25,7 +25,7 @@ public class AdminDaoImplTest extends BaseDaoImplTest {
     @Test
     public void addOrUpdate() throws Exception {
         Admin admin = createTestAdmin();
-        long expectedId = 1;
+        Integer expectedId = 1;
 
         Admin result = adminDao.addOrUpdate(admin);
 
@@ -39,7 +39,7 @@ public class AdminDaoImplTest extends BaseDaoImplTest {
     public void delete() throws Exception {
         Admin admin = createTestAdmin();
         Admin result = adminDao.addOrUpdate(admin);
-        long id = result.getAdminId();
+        Integer id = result.getAdminId();
         adminDao.delete(id);
         result = adminDao.getById(id);
         assertNull(result);

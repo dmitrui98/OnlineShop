@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -41,6 +38,10 @@ public class ProductController {
     private AdminService adminService;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private ImageEditor imageEditor;
+    @Autowired
+    private CategoryEditor categoryEditor;
 
     @RequestMapping(method = RequestMethod.GET)
     public String productPage(Model model) {
@@ -58,7 +59,7 @@ public class ProductController {
         return "admin/productAdd";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @PostMapping(value = "/add")
     public String productAdd(@ModelAttribute("product") Product productForm,
                           BindingResult bindingResult, HttpServletRequest request, Model model){
 
@@ -151,8 +152,8 @@ public class ProductController {
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 
-        binder.registerCustomEditor(Category.class, new CategoryEditor(categoryService));
-        binder.registerCustomEditor(Image.class, new ImageEditor(imageService));
+        binder.registerCustomEditor(Category.class, categoryEditor);
+        binder.registerCustomEditor(Image.class, imageEditor);
     }
 
 

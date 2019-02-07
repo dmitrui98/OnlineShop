@@ -1,9 +1,6 @@
 package by.dmitrui98.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,16 +16,17 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     @EqualsAndHashCode.Include
-    private long productId;
+    private Long productId;
 
     @Transient
-    private int countProductsInPottle;
+    private int countProductsInBasket;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -38,7 +36,7 @@ public class Product {
 
     @Column(columnDefinition = "TEXT(500)", name = "description")
     // TODO заменить text на константу
-    @Type(type = "text")
+    @Type(type = "text")//TypeRegistery
     private String description;
 
     @Column(name = "created_at", nullable = false)
@@ -62,9 +60,11 @@ public class Product {
     private Admin admin;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Set<OrderProduct> orderProducts = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.product", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Set<ProductMaterial> productMaterials = new HashSet<>();
 
     public Product(String name, double price, String description, Image image, Category category, Admin admin) {
