@@ -43,15 +43,13 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, Long> implement
     }
 
     @Override
-    public Product save(Product product, String[] stringMaterialIds, String[] stringPercents) {
-        if (product.getProductMaterials() == null)
-            setProductMaterias(product, stringMaterialIds, stringPercents);
+    public Product save(Product product) {
         return productDao.addOrUpdate(product);
 
     }
 
     @Override
-    public Product save(Product product, String[] materialIds, String[] percents, String imageDirectory, Long imageId) {
+    public Product save(Product product, String imageDirectory, Long imageId) {
         if ((product.getProductId() != null) && (imageDirectory != null)) {
 
             if (product.getImage() == null) {
@@ -62,7 +60,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, Long> implement
                 imageService.remove(imageDirectory);
             }
         }
-        return save(product, materialIds, percents);
+        return save(product);
     }
 
     @Override
@@ -97,12 +95,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, Long> implement
     @Override
     public boolean remove(Long id) {
         Product product = productDao.getById(id);
-        if (imageService.removeImage(product)) {
-            log.info("Изображение: " + product.getImage().getImageDirectory() + " удалено успешно");
-        } else {
-            // TODO если изображение default, то не выводить сообщение
-            log.error("Изображение: " + product.getImage().getImageDirectory() + " не удалено!!!!");
-        }
+        imageService.removeImage(product);
         return productDao.delete(id);
     }
 

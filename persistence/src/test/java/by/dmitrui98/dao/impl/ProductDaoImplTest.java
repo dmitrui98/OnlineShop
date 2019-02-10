@@ -47,11 +47,16 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
     @Test
     public void editMaterial() throws Exception {
         Product product = createTestProduct();
-        int compositionSize = product.getProductMaterials().size();
 
         Product result = productDao.addOrUpdate(product);
+        Material[] expectedMaterials = getMaterials(result.getProductMaterials().iterator(), result.getProductMaterials().size());
 
-        Material[] expectedMaterials = changeMaterial(result);
+        ProductMaterial productMaterial = null;
+        for (ProductMaterial pm : result.getProductMaterials()) {
+            productMaterial = pm;
+            break;
+        }
+        productMaterial.setMaterial(new Material("material777", admin));
         productDao.addOrUpdate(result);
 
         result = productDao.getById(result.getProductId());
@@ -69,27 +74,6 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
             materials[i] = iterator.next().getMaterial();
             i++;
         }
-        return materials;
-    }
-
-    private Material[] changeMaterial(Product product) {
-        Iterator<ProductMaterial> iterator = product.getProductMaterials().iterator();
-        Material[] materials = new Material[product.getProductMaterials().size()];
-        double[] percents = new double[product.getProductMaterials().size()];
-        int i = 0;
-        while (iterator.hasNext()) {
-            ProductMaterial productMaterial = iterator.next();
-            Material material = productMaterial.getMaterial();
-            double percent = productMaterial.getPercentMaterial();
-
-            materials[i] = material;
-            percents[i] = percent;
-            i++;
-        }
-
-        materials[0] = new Material("material777", admin);
-        materialDao.addOrUpdate(materials[0]);
-        setComposition(product, materials, percents);
         return materials;
     }
 

@@ -38,8 +38,7 @@ public class Product {
     private double price;
 
     @Column(columnDefinition = "TEXT(500)", name = "description")
-    // TODO заменить text на константу
-    @Type(type = "text")//TypeRegistery
+    @Type(type = "text")
     private String description;
 
     @Column(name = "created_at", nullable = false)
@@ -54,18 +53,19 @@ public class Product {
     @JoinColumn(name = "image_id")
     private Image image;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private Admin admin;
 
-    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.product", cascade = CascadeType.PERSIST)
     @ToString.Exclude
     private Set<OrderProduct> orderProducts = new HashSet<>();
 
+    // TODO поменять fetch на lazy
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.product", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<ProductMaterial> productMaterials = new HashSet<>();

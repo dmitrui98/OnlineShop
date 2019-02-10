@@ -26,16 +26,13 @@ public class ImageServiceImpl implements ImageService {
     private static final String dir = "server/file_storage/images/";
     private static final String DEFAULT_IMAGE_NAME = "default.jpg";
     private static final String SERVER_DIR = "/images/";
+    private static String contextPath = null;
 
 
     @Autowired
     private ImageDao imageDao;
 
     public Image write(byte[] bytes) {
-
-        // достаем contextPath из request
-        String contextPath = getContextPath();
-
         Image image = null;
         if (bytes.length != 0) {
             File folder = createFolder(dir);
@@ -49,6 +46,7 @@ public class ImageServiceImpl implements ImageService {
                         new BufferedOutputStream(new FileOutputStream(new File(folder, imageName)));
                 stream.write(bytes);
 
+                String contextPath = getContextPath();
                 image = imageDao.save(contextPath + SERVER_DIR + imageName);
 
             } catch (IOException ex) {
@@ -108,8 +106,9 @@ public class ImageServiceImpl implements ImageService {
      * @return default image
      */
     private Image getDefaultImage() {
+        String contextPath = getContextPath();
         // TODO переместить изображение default.jpg из classpath, если оно не сущетсвует
-        String defaultImagePath = getContextPath() + SERVER_DIR + DEFAULT_IMAGE_NAME;
+        String defaultImagePath = contextPath + SERVER_DIR + DEFAULT_IMAGE_NAME;
         Image image = this.getImageByPath(defaultImagePath);
         return image == null ? new Image(defaultImagePath) : image;
     }
@@ -123,15 +122,22 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public boolean remove(String serverDirectory) {
-        String imageName = serverDirectory.substring(SERVER_DIR.length());
+    public boolean remove(String imagePath) {
+        String contextPath = getContextPath();
+        String imageName = imagePath.substring(SERVER_DIR.length() + contextPath.length());
         File folder = createFolder(dir);
         File image = new File(folder, imageName);
 
+        boolean deleted = false;
         if (!imageName.equals(DEFAULT_IMAGE_NAME)) {
-            return image.delete();
+            deleted = image.delete();
+            if (deleted) {
+                log.info("Изображение: " + imagePath + " удалено успешно");
+            } else {
+                log.error("Изображение: " + imagePath + " не удалено!!!!");
+            }
         }
-        return false;
+        return deleted;
     }
 
     @Override
@@ -146,18 +152,20 @@ public class ImageServiceImpl implements ImageService {
     }
 
     /**
-     * Достает contextPath из request
+     * Достает contextPath из request или возвращает текущее значение
      *
      * @return contextPath
      */
     private String getContextPath() {
-        String contextPath = "";
-        ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (sra != null) {
-            HttpServletRequest req = sra.getRequest();
-            contextPath = req.getContextPath();
-        } else {
-            log.error("Не удалось получить contextPath из request при сохранении изображения");
+        if (contextPath == null) {
+            ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (sra != null) {
+                HttpServletRequest req = sra.getRequest();
+                contextPath = req.getContextPath();
+            } else {
+                log.error("Не удалось получить contextPath из request при сохранении изображения");
+                contextPath = "";
+            }
         }
         return contextPath;
     }

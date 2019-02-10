@@ -31,7 +31,7 @@ public class Category implements Comparable<Category> {
     @JoinColumn(name = "created_by", nullable = false)
     private Admin admin;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Product> products = new HashSet<>();
 
     @Column(name = "created_at", nullable = false)

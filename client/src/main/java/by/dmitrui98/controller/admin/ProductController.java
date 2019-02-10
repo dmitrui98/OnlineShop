@@ -71,6 +71,7 @@ public class ProductController {
         String[] stringMaterialIds = parameterMap.get("materialId[]");
         String[] stringPercents = parameterMap.get("percent[]");
 
+        // необходимо для валидации
         productService.setProductMaterias(productForm, stringMaterialIds, stringPercents);
 
 
@@ -104,11 +105,10 @@ public class ProductController {
             String imageDirectory = request.getParameter("imageDirectory");
             Long imageId = Long.parseLong(request.getParameter("imageId"));
 
-            productService.save(productForm, stringMaterialIds, stringPercents,
-                    imageDirectory, imageId);
+            productService.save(productForm, imageDirectory, imageId);
         }
         else
-            productService.save(productForm, stringMaterialIds, stringPercents);
+            productService.save(productForm);
 
 
         if (isEdit)
