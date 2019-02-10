@@ -1,5 +1,9 @@
 package by.dmitrui98.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 
@@ -10,6 +14,9 @@ import javax.persistence.*;
                 joinColumns = @JoinColumn(name = "product_id")),
         @AssociationOverride(name = "id.material",
                 joinColumns = @JoinColumn(name = "material_id")) })
+@Getter
+@Setter
+@NoArgsConstructor
 public class ProductMaterial {
 
     @EmbeddedId
@@ -17,30 +24,6 @@ public class ProductMaterial {
 
     @Column(name = "percent_material", columnDefinition = "DOUBLE(6,2) DEFAULT 0.00")
     private double percentMaterial;
-
-    public ProductMaterial() {
-    }
-
-    public ProductMaterial(ProductMaterialPK id, double percentMaterial) {
-        this.id = id;
-        this.percentMaterial = percentMaterial;
-    }
-
-    public ProductMaterialPK getId() {
-        return id;
-    }
-
-    public void setId(ProductMaterialPK id) {
-        this.id = id;
-    }
-
-    public double getPercentMaterial() {
-        return percentMaterial;
-    }
-
-    public void setPercentMaterial(double percentMaterial) {
-        this.percentMaterial = percentMaterial;
-    }
 
     @Transient
     public Product getProduct() {

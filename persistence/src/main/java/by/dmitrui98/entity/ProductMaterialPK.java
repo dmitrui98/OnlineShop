@@ -1,9 +1,14 @@
 package by.dmitrui98.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
+@Data
+@NoArgsConstructor
 public class ProductMaterialPK implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -13,29 +18,4 @@ public class ProductMaterialPK implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id")
     private Material material;
-
-    public ProductMaterialPK() {
-    }
-
-    public ProductMaterialPK(Product product, Material material) {
-        this.product = product;
-        this.material = material;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
 }

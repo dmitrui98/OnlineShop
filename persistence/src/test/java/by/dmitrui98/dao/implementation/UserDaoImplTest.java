@@ -6,14 +6,13 @@ import by.dmitrui98.entity.User;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by Администратор on 30.05.2017.
@@ -51,8 +50,6 @@ public class UserDaoImplTest extends BaseDaoImplTest {
     public void findAll() throws Exception {
         User user = createTestUser();
         User user1 = new User("login", "email", "password", "ваня");
-        user1.setCreatedAt(new Date());
-        user1.setUpdatedAt(new Date());
 
         userDao.addOrUpdate(user);
         userDao.addOrUpdate(user1);
@@ -86,8 +83,6 @@ public class UserDaoImplTest extends BaseDaoImplTest {
         user.setPassword("testUserPassword");
         user.setEmail("testUserEmail");
         user.setFname("петя");
-        user.setCreatedAt(new Date());
-        user.setUpdatedAt(new Date());
 
         return user;
     }

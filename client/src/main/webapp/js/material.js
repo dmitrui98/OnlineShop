@@ -8,7 +8,7 @@ jQuery('document').ready(function() {
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-            url: "/security/material/delete",
+            url: "material/delete",
             headers: {'X-Csrf-Token': csrfValue},
             data: data,
             method: "post",
@@ -37,7 +37,7 @@ jQuery('document').ready(function() {
             data[csrfName] = csrfValue;
 
             jQuery.ajax({
-                url: "/security/material/deleteCascade",
+                url: "material/deleteCascade",
                 headers: {'X-Csrf-Token': csrfValue},
                 data: data,
                 method: "post",
@@ -56,7 +56,7 @@ jQuery('document').ready(function() {
         var data = {'id': id};
 
         jQuery.ajax({
-            url: "/security/material/edit",
+            url: "material/edit",
             data: data,
             method: "get",
             success: function (response, textStatus, xhr) {

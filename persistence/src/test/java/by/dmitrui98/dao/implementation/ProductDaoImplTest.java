@@ -5,13 +5,16 @@ import by.dmitrui98.entity.*;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by Администратор on 02.06.2017.
@@ -83,7 +86,7 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
             i++;
         }
 
-        materials[0] = new Material("material777", admin, new Date(), new Date());
+        materials[0] = new Material("material777", admin);
         materialDao.addOrUpdate(materials[0]);
         setComposition(product, materials, percents);
         return materials;
@@ -114,7 +117,7 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
 
     private int compositionSize = 4;
     private Product createTestProduct() {
-        Product product = new Product("name", 10, "описание", new Date(), new Date(), image, category, admin);
+        Product product = new Product("name", 10, "описание", image, category, admin);
         Material[] materials = new Material[compositionSize];
         double[] percents = new double[compositionSize];
         createComposition(materials, percents);
@@ -126,7 +129,7 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
     }
 
     private Product createSecondTestProduct() {
-        Product product = new Product("name2", 15, "описание11", new Date(), new Date(), image, category, admin);
+        Product product = new Product("name2", 15, "описание11", image, category, admin);
         setComposition(product, materialArray, percentArray);
         return product;
     }
@@ -139,9 +142,9 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
     @Before
     public void before() {
         System.out.println("**********BEFORE**********");
-        admin = adminDao.addOrUpdate(new Admin("login", "email", "password", new Date(), new Date()));
+        admin = adminDao.addOrUpdate(new Admin("login", "email", "password"));
         image = imageDao.addOrUpdate(new Image("/test"));
-        category = categoryDao.addOrUpdate(new Category("категория", admin, new Date(), new Date()));
+        category = categoryDao.addOrUpdate(new Category("категория", admin));
     }
 
     @After
@@ -199,7 +202,7 @@ public class ProductDaoImplTest extends BaseDaoImplTest{
     private void createComposition(Material[] materials, double[] percents) {
         double percent = expectedPercent/compositionSize;
         for (int i = 0; i<materials.length; i++) {
-            materials[i] = new Material("material"+(i+1), admin, new Date(), new Date());
+            materials[i] = new Material("material"+(i+1), admin);
             materialDao.addOrUpdate(materials[i]);
             percents[i] = percent;
         }

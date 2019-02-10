@@ -2,7 +2,6 @@ package by.dmitrui98.service.dao.implementation;
 
 import by.dmitrui98.dao.MaterialDao;
 import by.dmitrui98.entity.Material;
-import by.dmitrui98.entity.Product;
 import by.dmitrui98.entity.ProductMaterial;
 import by.dmitrui98.service.dao.ImageService;
 import by.dmitrui98.service.dao.MaterialService;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,11 +37,6 @@ public class MaterialServiceImpl implements MaterialService {
     @Override
     public void save(Material material) {
         material.setName(material.getName().toLowerCase());
-        if (material.getMaterialId() == 0) {
-            material.setCreatedAt(new Date());
-            material.setUpdatedAt(new Date());
-        } else
-            material.setUpdatedAt(new Date());
         materialDao.addOrUpdate(material);
     }
 

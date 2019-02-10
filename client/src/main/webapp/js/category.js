@@ -8,7 +8,7 @@ jQuery('document').ready(function() {
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-            url: "/security/category/delete",
+            url: "category/delete",
             headers: {'X-Csrf-Token': csrfValue},
             data: data,
             method: "post",
@@ -39,7 +39,7 @@ jQuery('document').ready(function() {
             data[csrfName] = csrfValue;
 
             jQuery.ajax({
-                url: "/security/category/deleteCascade",
+                url: "category/deleteCascade",
                 headers: {'X-Csrf-Token': csrfValue},
                 data: data,
                 method: "post",
@@ -58,7 +58,7 @@ jQuery('document').ready(function() {
         var data = {'id': id};
 
         jQuery.ajax({
-            url: "/security/category/edit",
+            url: "category/edit",
             data: data,
             method: "get",
             success: function (response, textStatus, xhr) {

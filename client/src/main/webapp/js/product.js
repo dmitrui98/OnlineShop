@@ -2,7 +2,7 @@ jQuery('document').ready(function() {
     jQuery(".viewButton").on("click", function () {
         var id = $(this).data("id");
         $.ajax({
-            url: "/security/product/view",
+            url: "/admin/product/view",
             data: {'id': id},
             method: "get",
             success: function (response) {
@@ -19,7 +19,7 @@ jQuery('document').ready(function() {
 
         var data = {'id': id};
         $.ajax({
-            url: "/security/product/edit",
+            url: "/admin/product/edit",
             data: data,
             method: "get",
             success: function (response) {
@@ -39,7 +39,7 @@ jQuery('document').ready(function() {
         var data = {'id': id};
         data[csrfName] = csrfValue;
         $.ajax({
-            url: "/security/product/delete",
+            url: "/admin/product/delete",
             headers: {'X-Csrf-Token': csrfValue},
             data: data,
             method: "post",

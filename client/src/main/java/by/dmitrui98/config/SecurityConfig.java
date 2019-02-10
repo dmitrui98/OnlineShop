@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(new EncodingFilter(), ChannelProcessingFilter.class);
 
         http.authorizeRequests()
-                .antMatchers("/security/**").hasRole(UserRoleEnum.ADMIN.name())
+                .antMatchers("/admin/**").hasRole(UserRoleEnum.ADMIN.name())
                 .antMatchers("/pottle").hasAnyRole(UserRoleEnum.USER.name(), UserRoleEnum.ADMIN.name())
                 .antMatchers("/welcome").authenticated()
                 .antMatchers("/pottleController/**").authenticated()

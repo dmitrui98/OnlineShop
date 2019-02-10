@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,12 +38,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void save(Category category) {
         category.setName(category.getName().toLowerCase());
-        if (category.getCategoryId() == 0) {
-            category.setCreatedAt(new Date());
-            category.setUpdatedAt(new Date());
-        } else
-            category.setUpdatedAt(new Date());
-
         categoryDao.addOrUpdate(category);
     }
 

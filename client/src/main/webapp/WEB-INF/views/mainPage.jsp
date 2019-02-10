@@ -30,7 +30,7 @@
 					<c:otherwise>
 						<span style="font-size : 18px;">
 							<%= "Привет, " + request.getUserPrincipal().getName().toString()%> <br/>
-							<a href = "/logout">Logout</a>
+							<a href = "logout">Logout</a>
 						</span>
 					</c:otherwise>
 				</c:choose>
@@ -79,7 +79,7 @@
 								<a class="page-link number" href="#"><%=i%> </a>
 							</li>
 							<%}%>
-							<li class="page-item">
+							<li class="page-item disabled">
 								<a class="page-link" href="#">Следующая</a>
 							</li>
 						</ul>

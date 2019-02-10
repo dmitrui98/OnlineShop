@@ -6,13 +6,15 @@ import by.dmitrui98.dao.CategoryDao;
 import by.dmitrui98.entity.Admin;
 import by.dmitrui98.entity.Category;
 import org.hibernate.Session;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by Администратор on 30.05.2017.
@@ -49,7 +51,7 @@ public class CategoryDaoImplTest extends BaseDaoImplTest {
     @Test
     public void findAll() throws Exception {
         Category category = createTestCategory();
-        Category category1 = new Category("name", admin, new Date(), new Date());
+        Category category1 = new Category("name", admin);
 
         categoryDao.addOrUpdate(category);
         categoryDao.addOrUpdate(category1);
@@ -70,7 +72,7 @@ public class CategoryDaoImplTest extends BaseDaoImplTest {
     }
 
     private Category createTestCategory() {
-        Category category = new Category("testName", admin, new Date(), new Date());
+        Category category = new Category("testName", admin);
         return category;
     }
 
@@ -78,7 +80,7 @@ public class CategoryDaoImplTest extends BaseDaoImplTest {
     @Before
     public void before() {
         System.out.println("**********BEFORE**********");
-        admin = adminDao.addOrUpdate(new Admin("login", "email", "password", new Date(), new Date()));
+        admin = adminDao.addOrUpdate(new Admin("login", "email", "password"));
     }
 
     @After

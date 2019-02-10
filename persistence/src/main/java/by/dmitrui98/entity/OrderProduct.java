@@ -1,7 +1,8 @@
 package by.dmitrui98.entity;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -13,6 +14,9 @@ import javax.persistence.*;
                 joinColumns = @JoinColumn(name = "order_id")),
         @AssociationOverride(name = "id.product",
                 joinColumns = @JoinColumn(name = "product_id")) })
+@Getter
+@Setter
+@NoArgsConstructor
 public class OrderProduct {
 
     @EmbeddedId
@@ -23,39 +27,6 @@ public class OrderProduct {
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
-
-    public OrderProduct() {
-    }
-
-    public OrderProduct(OrderProductPK id, double price, int quantity) {
-        this.id = id;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
-    public OrderProductPK getId() {
-        return id;
-    }
-
-    public void setId(OrderProductPK id) {
-        this.id = id;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     @Transient
     public Order getOrder() {

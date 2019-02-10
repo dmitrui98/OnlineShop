@@ -85,7 +85,7 @@
 			</spring:bind>
 
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
-			<h4 class="text-center"><a href="/">Главная страница</a></h4>
+			<h4 class="text-center"><a href="<c:url value="/"/>">Главная страница</a></h4>
 		</form:form>
 
 	</div>
