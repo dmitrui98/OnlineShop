@@ -1,8 +1,7 @@
 package by.dmitrui98.config;
 
-import by.dmitrui98.util.SessionUtil;
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,9 +27,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
 @ComponentScan("by.dmitrui98")
+@Log4j
 public class HibernateConfig {
-
-    private static final Logger logger = Logger.getLogger(HibernateConfig.class);
 
     @Resource
     private Environment env;
@@ -40,7 +38,7 @@ public class HibernateConfig {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory());
 
-        logger.debug("HibernateTransactionManager bean is configured");
+        log.debug("HibernateTransactionManager bean is configured");
         return txManager;
     }
 
@@ -50,7 +48,7 @@ public class HibernateConfig {
         sessionBuilder.scanPackages(env.getRequiredProperty("db.entity.package"));
         sessionBuilder.addProperties(getHibernateProperties());
 
-        logger.debug("SessionFactory bean is configured");
+        log.debug("SessionFactory bean is configured");
         return sessionBuilder.buildSessionFactory();
     }
 
@@ -77,15 +75,9 @@ public class HibernateConfig {
         ds.setTestOnBorrow(Boolean.valueOf(env.getRequiredProperty("db.testOnBorrow")));
         ds.setValidationQuery(env.getRequiredProperty("db.validationQuery"));
 
-        logger.debug("DataSource bean is configured");
+        log.debug("DataSource bean is configured");
 
         return ds;
-    }
-
-    @Bean
-    public SessionUtil sessionUtil() {
-        logger.debug("SessionUtil bean is configured.");
-        return new SessionUtil();
     }
 
     private Properties getHibernateProperties() {
@@ -96,7 +88,7 @@ public class HibernateConfig {
             properties.load(is);
             return properties;
         } catch (IOException e) {
-            logger.error("Can't find 'hibernate.properties' in classpath!", e);
+            log.error("Can't find 'hibernate.properties' in classpath!", e);
             throw new IllegalArgumentException("Can't find 'hibernate.properties' in classpath!", e);
         }
     }

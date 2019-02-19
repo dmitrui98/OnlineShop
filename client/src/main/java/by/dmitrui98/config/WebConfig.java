@@ -2,6 +2,8 @@ package by.dmitrui98.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -98,4 +100,26 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
         return multipartResolver;
     }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
+
+    /* mapping
+
+    Converter<DogData, DogInfo> myConverter = new Converter<DogData, DogInfo>()
+    {
+        public DogInfo convert(MappingContext<DogData, DogInfo> context)
+        {
+            DogData s = context.getSource();
+            DogInfo d = context.getDestination();
+            d.setName(s.getName());
+            d.setLarge(s.getMass() > 25);
+            return d;
+        }
+    };
+     */
 }

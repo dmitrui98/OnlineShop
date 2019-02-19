@@ -1,5 +1,6 @@
 package by.dmitrui98.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,40 +10,36 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "order_product")
-@AssociationOverrides({
-        @AssociationOverride(name = "id.order",
-                joinColumns = @JoinColumn(name = "order_id")),
-        @AssociationOverride(name = "id.product",
-                joinColumns = @JoinColumn(name = "product_id")) })
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class OrderProduct {
 
     @EmbeddedId
-    private OrderProductPK id;
+    @EqualsAndHashCode.Exclude
+    private OrderProductId id;
 
     @Column(name = "price", nullable = false)
+    @EqualsAndHashCode.Exclude
     private double price;
 
     @Column(name = "quantity", nullable = false)
+    @EqualsAndHashCode.Exclude
     private int quantity;
 
-    @Transient
-    public Order getOrder() {
-        return getId().getOrder();
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("productId")
+    private Product product;
 
-    @Transient
-    public Product getProduct() {
-        return getId().getProduct();
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("orderId")
+    private Order order;
 
-    public void setOrder(Order order) {
-        getId().setOrder(order);
-    }
-
-    public void setProduct(Product product) {
-        getId().setProduct(product);
+    public OrderProduct(double price, int quantity, Product product, Order order) {
+        this.price = price;
+        this.quantity = quantity;
+        this.product = product;
+        this.order = order;
     }
 }

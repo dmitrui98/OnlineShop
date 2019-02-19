@@ -22,7 +22,7 @@ public class Category implements Comparable<Category> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private int categoryId;
+    private Integer categoryId;
 
     @Column(name = "name", nullable = false, unique = true, length = 50)
     private String name;

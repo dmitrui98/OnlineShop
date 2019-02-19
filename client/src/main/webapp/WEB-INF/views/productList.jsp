@@ -33,7 +33,7 @@
                                 <td> ${product.category.name} </td>
                                 <td><img src="${product.image.imageDirectory}" width="70" height="50"/></td>
                                 <td>
-                                    <form action="/product/info" method="get">
+                                    <form action="product/info" method="get">
                                         <input type="hidden" name="id" value="${product.productId}">
                                         <button type="submit"> Подробнее </button>
                                     </form>

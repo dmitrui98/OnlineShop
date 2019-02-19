@@ -8,14 +8,14 @@ jQuery('document').ready(function() {
         data[csrfName] = csrfValue;
 
         jQuery.ajax({
-            url: "/pottle/put",
+            url: "pottle/put",
             headers: {'X-Csrf-Token': csrfValue},
             data: data,
             method: "post",
             success: function (response, textStatus, xhr) {
 
                 if (response.length > 0) {
-                    location.href = "/comeIn";
+                    location.href = "/onlineShop/comeIn";
                 } else{
                     alert("Товар добавлен в корзину");
                 }

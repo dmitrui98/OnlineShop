@@ -12,5 +12,6 @@ public interface ProductDao extends BaseDao<Product, Long> {
         Возвращает элементы с from элемента количеством count
      */
     List<Product> getElements(int from, int count);
-    long getCount();
+
+    Long getCount();
 }

@@ -1,14 +1,14 @@
 jQuery('document').ready(function() {
 	jQuery("#comeIn").on("click", function() {
-		location.href = "comeIn";
+        location.href = "comeIn";
 	});
 
 	jQuery("#registration").on("click", function() {
-		location.href = "registration";
+        location.href = "registration";
 	});
 
 	jQuery("#pottle").on("click", function() {
-		location.href = "pottle";
+        location.href = "pottle";
 	});
 
     // jQuery.ajax({

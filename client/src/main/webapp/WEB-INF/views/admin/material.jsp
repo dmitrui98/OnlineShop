@@ -8,7 +8,7 @@
 <head>
     <title>Материал</title>
     <jsp:include page="headers/adminHeader.jsp" flush="true"/>
-    <script type = "text/javascript" src = "<c:url value="/js/material.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/js/material.js"/>"></script>
 </head>
 <body>
 <div class="container">

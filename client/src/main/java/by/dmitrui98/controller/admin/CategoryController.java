@@ -6,17 +6,13 @@ import by.dmitrui98.service.dao.AdminService;
 import by.dmitrui98.service.dao.CategoryService;
 import by.dmitrui98.validation.CategoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +42,7 @@ public class CategoryController {
     public String addOrUpdate(@ModelAttribute("category") Category category, BindingResult bindingResult, HttpServletRequest request) {
 
         boolean isEdit = true;
-        if (category.getCategoryId() == 0)
+        if (category.getCategoryId() == null)
             isEdit = false;
 
         categoryValidator.validate(category, bindingResult);
@@ -102,12 +98,12 @@ public class CategoryController {
         return "redirect:/admin/category";
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        sdf.setLenient(true);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-    }
+//    @InitBinder
+//    public void initBinder(WebDataBinder binder) {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        sdf.setLenient(true);
+//        binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+//    }
 
 
 }

@@ -4,13 +4,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Session;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Entity
 @Table(name = "material")
@@ -24,7 +26,7 @@ public class Material implements Comparable<Material> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "material_id")
     @EqualsAndHashCode.Include
-    private int materialId;
+    private Long materialId;
 
     @Column(name = "name", nullable = false, unique = true, length = 50)
     private String name;
@@ -41,12 +43,26 @@ public class Material implements Comparable<Material> {
     @JoinColumn(name = "created_by", nullable = false)
     private Admin admin;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.material", cascade=CascadeType.ALL)
-    private Set<ProductMaterial> productMaterials = new HashSet<>();
+    @OneToMany(mappedBy = "material", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    private List<ProductMaterial> productMaterials = new ArrayList<>();
 
     public Material(String name, Admin admin) {
         this.name = name;
         this.admin = admin;
+    }
+
+    public void removeAllProductCascade(Session session) {
+        for (Iterator<ProductMaterial> it = productMaterials.iterator(); it.hasNext(); ) {
+            ProductMaterial pm = it.next();
+            it.remove();
+            pm.getProduct().getProductMaterials().remove(pm);
+            Product product = pm.getProduct();
+            product.removeAllMaterial();
+            product.getCategory().getProducts().remove(product);
+            session.delete(product);
+            pm.setProduct(null);
+            pm.setMaterial(null);
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package by.dmitrui98.config;
 
-import by.dmitrui98.util.SessionUtil;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
@@ -67,14 +66,6 @@ public class DatabaseConfigTest {
         txManager.setSessionFactory(sessionFactory());
         return txManager;
     }
-
-    @Bean
-    public SessionUtil sessionUtil() {
-        System.out.println("registered TEST sessionUtil");
-        return new SessionUtil();
-    }
-
-
 
     private Properties getHibernateProperties() {
 

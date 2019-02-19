@@ -1,7 +1,7 @@
 package by.dmitrui98.dao;
 
 import by.dmitrui98.config.DatabaseConfigTest;
-import by.dmitrui98.util.SessionUtil;
+import org.hibernate.SessionFactory;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +21,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public abstract class BaseDaoImplTest {
     @Autowired
-    protected SessionUtil sessionUtil;
+    protected SessionFactory sessionFactory;
 }

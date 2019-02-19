@@ -65,7 +65,7 @@ $(document).ready(function () {
         var data = {page : page, countElements: countElements};
 
         $.ajax({
-            url: "/productList",
+            url: "/onlineShop/productList",
             data: data,
             method: "get",
             success: function (response) {
@@ -85,7 +85,7 @@ $(document).ready(function () {
         var countElements = $(this).val();
         var data = {countElements: countElements};
         $.ajax({
-            url: "/countPages",
+            url: "/onlineShop/countPages",
             data: data,
             method: "get",
             success: function(response) {
@@ -103,7 +103,7 @@ $(document).ready(function () {
                 var data = {countElements: countElements,
                     page: $("li.page-item.active").text().trim()};
                 $.ajax({
-                    url: "/productList",
+                    url: "/onlineShop/productList",
                     data: data,
                     method: "get",
                     success: function (response) {
@@ -125,7 +125,7 @@ function repaintPagination() {
     var countElements = $("select.countElements").val();
     var data = {countElements: countElements};
     $.ajax({
-        url: "/countPages",
+        url: "/onlineShop/countPages",
         data: data,
         method: "get",
         success: function (response) {

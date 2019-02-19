@@ -1,6 +1,5 @@
 package by.dmitrui98.dao;
 
-import by.dmitrui98.dao.BaseDao;
 import by.dmitrui98.entity.Image;
 
 /**
@@ -8,4 +7,6 @@ import by.dmitrui98.entity.Image;
  */
 public interface ImageDao extends BaseDao<Image, Long>{
     Image save(String directory);
+
+    Image getByPath(String path);
 }

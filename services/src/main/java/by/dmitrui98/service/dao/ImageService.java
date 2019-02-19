@@ -13,7 +13,7 @@ public interface ImageService {
 
     boolean remove(String serverDirectory);
 
-    Image getDefaultImage();
-
     boolean removeImage(Product product);
+
+    Image getImageByPath(String defaultImagePath);
 }

@@ -17,7 +17,7 @@
             <h3 class="panel-title text-center"><b>Редактирование материала</b></h3>
         </div>
 
-        <form:form action="/onlineShop/admin/material" modelAttribute="material" method="POST"  class="form-horizontal">
+        <form:form action="/onlineShop/admin/material" modelAttribute="material" method="POST" class="form-horizontal">
 
             <div class="form-group">
                 <form:label path="materialId" class="col-sm-2">

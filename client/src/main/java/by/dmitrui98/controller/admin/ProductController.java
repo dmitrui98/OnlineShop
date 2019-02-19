@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -41,9 +38,13 @@ public class ProductController {
     private AdminService adminService;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private ImageEditor imageEditor;
+    @Autowired
+    private CategoryEditor categoryEditor;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String productPage(Model model) {
+    public String get(Model model) {
         model.addAttribute("products", productService.getAll());
         return "admin/product";
     }
@@ -58,20 +59,20 @@ public class ProductController {
         return "admin/productAdd";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @PostMapping(value = "/add")
     public String productAdd(@ModelAttribute("product") Product productForm,
                           BindingResult bindingResult, HttpServletRequest request, Model model){
 
         boolean isEdit = true;
-        if (productForm.getProductId() == 0)
+        if (productForm.getProductId() == null)
             isEdit = false;
 
         Map<String, String[]> parameterMap = request.getParameterMap();
         String[] stringMaterialIds = parameterMap.get("materialId[]");
         String[] stringPercents = parameterMap.get("percent[]");
 
-        productService.setProductMaterias(productForm, stringMaterialIds, stringPercents);
-
+        // необходимо для валидации
+        productService.setProductMaterials(productForm, stringMaterialIds, stringPercents);
 
         productValidator.validate(productForm, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -101,23 +102,22 @@ public class ProductController {
         productForm.setAdmin(admin);
         if (isEdit) {
             String imageDirectory = request.getParameter("imageDirectory");
-            long imageId = Long.parseLong(request.getParameter("imageId"));
+            Long imageId = Long.parseLong(request.getParameter("imageId"));
 
-            productService.save(productForm, stringMaterialIds, stringPercents,
-                    imageDirectory, imageId);
+            productService.save(productForm, imageDirectory, imageId);
+        } else {
+            productService.save(productForm);
         }
-        else
-            productService.save(productForm, stringMaterialIds, stringPercents);
 
-
-        if (isEdit)
+        if (isEdit) {
             return "redirect:/admin/product";
-        else
+        } else {
             return "redirect:/admin/product/add";
+        }
     }
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String productViewPage(HttpServletRequest request, Model model) {
+    public String getInfo(HttpServletRequest request, Model model) {
         long id = Long.parseLong(request.getParameter("id"));
         Product product = productService.getById(id);
         model.addAttribute("product", product);
@@ -125,7 +125,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String productEditPage(HttpServletRequest request, Model model) {
+    public String edit(HttpServletRequest request, Model model) {
         long id = Long.parseLong(request.getParameter("id"));
         Product product = productService.getById(id);
         model.addAttribute("product", product);
@@ -136,7 +136,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String productDelete(HttpServletRequest request, Model model) {
+    public String delete(HttpServletRequest request, Model model) {
         long id = Long.parseLong(request.getParameter("id"));
 
         productService.remove(id);
@@ -151,9 +151,7 @@ public class ProductController {
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 
-        binder.registerCustomEditor(Category.class, new CategoryEditor(categoryService));
-        binder.registerCustomEditor(Image.class, new ImageEditor(imageService));
+        binder.registerCustomEditor(Category.class, categoryEditor);
+        binder.registerCustomEditor(Image.class, imageEditor);
     }
-
-
 }

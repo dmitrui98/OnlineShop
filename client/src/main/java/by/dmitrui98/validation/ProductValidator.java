@@ -76,7 +76,7 @@ public class ProductValidator implements Validator {
         Iterator<ProductMaterial> iterator = product.getProductMaterials().iterator();
         while (iterator.hasNext()) {
             ProductMaterial productMaterial = iterator.next();
-            if (productMaterial.getPercentMaterial() <= 0)
+            if (productMaterial.getMaterialPercent() <= 0)
                 return true;
         }
         return false;
@@ -87,8 +87,8 @@ public class ProductValidator implements Validator {
         double actualPercent = 0.0;
         while (iterator.hasNext()) {
             ProductMaterial productMaterial = iterator.next();
-            if (productMaterial.getPercentMaterial() > 0)
-                actualPercent += productMaterial.getPercentMaterial();
+            if (productMaterial.getMaterialPercent() > 0)
+                actualPercent += productMaterial.getMaterialPercent();
         }
         return actualPercent;
     }

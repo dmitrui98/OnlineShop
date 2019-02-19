@@ -5,7 +5,7 @@ import by.dmitrui98.entity.User;
 import by.dmitrui98.entity.enums.UserRoleEnum;
 import by.dmitrui98.service.dao.AdminService;
 import by.dmitrui98.service.dao.UserService;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,8 +22,8 @@ import java.util.Set;
  * Created by Администратор on 18.04.2017.
  */
 @Service
+@Log4j
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private static final Logger logger = Logger.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
     private UserService userService;
@@ -34,30 +34,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-
         User user = userService.getByName(name);
+        Set<GrantedAuthority> roles = new HashSet<>();
         if (user == null) {
-            logger.debug("Пользователь с именем " + name + " не найден.");
-        }
-
-        Set<GrantedAuthority> roles = new HashSet();
-        UserDetails userDetails = null;
-        if (user != null) {
-            roles.add(new SimpleGrantedAuthority("ROLE_"+UserRoleEnum.USER.name()));
-            userDetails = new org.springframework.security.core.userdetails.User(user.getLogin(),
-                    user.getPassword(), roles);
-        } else {
+            // если user не найден, ищем администратора
             Admin admin = adminService.getByName(name);
-            if (admin != null) {
-                roles.add(new SimpleGrantedAuthority("ROLE_" + UserRoleEnum.ADMIN.name()));
-                userDetails = new org.springframework.security.core.userdetails.User(admin.getLogin(),
-                        admin.getPassword(), roles);
-            } else {
-                logger.debug("Администратор с именем " + name + " не найден.");
+            if (admin == null) {
+                log.info("Пользователь с именем " + name + " не найден.");
+                throw new UsernameNotFoundException("Пользователь с именем " + name + " не найден.");
             }
+            roles.add(new SimpleGrantedAuthority("ROLE_" + UserRoleEnum.ADMIN.name()));
+            return new org.springframework.security.core.userdetails.User(admin.getLogin(),
+                    admin.getPassword(), roles);
         }
-
-
-        return userDetails;
+        roles.add(new SimpleGrantedAuthority("ROLE_" + UserRoleEnum.USER.name()));
+        return new org.springframework.security.core.userdetails.User(user.getLogin(),
+                user.getPassword(), roles);
     }
 }

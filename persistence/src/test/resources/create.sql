@@ -26,11 +26,11 @@ CREATE UNIQUE INDEX UK_ob8kqyqqgmefl0aco34akdtpe ON user (email);
 DROP TABLE IF EXISTS admin;
 CREATE TABLE admin
 (
-  admin_id BIGINT AUTO_INCREMENT,
+  admin_id   INT AUTO_INCREMENT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  login VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
+  email      VARCHAR(255) NOT NULL,
+  login      VARCHAR(255) NOT NULL,
+  password   VARCHAR(255) NOT NULL,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 CREATE UNIQUE INDEX UK_3x1e18lmu2r0xekpql9xme0pp ON admin (login);
@@ -40,10 +40,10 @@ DROP TABLE IF EXISTS category;
 CREATE TABLE category
 (
   category_id INT AUTO_INCREMENT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  name NVARCHAR(50) NOT NULL,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  created_by BIGINT NOT NULL,
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  name        NVARCHAR(50)                        NOT NULL,
+  updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  created_by  INT                                 NOT NULL,
   CONSTRAINT FKjhmnkmwm8awm5yy2mi46p6vd9 FOREIGN KEY (created_by) REFERENCES admin (admin_id)
 );
 CREATE INDEX FKjhmnkmwm8awm5yy2mi46p6vd9 ON category (created_by);
@@ -52,11 +52,11 @@ CREATE UNIQUE INDEX UK_46ccwnsi9409t36lurvtyljak ON category (name);
 DROP TABLE IF EXISTS material;
 CREATE TABLE material
 (
-  material_id INT AUTO_INCREMENT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  name NVARCHAR(50) NOT NULL,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  created_by BIGINT NOT NULL,
+  material_id BIGINT AUTO_INCREMENT,
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  name        NVARCHAR(50)                        NOT NULL,
+  updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  created_by  INT                                 NOT NULL,
   CONSTRAINT FK2xg438n2qyvmrn66vu9cl2is6 FOREIGN KEY (created_by) REFERENCES admin (admin_id)
 );
 CREATE INDEX FK2xg438n2qyvmrn66vu9cl2is6 ON material (created_by);
@@ -65,15 +65,16 @@ CREATE UNIQUE INDEX UK_j8lh9456buiw3bl8pg6kbuwln ON material (name);
 DROP TABLE IF EXISTS product;
 CREATE TABLE product
 (
-  product_id BIGINT AUTO_INCREMENT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  description NVARCHAR(255),
-  name NVARCHAR(100) NOT NULL,
-  price DOUBLE NOT NULL,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  created_by BIGINT NOT NULL,
-  category_id INT NOT NULL,
-  image_id BIGINT,
+  product_id     BIGINT AUTO_INCREMENT,
+  count_products BIGINT                              NOT NULL,
+  created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  description    NVARCHAR(255),
+  name           NVARCHAR(100)                       NOT NULL,
+  price          DOUBLE                              NOT NULL,
+  updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  created_by     INT                                 NOT NULL,
+  category_id    INT                                 NOT NULL,
+  image_id       BIGINT,
   CONSTRAINT FKc5eq1tgd5q9flr1pm2svo8ck8 FOREIGN KEY (created_by) REFERENCES admin (admin_id),
   CONSTRAINT FK1mtsbur82frn64de7balymq9s FOREIGN KEY (category_id) REFERENCES category (category_id),
   CONSTRAINT FKsouy49035ik9r5ojgslbv3i3u FOREIGN KEY (image_id) REFERENCES image (image_id)
@@ -86,8 +87,8 @@ DROP TABLE IF EXISTS product_material;
 CREATE TABLE product_material
 (
   percent_material DOUBLE DEFAULT '0.00',
-  material_id INT NOT NULL,
-  product_id BIGINT NOT NULL,
+  material_id      BIGINT NOT NULL,
+  product_id       BIGINT NOT NULL,
   PRIMARY KEY (material_id, product_id),
   CONSTRAINT FK1jea57j19wyli2rpqcp2ho163 FOREIGN KEY (material_id) REFERENCES material (material_id),
   CONSTRAINT FKk16tidor8p5yj7n3e9h8j784d FOREIGN KEY (product_id) REFERENCES product (product_id)

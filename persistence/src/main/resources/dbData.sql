@@ -25,15 +25,16 @@ INSERT INTO user VALUES (NULL,
                          'user',
                          '2009-06-04 19:14:20');
 
-INSERT INTO user VALUES (NULL,
-                         '2009-06-04 19:14:20',
-                         5,
-                         'test@mail.ru',
-                         'test',
-                         'test',
-                         'test',
-                         '$2a$11$/fvV.P4r.TsnJsNiCfbak.273r/r4B/w8vTOPW/StXvKxt4TeyC.u',
-                         '+375291233218',
-                         'test',
-                         '2009-06-04 19:14:20');
+INSERT INTO user
+VALUES (NULL,
+        '2009-06-04 19:14:20',
+        5,
+        'test@mail.ru',
+        'test',
+        'test',
+        'test',
+        '$2a$11$/fvV.P4r.TsnJsNiCfbak.273r/r4B/w8vTOPW/StXvKxt4TeyC.u',
+        '+375291233218',
+        'test',
+        '2009-06-04 19:14:20');
 

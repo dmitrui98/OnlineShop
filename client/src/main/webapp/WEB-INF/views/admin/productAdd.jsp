@@ -8,8 +8,8 @@
     <title>Добавить товар</title>
 
     <jsp:include page="headers/adminHeader.jsp" flush="true"/>
-    <script type = "text/javascript" src = "js/handlebars-v4.0.5.js"> </script>
-    <script type = "text/javascript" src = "js/productAdd.js"> </script>
+    <script type="text/javascript" src="<c:url value="/js/handlebars-v4.0.5.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/js/productAdd.js"/>"></script>
 
     <style>
         .hide {
@@ -19,9 +19,11 @@
 </head>
 <body>
 <div class="container">
-    <a href="<c:url value="/admin/product" />">Назад</a> <br/>
+    <c:url value="/admin/product" var="productUrl"/>
+    <a href="${productUrl}">Назад</a> <br/>
 
-    <form:form action="/onlineShop/admin/product/add?${_csrf.parameterName}=${_csrf.token}" method="post"
+    <%--TODO передать токен в теле запроса--%>
+    <form:form action="${productUrl}/add?${_csrf.parameterName}=${_csrf.token}" method="post"
                modelAttribute="product" enctype="multipart/form-data" class="form-horizontal">
         <div class="text-center">
             <h4> Добавление товара </h4>
@@ -92,7 +94,7 @@
             <div class="col-sm-10">
                 <input id="inputImage" type="file" name="image" accept="image/*,image/jpeg"
                         class="form-control" />
-                <img src="/images/default.jpg" id = "image" width="150px" height="150px"
+                <img src="<c:url value="/images/default.jpg"/>" id="image" width="150px" height="150px"
                      class="img-responsive"/>
             </div>
         </div>
@@ -136,7 +138,7 @@
                     </td>
                     <td>
                         <input type="hidden" name="materialId[]" value="${pm.material.materialId}">
-                        <input type="number" step="any" name="percent[]" value="${pm.percentMaterial}">
+                        <input type="number" step="any" name="percent[]" value="${pm.materialPercent}">
                     </td>
                     <td>
                         <button class="delete btn btn-default">Удалить</button>

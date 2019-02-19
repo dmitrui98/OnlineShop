@@ -14,20 +14,21 @@
 
     <title>Welcome</title>
 
-    <link href = "css/bootstrap.css" rel="stylesheet" type ="text/css" />
+    <jsp:include page="headers/userHeader.jsp" flush="true"/>
+    <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
 
-    <script type = "text/javascript" src = "js/jquery-3.2.0.min.js"> </script>
-    <script type = "text/javascript" src = "js/bootstrap.min.js"> </script>
+    <script type="text/javascript" src="<c:url value="/js/jquery-3.2.0.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/js/bootstrap.min.js"/>"></script>
 </head>
 <body>
 
 <div class="container">
     <c:if test="${pageContext.request.userPrincipal.name != null}">
-        <form id="logoutForm" method="POST" action="/logout">
+        <form id="logoutForm" method="POST" action="/onlineShop/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h2>Welcome, ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        <h2>Привет, ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
         </h2>
 
     </c:if>

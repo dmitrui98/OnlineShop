@@ -32,6 +32,7 @@
         <lombok.version>1.18.4</lombok.version>
         <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
         <commons-io.version>2.6</commons-io.version>
+        <modelmapper.version>2.3.2</modelmapper.version>
     </properties>
 
     <modules>
@@ -109,6 +110,17 @@
             <version>${slf4j-log4j12.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+        </dependency>
 
     </dependencies>
     <build>

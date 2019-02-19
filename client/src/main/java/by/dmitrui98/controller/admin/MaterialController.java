@@ -51,7 +51,7 @@ public class MaterialController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editCategory(HttpServletRequest request, HttpServletResponse response, Model model) {
-        int id = Integer.parseInt(request.getParameter("id"));
+        Long id = Long.parseLong(request.getParameter("id"));
         model.addAttribute("material", materialService.getById(id));
 
         return "admin/materialEdit";
@@ -61,7 +61,7 @@ public class MaterialController {
     public String addOrUpdate(@ModelAttribute("material") Material material, BindingResult bindingResult, HttpServletRequest request) {
 
         boolean isEdit = true;
-        if (material.getMaterialId() == 0)
+        if (material.getMaterialId() == null)
             isEdit = false;
 
         materialValidator.validate(material, bindingResult);
@@ -86,7 +86,7 @@ public class MaterialController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
+        Long id = Long.parseLong(request.getParameter("id"));
 
         if (materialService.remove(id))
             return "redirect:/admin/material";
@@ -98,7 +98,7 @@ public class MaterialController {
 
     @RequestMapping(value = "/deleteCascade", method = RequestMethod.POST)
     public String deleteCascade(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
+        Long id = Long.parseLong(request.getParameter("id"));
         materialService.removeCascade(id);
 
         return "redirect:/admin/material";

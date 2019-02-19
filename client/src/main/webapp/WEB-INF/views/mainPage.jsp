@@ -6,7 +6,7 @@
 	<meta charset="UTF-8"/>
 	<title> Интернет-магазин товаров </title>
     <jsp:include page="headers/userHeader.jsp" flush="true"/>
-	<script type="text/javascript" src="js/mainPage.js"></script>
+    <script type="text/javascript" src="<c:url value="/js/mainPage.js" />"></script>
 <head>
 	
 <body>
@@ -17,26 +17,24 @@
 			</div>
 
 			<div id = "siteName">
-				Интернет-магазин одежды
+                Интернет-магазин товаров
 			</div>
 
 			<div id = "buttons">
-
 				<c:choose>
-					<c:when test="<%=request.getUserPrincipal() == null%>">
+                    <c:when test="${empty pageContext.request.userPrincipal}">
 						<button id = "comeIn"> войти </button>
 						<button id = "registration"> регистрация </button>
 					</c:when>
 					<c:otherwise>
 						<span style="font-size : 18px;">
-							<%= "Привет, " + request.getUserPrincipal().getName().toString()%> <br/>
-							<a href = "logout">Logout</a>
+							Привет, ${pageContext.request.userPrincipal.name} <br/>
+							<a href="logout">Logout</a>
 						</span>
 					</c:otherwise>
 				</c:choose>
 
 				<button id = "pottle"> корзина </button>
-
 
 			</div>
 

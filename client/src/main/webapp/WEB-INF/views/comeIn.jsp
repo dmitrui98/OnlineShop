@@ -10,7 +10,7 @@
 
 <body>
 	<div class="container">
-		<form action="" method="post">
+        <form action="" method="post">
 			<h2 class="form-heading">Аутентификация</h2>
 
 			<div class="form-group ${error != null ? 'has-error' : ''}">
@@ -25,8 +25,8 @@
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
 				<input class="btn btn-lg btn-primary btn-block" type="submit" value="Войти"/>
-				<h4 class="text-center"><a href="<c:url value="/registration"/>">Создать аккаунт</a></h4>
-				<h4 class="text-center"><a href="<c:url value="/"/>">Главная страница</a></h4>
+                <h4 class="text-center"><a href="<c:url value="/registration"/>">Создать аккаунт</a></h4>
+                <h4 class="text-center"><a href="<c:url value="/"/>">Главная страница</a></h4>
 			</div>
 		</form>
 

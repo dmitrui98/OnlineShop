@@ -1,5 +1,6 @@
 package by.dmitrui98.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,37 +10,32 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "product_material")
-@AssociationOverrides({
-        @AssociationOverride(name = "id.product",
-                joinColumns = @JoinColumn(name = "product_id")),
-        @AssociationOverride(name = "id.material",
-                joinColumns = @JoinColumn(name = "material_id")) })
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class ProductMaterial {
 
     @EmbeddedId
-    private ProductMaterialPK id = new ProductMaterialPK();
+    @EqualsAndHashCode.Exclude
+    private ProductMaterialId id;
 
-    @Column(name = "percent_material", columnDefinition = "DOUBLE(6,2) DEFAULT 0.00")
-    private double percentMaterial;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @MapsId("productId")
+    private Product product;
 
-    @Transient
-    public Product getProduct() {
-        return getId().getProduct();
-    }
+    @ManyToOne
+    @MapsId("materialId")
+    private Material material;
 
-    @Transient
-    public Material getMaterial() {
-        return getId().getMaterial();
-    }
+    @Column(name = "percent_material")
+    @EqualsAndHashCode.Exclude
+    private double materialPercent;
 
-    public void setProduct(Product product) {
-        getId().setProduct(product);
-    }
-
-    public void setMaterial(Material material) {
-        getId().setMaterial(material);
+    public ProductMaterial(Product product, Material material, double materialPercent) {
+        this.product = product;
+        this.material = material;
+        this.materialPercent = materialPercent;
+        this.id = new ProductMaterialId(product.getProductId(), material.getMaterialId());
     }
 }

@@ -7,8 +7,8 @@
 <head>
     <title>Редактировать товар</title>
     <jsp:include page="headers/adminHeader.jsp" flush="true"/>
-    <script type = "text/javascript" src = "js/handlebars-v4.0.5.js"> </script>
-    <script type = "text/javascript" src = "js/productEdit.js"> </script>
+    <script type="text/javascript" src="<c:url value="/js/handlebars-v4.0.5.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/js/productEdit.js" />"></script>
 
     <style>
         .hide {
@@ -20,7 +20,9 @@
 <div class="container">
     <a href="<c:url value="/admin/product" />">Назад</a> <br/>
 
-    <form:form action="/onlineShop/admin/product/add?${_csrf.parameterName}=${_csrf.token}" modelAttribute="product" method="POST" enctype="multipart/form-data">
+    <%--TODO передать токен в теле запроса--%>
+    <form:form action="/onlineShop/admin/product/add?${_csrf.parameterName}=${_csrf.token}" modelAttribute="product"
+               method="POST" enctype="multipart/form-data">
         <h3> Редактирование товара </h3>
 
         <div>
@@ -166,7 +168,7 @@
                         </td>
                         <td>
                             <input type="hidden" name="materialId[]" value="${pm.material.materialId}">
-                            <input type="number" step="any" name="percent[]" value="${pm.percentMaterial}">
+                            <input type="number" step="any" name="percent[]" value="${pm.materialPercent}">
                         </td>
                         <td>
                             <button class="delete">Удалить</button>
