@@ -26,6 +26,9 @@ public class BasketController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String get(HttpServletRequest request) {
+        System.out.println("Changes from buidos98!!!");
+
+
         HttpSession session = request.getSession();
         List<BasketDto> basket = (List<BasketDto>) session.getAttribute("basket");
 
