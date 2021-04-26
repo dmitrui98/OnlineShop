@@ -31,7 +31,7 @@
         <log4j.version>1.2.17</log4j.version>
         <lombok.version>1.18.4</lombok.version>
         <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <modelmapper.version>2.3.2</modelmapper.version>
     </properties>
 
